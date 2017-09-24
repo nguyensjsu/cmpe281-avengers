@@ -2,12 +2,12 @@
 
 ## Team Members
 
-1. Aartee Kasliwal
-2. Amita Vasudev Kamat
-3. Kajal Agarwal
-4. Mohammed Haroon Shareef
-5. Pavana Srinivasadeshika Achar
+1. [Aartee Kasliwal](https://github.com/Aartee)
+2. [Amita Vasudev Kamat](https://github.com/amitakamat)
+3. [Kajal Agarwal](https://github.com/agarka)
+4. [Mohammed Haroon Shareef](https://github.com/mohammedharoon)
+5. [Pavana Srinivasadeshika Achar](https://github.com/pavanaachar)
 
 
-### Link to Cumulative Flow Diagram (Team's Google Sheet):
-	https://docs.google.com/spreadsheets/d/1HU1S8RE7AaSchyCZFdp_s2n7W_vHUCRXeyHO0INXkAc/edit?usp=sharing 
+### [Cumulative Flow Diagram]
+	(https://docs.google.com/spreadsheets/d/1HU1S8RE7AaSchyCZFdp_s2n7W_vHUCRXeyHO0INXkAc/edit?usp=sharing)
