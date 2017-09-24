@@ -1,10 +1,20 @@
 ## Online Books inventory:
 
-The well known name in the online books inventory is Amazon. It is the largest online retailer.  There are other online bookstores that sell via third party sellers as well. 
+The well known name in the online books inventory is Amazon. It is the largest online retailer.  
+site:
+There are other online bookstores that sell via third party sellers as well. 
+For example : http://www.powells.com/
+              https://www.barnesandnoble.com/
+              
+There are some public data sets on books information that could be useful to our project:
+For example:  http://www2.informatik.uni-freiburg.de/~cziegler/BX/
+              http://nifty.stanford.edu/2011/craig-book-recommendations/books.txt
 
 ## Online Ice-cream inventory:
 
-There are a couple online ice-cream ordering systems that take orders from customers and deliver ice-cream frozen right to their doorstep. 
+There are a couple online ice-cream ordering systems that take orders from customers and deliver ice-cream frozen right to their doorstep.
+For example: https://shop.jenis.com/
+             http://www.icecreamsource.com/
 
 
 ## The focus here is to observe how the data flows in such online ordering systems.
