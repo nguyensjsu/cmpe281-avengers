@@ -1,4 +1,4 @@
-#MULTI BROWSER COMPATIBILITY :
+# MULTI BROWSER COMPATIBILITY :
 
 Various HTML/CSS rules begin to conflict with one another since there are many versions and the tags of one version may conflict with another.This can be especially problematic.
 
