@@ -9,5 +9,4 @@
 5. [Pavana Srinivasadeshika Achar](https://github.com/pavanaachar)
 
 
-### [Cumulative Flow Diagram]
-	(https://docs.google.com/spreadsheets/d/1HU1S8RE7AaSchyCZFdp_s2n7W_vHUCRXeyHO0INXkAc/edit?usp=sharing)
+[Cumulative Flow Diagram](https://docs.google.com/spreadsheets/d/1HU1S8RE7AaSchyCZFdp_s2n7W_vHUCRXeyHO0INXkAc/edit?usp=sharing)
