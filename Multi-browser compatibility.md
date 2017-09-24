@@ -1,9 +1,9 @@
 # Technologies to be used for the cloud-scale multi-user shopping cart
 
 - AWS to deploy clusters 
-- Load balancers, Authentication APIs like [Kong APIs](https://getkong.org/)
+- Load Balancers, Authentication APIs like [Kong APIs](https://getkong.org/)
 - REST APIs
-- NoSQL databases like cassandra, RDBMS,  Redis, etc.
+- NoSQL Databases like cassandra, RDBMS,  Redis, etc.
 - HTML5, CSS3, AngularJS for the front-end
 
 # Multi Browser Comppatiblity
