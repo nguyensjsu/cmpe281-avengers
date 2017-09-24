@@ -1,4 +1,4 @@
-MULTI BROWSER COMPATIBILITY :
+#MULTI BROWSER COMPATIBILITY :
 
 Various HTML/CSS rules begin to conflict with one another since there are many versions and the tags of one version may conflict with another.This can be especially problematic.
 
@@ -7,7 +7,7 @@ The browsers that shall be checked for compatibility will include Safari, Intern
 Some tools that we can use to ensure multi-browser compatibility would be :
 
 	 	 	
-1. MARKUP VALIDATION SERVICE - https://validator.w3.org/
+1. [MARKUP VALIDATION SERVICE](https://validator.w3.org/)
 This validator checks the markup validity of Web document (HTML). And for CSS, we can use CSS validator.
 
 2. LINTERS
