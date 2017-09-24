@@ -19,17 +19,17 @@ For example: https://shop.jenis.com/
 
 ## The focus here is to observe how the data flows in such online ordering systems.
 
-1) Customer logins to the online bookstore.
+1) customer logins to the online bookstore
 
-2) The product catalog is served to the customer.
+2) The product catalog is served to the customer
 
-3) The customer adds the interested item to the shopping cart and selects to check out.
+3) The customer adds the interested item to the shopping cart and selects to check out
 
-4) The customer is redirected to the payments page.
+4) The customer is redirected to the payments page
 
 5) The order is placed after successful payment.
 
-We can say that the item is moved around from catalog to shopping cart and then to orders. Once the item is in orders, the shipping components start working on it and it is moved again from orders to shipped to in-transit and then to delivered state. 
+we can say that the item is moved around from catalog to shopping cart and then to orders. Once the item is in orders, the shipping components start working on it and it is moved again from orders to shipped to in-transit and then to delivered state. 
 
 Although this looks straightforward on the outside, the design for such systems is rather complicated yet interesting. 
 
