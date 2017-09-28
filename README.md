@@ -10,3 +10,7 @@
 
 ## Link to Cumulative Flow Diagram
 https://docs.google.com/spreadsheets/d/1HU1S8RE7AaSchyCZFdp_s2n7W_vHUCRXeyHO0INXkAc/edit?usp=sharing
+  
+  
+## Domain for the project:
+Multi-user Online Book Shopping cart service
