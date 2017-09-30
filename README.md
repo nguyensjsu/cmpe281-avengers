@@ -14,3 +14,8 @@ https://docs.google.com/spreadsheets/d/1HU1S8RE7AaSchyCZFdp_s2n7W_vHUCRXeyHO0INX
   
 ## Domain for the project:
 Multi-user Online Book Shopping cart service
+  
+  
+## Technologies that would be used in the project:
+### 1. Front-End :  
+    AngularJS
