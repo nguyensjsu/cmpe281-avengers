@@ -1,7 +1,7 @@
-# Stick sessions with Local session caching
+# Sticky sessions with Local session caching
 Sticky sessions can be used when we are running application on a single server.
 In the industry where high availability and scalibility is expected in the application, this approach does not work for horizontal scaling.
-It allow you to route a site user to the particular web server that is managing that individual user’s session. The session’s validity can be determined by a number of methods, including a client-side cookies or via configurable duration parameters that can be set at the load balancer which routes requests to the web servers.
+It allow you to route a site user to the particular web server that is managing that individual userâ€™s session. The sessionâ€™s validity can be determined by a number of methods, including a client-side cookies or via configurable duration parameters that can be set at the load balancer which routes requests to the web servers.
   
 ## Advantages:
 1. Cost effective as sessions are stored in the servers running the application.
