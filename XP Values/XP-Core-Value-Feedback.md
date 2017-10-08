@@ -25,4 +25,9 @@ Similarly, we had a task to research and study for the feasibility of the front-
 This week, I worked on the UI wireframes for login and register screen. I got my designs reviewed by my team, got their feedback, worked on the changes and then uploaded the UI designs in the GitHub repository.
 
 It's very important to get timely feedback from the team and the customer on the progress of the tasks to make sure that there is no wastage of time or efforts and to find bugs early.
+  
+  
+# Week #3
+  
+In the team meeting, We discussed on the database reasearch we all conducted in our data domains. We took feedback from each other on our research observations and conclusions. This helped us think on what we need to do next - continue research or finalize a database for the domain.  Also, for the UI wireframes, I created two screens to show navigation menu before user logs in. After getting feedback from my team members, I realized I had missed out on adding catalog option in the menu. So, I made the required changes. Getting timely feedbacks from team members helps us eliminate any non-required tasks we are working on and helps us re-organize our tasks better.
  
