@@ -20,3 +20,10 @@ Also, if someone needs any help in between everyone is so helpful to get that do
 To see the whole with respect to the project, we have made major decisions on the domain of shopping cart, got real 
 time data for that domain, finalized front-end technology and started researching on the back-end technology such as 
 NoSQL databases for sub-modules(Product Catalog, Shopping Cart, User Sessions, User Activity Logs and Financial Data).
+
+
+**Week#3 : 01/10 - 07/10**
+
+This week each team member has done research on the backend service independently. While doing study of the backend services like NoSQL databases, scalability, etc. everyone has made simple choices so that it will be, as a whole, easy to develop and deliver in real time. 
+
+Overall, everyone has explained their study topic to each other at high level.In this way everyone has the picture in mind what others have studied and found. While doing this, everyone found its simple to understand since most of the backend services are interlinked with each other.
