@@ -1,3 +1,9 @@
+Week #3
+
+This week we were looking to finalize the NoSQL databases for the application, but couldn't finalize it. Everyone is not sure about the databases they are planning to use. We all are considering the trade-off between the available NoSQL databases which is causing a delay in project development.
+
+Even though delay is caused we respect everyone's opinion about the delay. This will be helpful in later stages of the project as there won't be mid-project issues with databases changes.
+
 Week #2
 
 This week the Domain of the project was finalized from the 6 available options. It was boiled down to one and we finally decided to go with: Multi-user Online Book Shopping cart service. Though this was not the choice for most of the team members to begin with, everyone measured it's pros and cons and discussed them. The team members respected each other's perspective about the domain and finally settled with it being the domain.
