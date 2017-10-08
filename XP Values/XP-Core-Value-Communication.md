@@ -10,3 +10,21 @@ WEEK #2 - 23/09 30/09
 This week we proceeded further with the issues faced and discussing the work being done. Since regular communication is important for successful accomplishment, he conducted daily conference calls on hangout to discuss - "what has been done", "what we need to do" and "what issues were faced".
 These questions made the flow easier and convenient to address all issues. Each member participated actively in the discussion and provided suggestions to others issues and ideas. Later we also, had a meet in library to record the progress and talk face to face.
 We stepped further by deciding the domain of the shopping cart. Many things where ambiguous when we started discussing further. We needed more clarity. Each one gave inputs and whatever they could think of. We worked on the specific tasks and continued.
+
+
+WEEK#3 01/10 - 07/10
+
+The ability to communicate effectively implies the success of the project, communication
+ensures the success of project. Communication s about talking about the risks and the issues
+and helps to articulate the project goal.
+
+The team met twice this week and started off this weeks sprint. We are planning to
+complete the selection the NoSQL model and all the related study require. Also then develop the UI in a user friendly
+manner to make the application attractive as well as interesting. 
+
+Everyone pushed their tasks that were in development and ready to start. We discussed few challenges we were facing regarding manual demostration of partition tolerance and the selection of NoSQL domain for the module. Each one gave insight on the knowledge they had regarding this.
+
+The base of the module must be good enough so that one is stuck up after implementation starts. So we decided to give enough time for research and studying these new technology and the NoSQL. Also we discussed upon the UI technology, desgn and development requirements.
+
+We also had a conference call to discuss the work in progress.All the work is going according
+to the plan and everything is being updated in the sprint burndown chart.
