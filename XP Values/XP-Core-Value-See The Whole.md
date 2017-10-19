@@ -27,3 +27,9 @@ NoSQL databases for sub-modules(Product Catalog, Shopping Cart, User Sessions, U
 This week each team member has done research on the backend service independently. While doing study of the backend services like NoSQL databases, scalability, etc. everyone has made simple choices so that it will be, as a whole, easy to develop and deliver in real time. 
 
 Overall, everyone has explained their study topic to each other at high level.In this way everyone has the picture in mind what others have studied and found. While doing this, everyone found its simple to understand since most of the backend services are interlinked with each other.
+
+**Week#4 : 15/10 - 21/10**
+
+As a whole, in this week everyone has worked on backend part of the sub-modules like product catalogs, shopping cart, user activity logs, etc. Evryone has explored the NoSql databases suitable for the assigned sub-modules and make local connection to those databases.
+
+Also, while working on the sub-modules, each team member has idea of how others are going worward with there sub-modules so that it will be easy to integrate all sub-modules as a whole.
