@@ -25,3 +25,9 @@ Henceforth, Simplicity is the key of our front-end and back-end design architect
 **Week#3 : 01/10 - 07/10**
 
 This week everyone has done thourogh research on each selected backend service independently. While doing study of the backend services like NoSQL databases, scalability, etc. everyone has made simple choices so that it will be easy to move forward in the implementation phase. Also, everyone has explained their study topic to each other at high level, in this way everyone has the picture in mind what others have studied and found. While doing this, everyone found its simple to understand since most of the backend services are interlinked with each other.
+
+**Week#4 : 15/10 - 21/10**
+
+In this week each team member has worked on sub-modules like shopping-cart, product-catalog, user activity logs in detail. It was easy and very simple to focus on assigned sub-module at a time because of such parallel work the velocity of the project increases. Also, while working on the sub-modules everyone has made sure what and how others are working so that the integration of all sub-modules will be simple.
+
+In this week, every member has shown the simplicity core value by working on the sub-modules adapting divide and conquer method.
