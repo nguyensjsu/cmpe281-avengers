@@ -1,5 +1,11 @@
 # Courage 
 
+WEEK #4:
+
+This week the team members decided upon the programming language for developing the project. Python is new for most of the team members, yet they have started working on the project, exploring and learning the new language. The team members have been exploring available database services for user sessions, financial data, shopping cart, etc. some of the database choices have been changed.
+=========================================================================================================
+
+
 WEEK #3:
 
 This week all the team members thoroughly researched independent modules on a more fundamental level and made their choice for backend data services. Although at this point, the choices that are made seems to be fair enough but there is always a risk of technical debt. Therefore, in order to proceed with the system implementation, the team has made a strong mind to go ahead with the available options at hand and face the consequences when it arises.
