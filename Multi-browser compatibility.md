@@ -6,7 +6,7 @@
 - NoSQL Databases like cassandra, RDBMS,  Redis, etc.
 - HTML5, CSS3, AngularJS for the front-end
 
-# Multi Browser Comppatiblity
+# Multi Browser Compatibility
 
 Various HTML/CSS rules begin to conflict with one another since there are many versions and the tags of one version may conflict with another.This can be especially problematic.
 
