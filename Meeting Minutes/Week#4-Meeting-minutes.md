@@ -5,7 +5,7 @@ Online conference call on Google Hangouts
 
 ## Meeting Date and Time
 10/16/2017  
-11:am - 12:30pm  
+11:00am - 12:30pm  
 
 ## Organizer and Scribe
 Pavana Srinivasadeshika Achar  
