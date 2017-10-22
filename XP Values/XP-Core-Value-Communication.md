@@ -30,7 +30,7 @@ We also had a conference call to discuss the work in progress.All the work is go
 to the plan and everything is being updated in the sprint burndown chart.
 
 
-WEEK#3 15/10 - 21/10
+WEEK#4 15/10 - 21/10
 
 Good communication within the team helped us to establish the base of the project on common terms. We decided the platforms and stated working on them discussing what each one had learnt and researched. 
 
