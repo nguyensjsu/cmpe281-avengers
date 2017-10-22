@@ -36,6 +36,6 @@ Good communication within the team helped us to establish the base of the projec
 
 We had a conference call on hangout to discuss what challenges we had in this week and what tasks we need to complete in order make progress on the work. Everyone pushed their tasks that were in development and ready to start.
 
-We started working on the specific modules and creating init functions, learning implementation of the NoSQL. communicating with the team helped builing a strng knowledge base in an effective manner. The team talks about all of their challenges and issues so that each can help out as much as possible.
+We started working on the specific modules and creating init functions, learning implementation of the NoSQL. Communicating with the team helped builing a strng knowledge base in an effective manner. The team talks about all of their challenges and issues so that each can help out as much as possible.
 
-Evrything was updated correctly for the week and reflectd the same in Sprint Burndown Chart.
+Everything was updated correctly for the week and reflected the same in Sprint Burndown Chart.
