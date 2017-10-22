@@ -30,4 +30,9 @@ It's very important to get timely feedback from the team and the customer on the
 # Week #3
   
 In the team meeting, We discussed on the database reasearch we all conducted in our data domains. We took feedback from each other on our research observations and conclusions. This helped us think on what we need to do next - continue research or finalize a database for the domain.  Also, for the UI wireframes, I created two screens to show navigation menu before user logs in. After getting feedback from my team members, I realized I had missed out on adding catalog option in the menu. So, I made the required changes. Getting timely feedbacks from team members helps us eliminate any non-required tasks we are working on and helps us re-organize our tasks better.
+
+
+# Week #4  
+  
+In the team meeting, we discussed the languages that can be used for the backend server side code. On discussing the pros cons of the languages Java, Go and Python, taking feedback from team members who have already worked on the three languages, we decided to work in python. We discussed and reviewed the UI wireframes for this week and took feedback on it. we discussed on how to proceed with the coding coming up with 3 options - frontend, database or the api code. Taking each other's feedback we decided to start with the database and api code and then proceed with the frontend code. We discussed the NOSQL DB we plan on using for our respective modules and based on the discussion changed some of our decisions to avoid waste of efforts due to feasibility or lack of documentation issues.
  
