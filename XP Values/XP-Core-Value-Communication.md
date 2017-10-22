@@ -28,3 +28,14 @@ The base of the module must be good enough so that one is stuck up after impleme
 
 We also had a conference call to discuss the work in progress.All the work is going according
 to the plan and everything is being updated in the sprint burndown chart.
+
+
+WEEK#3 15/10 - 21/10
+
+Good communication within the team helped us to establish the base of the project on common terms. We decided the platforms and stated working on them discussing what each one had learnt and researched. 
+
+We had a conference call on hangout to discuss what challenges we had in this week and what tasks we need to complete in order make progress on the work. Everyone pushed their tasks that were in development and ready to start.
+
+We started working on the specific modules and creating init functions, learning implementation of the NoSQL. communicating with the team helped builing a strng knowledge base in an effective manner. The team talks about all of their challenges and issues so that each can help out as much as possible.
+
+Evrything was updated correctly for the week and reflectd the same in Sprint Burndown Chart.
