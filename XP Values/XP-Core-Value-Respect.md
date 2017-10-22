@@ -1,3 +1,7 @@
+Week #4
+
+This week two of the teammates have migrated their NoSQL databases from Riak to DynamoDB and from DynamoDB to Redis. Other people respected the change. Also, this week, we were to decide on the programming language to use for the backend code. We came up with three options namely: go, python and Java. Most of use were inclined to using Go or python as they are very easy to use. But, none of us have worked on Go before and 3 of us have experience in writing code in python. So we decided to use Python for the server side code. Everyone agreed upon this and the others who don't have experience with either language respected the choice. 
+
 Week #3
 
 This week we were looking to finalize the NoSQL databases for the application, but couldn't finalize it. Everyone is not sure about the databases they are planning to use. We all are considering the trade-off between the available NoSQL databases which is causing a delay in project development.
