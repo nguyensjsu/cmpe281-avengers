@@ -1,0 +1,59 @@
+/*html {
+  overflow-y: scroll;
+}*/
+
+body {
+	background-color : #F6F6F6;
+}
+
+#header {
+	width : 100%;
+	margin-top : 0%;
+	height : 8%;
+	border-bottom : solid 2px #A8A8A8;
+	color : #E30B5D;
+	font-family : "Comic Sans MS";
+	padding : 0%;
+	background-color : white;
+}
+
+.header-items-container {
+	position : absolute;
+	margin-top : 0%;
+	width : 100%;
+}
+
+.menu-img.menu-img-left {
+	float: left;
+}
+
+.menu-img {
+	width: 3%;
+    height: 99%;
+}
+
+.header-books {
+	margin-top: 1%;
+    vertical-align: top;
+    width: 7%;
+    height: 80%;
+}
+
+#header-center{
+	margin-left : 40%;
+	width : 53%;
+	height : 85%;
+	float: left;
+}
+
+.logo-label {
+	font-size : x-large;
+	font-family : "Comic Sans MS";
+}
+
+.cart-item-number {
+	font-size : small;
+	margin-top: 2%;
+    float: left;
+	font-weight: bolder;
+}
