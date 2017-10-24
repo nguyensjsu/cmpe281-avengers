@@ -3,6 +3,7 @@ from flask_restful import Resource, Api
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from bson.json_util import dumps
+import json
 
 app = Flask(__name__)
 # configure the mondodb database name with 'books' and database service uri for the same
@@ -19,7 +20,7 @@ class ProductApi(Resource):
     def get(self):
         output = mongo.db.books_collection.find()
         data = dumps(output)
-        return jsonify({"Status": "OK", "data": data})
+        return jsonify({"Status": "OK", "data": json.loads(data)})
 
 api.add_resource(ProductApi,'/')
 
