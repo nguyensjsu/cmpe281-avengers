@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,100,300,500">
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../assets/css/form-elements.css">
+    <!--<link rel="stylesheet" href="../assets/css/form-elements.css">-->
     <link rel="stylesheet" href="../assets/css/style.css">
+	<link rel="stylesheet" href="../assets/css/register.css">
 
     <!-- Javascript -->
     <!--<script src="../assets/js/jquery-1.11.1.min.js"></script>
@@ -27,6 +28,39 @@
 <body>
 	<div header></div>
 	<div id="content" class="content-container">
+	<p></p>
+		<div id="register-container">
+			<div id="create-div" class="containers">Create Account</div>
+			<div id="sign-in-option" class="containers">Already have an account? &nbsp;
+				<a href="self" style="color : #E30B5D;">Sign In</a>
+			</div>
+			<div id="name-labels" class="containers text-left">
+				<div id="first-name" class="names">First Name</div>
+				<div id="last-name" class="names">Last Name</div>
+			</div>
+			<div id="name-fields" class="containers">
+				<input type="text" name="firstname" class="names text-fields" value="" placeholder="John"/>
+				<input type="text" name="lastname" class="names text-fields" value="" placeholder="Doe"/>
+			</div>
+			<div id="contact-fields" class="containers">
+				<div id="email" class="contact text-left">Email</div>
+				<input type="text" name="email" class="contact text-left text-fields" value="" placeholder="john.doe@gmail.com"/>
+				<div id="mobile" class="contact text-left">Mobile</div>
+				<input type="text" name="mobile" class="contact text-left text-fields" value="" placeholder="6236452667"/>
+			</div>
+			<div id="password-container" class="containers">
+				<div id="password-label" class="names text-left">Password</div>
+				<div id="password-condition" class="names text-right">at least 8 characters</div>
+				<input type="password" name="password" class="contact text-left text-fields" value=""/>
+			</div>
+			<div id="terms" class="containers terms">By creating an account, you agree to EasyBuy's</div>
+			<div class="containers terms">
+				<a href="self">Terms and Conditions</a> and <a href="self">Privacy Statement</a>
+			</div>
+			<div id="submit" class="containers">
+				<button id="create-account" class="names">Create my Account</button>
+			</div>
+		</div>
 	</div>
 	<div footer></div>
 </body>
