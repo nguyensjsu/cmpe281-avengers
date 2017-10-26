@@ -10,23 +10,39 @@
     <!-- CSS -->
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,100,300,500">
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
-    <!--<link rel="stylesheet" href="../assets/css/form-elements.css">-->
+    <!--<link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../assets/css/form-elements.css">-->
     <link rel="stylesheet" href="../assets/css/style.css">
 	<link rel="stylesheet" href="../assets/css/register.css">
+	<link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.5/angular-material.css">
+	<link rel="stylesheet" href="https://material.angularjs.org/1.1.5/docs.css>
 
     <!-- Javascript -->
-    <!--<script src="../assets/js/jquery-1.11.1.min.js"></script>
+    <script src="../assets/js/jquery-1.11.1.min.js"></script>
+	<!--<script src="../assets/js/jquery.backstretch.min.js"></script>
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../assets/js/jquery.backstretch.min.js"></script>
     <script src="assets/js/scripts.js"></script> -->
 	<script src="../assets/js/angular.min.js"></script>
 	<script src="../assets/js/angular-route.min.js"></script>
 	<script src="../assets/modules/header_footer_directive.js"></script>
+	<!--<script src="../assets/controllers/header_controller.js"></script>-->
 </head>
 
-<body>
+<body ng-controller="AppCtrl">
 	<div header></div>
+	<div id="right-nav">
+		<md-sidenav class="md-sidenav-right" md-component-id="right">
+			<md-toolbar class="md-theme-light">
+				<h1 class="md-toolbar-tools">Sidenav Right</h1>
+			</md-toolbar>
+			<md-content ng-controller="RightCtrl" layout-padding="">
+				<form>
+				<md-input-container>
+				</md-input-container>
+				</form>
+			</md-content>
+		</md-sidenav>
+	</div>
 	<div id="content" class="content-container">
 	<p></p>
 		<div id="register-container">
@@ -63,6 +79,16 @@
 		</div>
 	</div>
 	<div footer></div>
+	
+	<!--<menu visible="leftVisible" alignment="left">
+		<menu-item hash="first-page">First Page</menu-item>
+		<menu-item hash="second-page">Second Page</menu-item>
+		<menu-item hash="third-page">Third Page</menu-item>
+	</menu>
+	<menu visible="rightVisible" alignment="right">
+		<menu-item hash="first-page">First Page</menu-item>
+		<menu-item hash="second-page">Second Page</menu-item>
+		<menu-item hash="third-page">Third Page</menu-item>
+	</menu>-->
 </body>
-
 </html>

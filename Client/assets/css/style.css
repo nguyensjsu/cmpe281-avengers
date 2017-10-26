@@ -41,6 +41,16 @@ body {
     height: 99%;
 }
 
+#right-nav {
+	display:none;
+	height: 78%;
+    position: absolute;
+    margin-left: 70%;
+    width: 30%;
+    border-left: solid 2px #A8A8A8;
+	background-color: white;
+}
+
 .header-center-images {
 	margin-top: 1%;
     vertical-align: top;
