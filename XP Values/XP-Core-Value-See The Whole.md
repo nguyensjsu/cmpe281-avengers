@@ -33,3 +33,9 @@ Overall, everyone has explained their study topic to each other at high level.In
 As a whole, in this week everyone has worked on backend part of the sub-modules like product catalogs, shopping cart, user activity logs, etc. Evryone has explored the NoSql databases suitable for the assigned sub-modules and make local connection to those databases.
 
 Also, while working on the sub-modules, each team member has idea of how others are going worward with there sub-modules so that it will be easy to integrate all sub-modules as a whole.
+
+**Week#5 : 22/10 - 28/10**
+
+Everyone has created the REST apis for respective sub-modules' functionalities in python. While designing the REST api for particular sub-module everyone has kept the similar format so that it will be easy to integrate as a whole.
+
+Some team members has worked on the frontend to see the proof of concept which will make development easy in a bigger picture. As a whole, to integrate all modules everyone has researched on how to create cluster for each sub-module's databases in the AWS account.
