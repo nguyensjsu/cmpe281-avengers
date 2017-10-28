@@ -13,23 +13,20 @@ app.config['MONGO_URI'] = 'mongodb://localhost:27017/books'
 
 mongo = PyMongo(app)
 
-@app.route('/books', methods=['GET',])
+@app.route('/books', methods=['POST','GET'])
 def books():
     books = mongo.db.books_collection
-    output = books.find()
-    data = dumps(output)
-    return jsonify({"Status": "OK", "data": data})
-
-@app.route('/books/insert/', methods=['POST'])
-def insert_book():
-    books = mongo.db.books_collection        
-    book = {}
-    result = json.loads(request.get_data(as_text=True))
-    book['title']=result['title']
-    book['author'] = result['author']
-    book['price']=result['price']
-    output = books.insert(book)
-    data = dumps(output)
+    if request.method == 'POST':        
+        book = {}
+        result = json.loads(request.get_data(as_text=True))
+        book['title']=result['title']
+        book['author'] = result['author']
+        book['price']=result['price']
+        output = books.insert(book)
+        data = dumps(output)
+    elif request.method == 'GET':
+        output = books.find()
+        data = dumps(output)
     return jsonify({"Status": "OK", "data": data})
 
 @app.route('/books/title/<title>', methods=['GET'])
