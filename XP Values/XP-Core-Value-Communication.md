@@ -24,7 +24,7 @@ manner to make the application attractive as well as interesting.
 
 Everyone pushed their tasks that were in development and ready to start. We discussed few challenges we were facing regarding manual demostration of partition tolerance and the selection of NoSQL domain for the module. Each one gave insight on the knowledge they had regarding this.
 
-The base of the module must be good enough so that one is stuck up after implementation starts. So we decided to give enough time for research and studying these new technology and the NoSQL. Also we discussed upon the UI technology, desgn and development requirements.
+The base of the module must be good enough so that one is stuck up after implementation starts. So we decided to give enough time for research and studying these new technology and the NoSQL. Also we discussed upon the UI technology, design and development requirements.
 
 We also had a conference call to discuss the work in progress.All the work is going according
 to the plan and everything is being updated in the sprint burndown chart.
@@ -36,6 +36,19 @@ Good communication within the team helped us to establish the base of the projec
 
 We had a conference call on hangout to discuss what challenges we had in this week and what tasks we need to complete in order make progress on the work. Everyone pushed their tasks that were in development and ready to start.
 
-We started working on the specific modules and creating init functions, learning implementation of the NoSQL. Communicating with the team helped builing a strng knowledge base in an effective manner. The team talks about all of their challenges and issues so that each can help out as much as possible.
+We started working on the specific modules and creating init functions, learning implementation of the NoSQL. Communicating with the team helped builing a strong knowledge base in an effective manner. The team talks about all of their challenges and issues so that each can help out as much as possible.
 
-Everything was updated correctly for the week and reflected the same in Sprint Burndown Chart.
+Everything was updated correctly for the week.
+
+
+WEEK#5 22/10 - 28/10
+
+Its the first week for Scrum and everything started great. We created a Sprint Burndown Chart to track and update the work for each team member. We sat together to discuss each task for the coming week for each member.
+
+There were few changes to things proposed earlier since their were certain problems in implementation. We worked as a team to find a solution to select backend database for team member and and designed UI wireframes for each page to be designed. 
+
+Everyone pushed their tasks that were in development and ready to start. We started working on them and discussing each time, if any member had any difficulties. Also we discussed upon the UI technology, design and development requirements.
+
+We started working on the specific modules and writing CRUD API, learning implementation of the NoSQL, partition tolerance, deploying nodes on aws etc. Communicating with the team helped builing a strong knowledge base in an effective manner. 
+
+The team talks about all of their challenges and issues so that each can help out as much as possible.
