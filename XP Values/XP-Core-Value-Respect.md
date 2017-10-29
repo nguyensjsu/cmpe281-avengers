@@ -1,3 +1,10 @@
+Week #5
+
+This week we have decided to change the NoSQL databases for shopping cart module and User Sessions module, because the deployment of DynamoDB and Redis on AWS is not feasible. Even though we have migrated the databases twice during the project, everyone in the team respected the decision because deploying the NoSQL database as a cluster on AWS is more important than trying different NoSQL DBS for each module. Thus, it has been decided that all 5 NoSQL DB's will be MongoDB which will be deployed on 5 users accounts as seperate clusters.
+
+Also this week we have re-discussed on the system architecture and everyone came up with their feedback, and finally it was decided that Each NoSQL DB API will be placed on the Bastion host for their respective Database cluster. All these API's will be connected as upstream URL's from the web application server and each API call will be routed to respective NoSQL DB API.
+
+
 Week #4
 
 This week two of the teammates have migrated their NoSQL databases from Riak to DynamoDB and from DynamoDB to Redis. Other people respected the change. Also, this week, we were to decide on the programming language to use for the backend code. We came up with three options namely: go, python and Java. Most of use were inclined to using Go or python as they are very easy to use. But, none of us have worked on Go before and 3 of us have experience in writing code in python. So we decided to use Python for the server side code. Everyone agreed upon this and the others who don't have experience with either language respected the choice. 
