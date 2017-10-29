@@ -1,4 +1,8 @@
 # Courage 
+WEEK #5:
+
+The team worked on deploying different database clusters on aws. It is observed that some of the databases selected earlier are not feasible for clustering and partitioning. Therefore, the team had to change over to MongoDB for better clustering features. The team also worked on back end code by designing APIs for integrating different microservices.  
+=========================================================================================================
 
 WEEK #4:
 
