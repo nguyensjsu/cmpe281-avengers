@@ -35,4 +35,9 @@ In the team meeting, We discussed on the database reasearch we all conducted in 
 # Week #4  
   
 In the team meeting, we discussed the languages that can be used for the backend server side code. On discussing the pros cons of the languages Java, Go and Python, taking feedback from team members who have already worked on the three languages, we decided to work in python. We discussed and reviewed the UI wireframes for this week and took feedback on it. we discussed on how to proceed with the coding coming up with 3 options - frontend, database or the api code. Taking each other's feedback we decided to start with the database and api code and then proceed with the frontend code. We discussed the NOSQL DB we plan on using for our respective modules and based on the discussion changed some of our decisions to avoid waste of efforts due to feasibility or lack of documentation issues.
+
+
+# Week #5
+
+In the team meeting, we discuused the architecture of our project. Taking feedback from everybody we came up with how we need to connect the different clusters with the web server. We discussed on the different databases we were trying to use. After discussing and getting feedback on how to create a cluster for the database in AWS, whether it is possible, whether we can connect to it through python code, etc, we came to know different issues with deploying different NOSQL databases on AWS. We finally decide on using mongodb for all the modules and deploy it separately as a cluster on our accounts. Getting feedback helped us figure out the issues and change our databases in time to avoid lot of rework and loss of time. We also discussed and got feedback on the UI design and AI design to include versions.
  
