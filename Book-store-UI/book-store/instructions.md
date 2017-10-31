@@ -1,6 +1,6 @@
 Install latest version of node ([installation](https://docs.npmjs.com/getting-started/installing-node))
 
-Go to the source code directory and install npm packages mentioned in the package,json.
+Go to the source code directory and install npm packages mentioned in the package.json.
 ```shell
 npm install
 ```
