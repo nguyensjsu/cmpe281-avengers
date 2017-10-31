@@ -67,10 +67,19 @@ def get_user(id):
     return user_data.find_one({'ID': id})
 
 
+# Delete user based on user ID
+def delete_user(id):
+    user_data.delete_one({'ID': id})
+
+
 # Fetches session details based on user ID
 def get_session(userID):
     return sessions_data.find_one({'userID': userID})
 
+
+# Delete session entry based on User ID
+def delete_session(userID):
+    return sessions_data.delete_one({'userID': userID})
 
 
 if __name__ == '__main__':
@@ -79,3 +88,7 @@ if __name__ == '__main__':
     session_value = add_session(new_user.id)
     print ( 'User details: ' + str(get_user(new_user.id)))
     print ( 'Session details: ' + str(get_session(new_user.id)))
+    delete_session(new_user.id)
+    delete_user(new_user.id)
+    print('User details after delete: ' + str(get_user(new_user.id)))
+    print('Session details after delete: ' + str(get_session(new_user.id)))
