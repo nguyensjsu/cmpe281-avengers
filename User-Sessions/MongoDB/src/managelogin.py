@@ -50,14 +50,19 @@ def add_user(user):
                 'Password': user.password
             }
         )
-    print('user id : ' + user.id)
-    print('result : ' + str(result.inserted_id))
 
 
 # Fetches user details based on user ID
 def get_user(id):
     return user_data.find_one({'ID': id})
 
+# verify if user with passed id and password exists
+def verify_user(id, password):
+    result = user_data.find_one({'ID': id, 'Password' : password})
+    if result is None:
+        return False
+    else:
+        return True
 
 # Delete user based on user ID
 def delete_user(id):
@@ -87,8 +92,6 @@ def add_session(session):
             'sessionID': session.sessionID
         }
     )
-    print('session id : ' + str(session.sessionID))
-    print('result : ' + str(result.inserted_id))
 
 
 # Fetches session details based on user ID
@@ -112,25 +115,32 @@ def update_session(session):
             }
     )
 
+# Verify login and create session
+def verify_login_create_session(id, password):
+    if(verify_user(id, password)):
+        # if valid create a session, store it and return session value to the client.
+        delete_session(id)
+        session = Session(id)
+        add_session(session)
+        return session.sessionID
+    else:
+        return 0
+
 
 if __name__ == '__main__':
 
-    new_user = User("Amita", "Kamat", "abc@gmail.com", "password")
+    new_user = User("A", "B", "abc@gmail.com", "password")
     add_user(new_user)
 
-    new_session = Session(new_user.id)
-    add_session(new_session)
-
     print ( 'User details: ' + str(get_user(new_user.id)))
-    print ( 'Session details: ' + str(get_session(new_user.id)))
+
+    print ("Valid login : " + str(verify_login_create_session(new_user.id, 'password1')))
+    print ("Valid login : " + str(verify_login_create_session(new_user.id, 'password')))
 
     new_user.first_name = "A"
     new_user.last_name = "K"
     update_user(new_user)
     print('User details after update: ' + str(get_user(new_user.id)))
-    new_session.sessionID = generate_session()
-    update_session(new_session)
-    print ( 'Session details after update: ' + str(get_session(new_session.userID)))
 
 
     delete_session(new_user.id)
@@ -138,3 +148,4 @@ if __name__ == '__main__':
 
     print('User details after delete: ' + str(get_user(new_user.id)))
     print('Session details after delete: ' + str(get_session(new_user.id)))
+
