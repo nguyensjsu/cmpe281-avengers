@@ -20,23 +20,21 @@ mongo = PyMongo(app)
 @app.route('/books', methods=['PUT','GET'])
 def books():
     books = mongo.db.books_collection
-    if request.method == 'PUT':        
-        #TODO 
-        # decrement quantity attribute
-        # for every product ordered
-    elif request.method == 'GET':
+    #TODO
+    #Decrement Quantity for PUT method
+    if request.method == 'GET':
         output = books.find()
         data = dumps(output)
-    return jsonify({"Status": "OK", "data": data})
+    return jsonify({"Status": "OK", "data": json.loads(data)})
 
 # The GET request with oid returns a particular document having that Id
 
 @app.route('/books/<oid>', methods=['GET'])
 def get_book_by_id(oid):
-	#TODO 
-	# parse the request body for oid
-	# fetch the product by oid
-	# return the document
+    books = mongo.db.books_collection
+    output = books.find_one({'_id': ObjectId(oid)})
+    data = dumps(output)
+    return jsonify({"Status": "OK", "data": json.loads(data)})
 
 if __name__ == '__main__':
     app.run(debug=True)
