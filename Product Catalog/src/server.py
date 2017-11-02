@@ -13,9 +13,8 @@ app.config['MONGO_URI'] = 'mongodb://localhost:27017/books'
 
 mongo = PyMongo(app)
 
-#  A single URI for both GET and PUT requests
-#  The GET request returns all the books in the database
-#  After a successful order, a PUT request decrements the quantity of the books in the inventory
+#  The GET request returns all the books in the database.
+#  The PUT request decrements the quantity of the book in the inventory
 
 @app.route('/books', methods=['PUT','GET'])
 def books():
@@ -23,8 +22,11 @@ def books():
     #TODO
     #Decrement Quantity for PUT method
     if request.method == 'GET':
-        output = books.find()
-        data = dumps(output)
+        try:
+            output = books.find()
+            data = dumps(output)
+        except Exception as e:
+            return jsonify({"Status":"Error"})
     return jsonify({"Status": "OK", "data": json.loads(data)})
 
 # The GET request with oid returns a particular document having that Id
@@ -32,8 +34,11 @@ def books():
 @app.route('/books/<oid>', methods=['GET'])
 def get_book_by_id(oid):
     books = mongo.db.books_collection
-    output = books.find_one({'_id': ObjectId(oid)})
-    data = dumps(output)
+    try:
+        output = books.find_one({'_id': ObjectId(oid)})
+        data = dumps(output)
+    except Exception as e:
+        return jsonify({"Status":"Error"})
     return jsonify({"Status": "OK", "data": json.loads(data)})
 
 if __name__ == '__main__':
