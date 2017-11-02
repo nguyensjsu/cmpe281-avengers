@@ -31,9 +31,9 @@ Run the server
 ```shell
 python server.py &
 ```
-Test the api with GET request
+Test the api with GET request to get all the books in the database
 ```shell
-curl 127.0.0.1:5000
+curl localhost:5000/books
 ```
 Response would be like:
 ```json
@@ -67,3 +67,22 @@ Response would be like:
   ]
 }
 ```
+Test the api with GET request to get a particular book by passing object Id
+```shell
+curl http://localhost:5000/books/59ef95771fe8881db48299b8
+```
+Response would be like:
+```json
+{
+    "Status": "OK",
+    "data": {
+        "_id": {
+            "$oid": "59ef95771fe8881db48299b8"
+        },
+        "author": "sample author",
+        "price": "$10.00",
+        "title": "sample book"
+    }
+}
+```
+
