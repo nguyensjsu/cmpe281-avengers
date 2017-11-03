@@ -38,6 +38,10 @@ def getUserDetails():
     return userDetails
 
 userId = userDetails["userName"]
+
+"""
+addTocart: This method adds a product to the cart
+"""
 def addToCart(productId, quantity):
     #dummy details
     #APICallToProductCatalog
@@ -92,13 +96,32 @@ def findProduct(userId, productId):
 pprint(findProduct(userId, productId))
 
 #create a method to update
+"""
+updateCart : This method updates the user cart
+    userId:
+    productId:
+    newQty:
 
-#create a method to delete
+if newQty is 0 : call the delete method and remove this item from cart
+"""
+def updateCart(userId, productId, newQty):
+    if newQty == 0:
+        deleteProduct(userId, productId)
+    else:
+
+#write a method to delete an item from the cart
+"""
+deleteProduct: This method removes a product from the cart
+    userId:
+    productId:
+"""
 def deleteProduct(userId, productId):
     result = myCart.delete_one({"userId":userId, "productId" : productId})
     pprint(dir(result))
     pprint(result)
-#create a method to create after checking the availability in db, if already
+
+
+#write a method to create after checking the availability in db, if already
 #present update the quantity
 
 deleteProduct(userId, productId)
