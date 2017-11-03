@@ -83,10 +83,23 @@ findProduct : returns the details of a product for
 def findProduct(userId, productId):
     item = {}
     item = myCart.find_one({"userId":userId, "productId" : productId})
-    print(type(item))
     return item
 
 #addToCart(productId,quantity)
 #pprint(myCart.find_one())
 
-getCartDetails(userId)
+#getCartDetails(userId)
+pprint(findProduct(userId, productId))
+
+#create a method to update
+
+#create a method to delete
+def deleteProduct(userId, productId):
+    result = myCart.delete_one({"userId":userId, "productId" : productId})
+    pprint(dir(result))
+    pprint(result)
+#create a method to create after checking the availability in db, if already
+#present update the quantity
+
+deleteProduct(userId, productId)
+pprint(findProduct(userId, productId))
