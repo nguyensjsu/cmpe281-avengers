@@ -16,7 +16,7 @@ mongo = PyMongo(app)
 #  The GET request returns all the books in the database.
 #  The PUT request decrements the quantity of the book in the inventory
 
-@app.route('/books', methods=['PUT','GET'])
+@app.route('/v1/books', methods=['PUT','GET'])
 def books():
     books = mongo.db.books_collection
     #TODO
@@ -31,7 +31,7 @@ def books():
 
 # The GET request with oid returns a particular document having that Id
 
-@app.route('/books/<oid>', methods=['GET'])
+@app.route('/v1/books/<oid>', methods=['GET'])
 def get_book_by_id(oid):
     books = mongo.db.books_collection
     try:
