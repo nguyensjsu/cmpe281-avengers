@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 import uuid
 import os, base64
+import json
 
 client = MongoClient('mongodb://localhost:27017/')
 
@@ -56,7 +57,6 @@ def add_user(user):
 def get_user(id):
     return user_data.find_one({'ID': id})
 
-# verify if user with passed id and password exists
 def verify_user(id, password):
     result = user_data.find_one({'ID': id, 'Password' : password})
     if result is None:
@@ -115,6 +115,14 @@ def update_session(session):
             }
     )
 
+# Verify if the session for the user is valid
+def verify_session(id, session_value):
+    result = sessions_data.find_one({'userID': id, 'sessionID' : session_value})
+    if result is None:
+        return False
+    else:
+        return True
+
 # Verify login and create session
 def verify_login_create_session(id, password):
     if(verify_user(id, password)):
@@ -134,16 +142,18 @@ if __name__ == '__main__':
 
     print ( 'User details: ' + str(get_user(new_user.id)))
 
-    print ("Valid login : " + str(verify_login_create_session(new_user.id, 'password1')))
-    print ("Valid login : " + str(verify_login_create_session(new_user.id, 'password')))
+    print ("Test Invalid login : " + str(verify_login_create_session(new_user.id, 'password1')))
+    print ("Test Valid login : " + str(verify_login_create_session(new_user.id, 'password')))
 
     new_user.first_name = "A"
     new_user.last_name = "K"
     update_user(new_user)
     print('User details after update: ' + str(get_user(new_user.id)))
 
-
     delete_session(new_user.id)
+    session_id = verify_login_create_session(new_user.id, 'password')
+    print ("Test Valid session : " + str(verify_session(new_user.id, session_id)))
+    print ("Test Invalid session : " + str(verify_session(new_user.id, 'invalid-sessiond')))
     delete_user(new_user.id)
 
     print('User details after delete: ' + str(get_user(new_user.id)))
