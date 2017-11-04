@@ -52,3 +52,13 @@ def addToMyOrders(userId, cartId):
     #check the exact attribute name for the image
     cartId = myCart.insert_one(item).inserted_id
     #print(cartId)
+    
+    """
+getCartDetails: display the transactions details 
+    cartId: id of cart whose cart content is to be displayed
+"""
+def getCartDetails(cartId):
+    items = myCart.find({"cartId":cartId})
+    for item in items:
+        pprint(item)
+
