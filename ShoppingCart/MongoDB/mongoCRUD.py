@@ -13,7 +13,10 @@ quantity -> get from user on GUI of shopping cart or add to cart page
 
 from pymongo import MongoClient
 from pprint import pprint
-mongo_cluster = "mongodb://haroon:haroon@cluster0-shard-00-00-pjkz1.mongodb.net:27017,cluster0-shard-00-01-pjkz1.mongodb.net:27017,cluster0-shard-00-02-pjkz1.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin"
+mongo_cluster = ("mongodb://haroon:haroon@cluster0-shard-00-00-pjkz1.mongodb.net:27017,"
+                "cluster0-shard-00-01-pjkz1.mongodb.net:27017,"
+                "cluster0-shard-00-02-pjkz1.mongodb.net:27017"
+                "/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin")
 
 client = MongoClient(mongo_cluster)
 
@@ -41,6 +44,7 @@ userId = userDetails["userName"]
 
 """
 addTocart: This method adds a product to the cart
+adds duplicate items
 """
 def addToCart(productId, quantity):
     #dummy details
@@ -89,11 +93,6 @@ def findProduct(userId, productId):
     item = myCart.find_one({"userId":userId, "productId" : productId})
     return item
 
-#addToCart(productId,quantity)
-#pprint(myCart.find_one())
-
-#getCartDetails(userId)
-pprint(findProduct(userId, productId))
 
 #create a method to update
 """
@@ -118,11 +117,45 @@ deleteProduct: This method removes a product from the cart
 def deleteProduct(userId, productId):
     result = myCart.delete_one({"userId":userId, "productId" : productId})
     pprint(dir(result))
-    pprint(result)
 
 
 #write a method to create after checking the availability in db, if already
 #present update the quantity
 
-deleteProduct(userId, productId)
-pprint(findProduct(userId, productId))
+def addToCart2(productId, quantity):
+    #APICallToProductCatalog
+    #productDetails = "curl http://localhost:5000/books/"+productId
+
+    productDetails = {
+    "_id": productId,
+    "title": "Datastructures and algorithms made easy",
+    "price": 30.41,
+    "productImage": "Red and white colored book"
+    }
+
+    #document to insert
+    item = findProduct(userId, productId)
+    if not item:
+        #code for update if product already exists
+    else:
+        #Check the schema for user database
+        item['userId'] = userDetails['userName']
+        item['productId'] = productDetails['_id']
+        item['productName'] = productDetails['title']
+        item['price'] = productDetails['price']
+
+        #check the exact attribute name for the image
+        item['productImage'] = productDetails['productImage']
+        item['quantity'] = quantity
+        cartId = myCart.insert_one(item).inserted_id
+    #write logic to return the response
+
+#deleteProduct(userId, productId)
+#pprint(findProduct(userId, productId))
+
+addToCart(productId,quantity)
+#pprint(myCart.find_one())
+
+#getCartDetails(userId)
+#pprint(findProduct(userId, productId))
+
