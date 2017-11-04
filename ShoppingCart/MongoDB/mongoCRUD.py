@@ -46,7 +46,7 @@ userId = userDetails["userName"]
 addTocart: This method adds a product to the cart
 adds duplicate items
 """
-def addToCart(productId, quantity):
+def addToCart1(productId, quantity):
     #dummy details
     #APICallToProductCatalog
     #productDetails = "curl http://localhost:5000/books/"+productId
@@ -89,8 +89,16 @@ findProduct : returns the details of a product for
     productId : product whose details are required
 """
 def findProduct(userId, productId):
+    """
+    NOTE: If we want to project only select few columns
+    then use additional arg to find_one
+    e.g. to include only userId and productId use:
+    myCart.find_one({"userId":userId, "productId" : productId},
+    {userId:1, productId:1, _id:0})
+    """
     item = {}
     item = myCart.find_one({"userId":userId, "productId" : productId})
+    pprint(type(item))
     return item
 
 
@@ -107,6 +115,8 @@ def updateCart(userId, productId, newQty):
     if newQty == 0:
         deleteProduct(userId, productId)
     else:
+        myCart.update_one({"userId":userId, "productId": productId},
+        {"$set": {"quantity":newQty} })
 
 #write a method to delete an item from the cart
 """
@@ -116,6 +126,7 @@ deleteProduct: This method removes a product from the cart
 """
 def deleteProduct(userId, productId):
     result = myCart.delete_one({"userId":userId, "productId" : productId})
+    #add logic to return the response
     pprint(dir(result))
 
 
@@ -135,9 +146,13 @@ def addToCart2(productId, quantity):
 
     #document to insert
     item = findProduct(userId, productId)
-    if not item:
+    if item is not None:
         #code for update if product already exists
+        updateCart(userId, productId, quantity)
+        pass
+
     else:
+        item = {}
         #Check the schema for user database
         item['userId'] = userDetails['userName']
         item['productId'] = productDetails['_id']
@@ -149,13 +164,25 @@ def addToCart2(productId, quantity):
         item['quantity'] = quantity
         cartId = myCart.insert_one(item).inserted_id
     #write logic to return the response
+    pass
 
-#deleteProduct(userId, productId)
-#pprint(findProduct(userId, productId))
+"""
+deleteProduct(userId, productId)
+pprint(findProduct(userId, productId))
+"""
 
+"""
 addToCart(productId,quantity)
-#pprint(myCart.find_one())
+pprint(myCart.find_one())
+"""
 
-#getCartDetails(userId)
-#pprint(findProduct(userId, productId))
+"""
+getCartDetails(userId)
+pprint(findProduct(userId, productId))
+"""
 
+"""
+addToCart2(productId, quantity)
+"""
+
+updateCart(userId, productId,6)
