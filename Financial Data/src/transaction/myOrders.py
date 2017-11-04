@@ -61,4 +61,34 @@ def getCartDetails(cartId):
     items = myCart.find({"cartId":cartId})
     for item in items:
         pprint(item)
+ #method to update the transactions
+"""
+updateMyOrders : This method updates the orders
+    userId:
+    cartId:
+    amt:
+
+"""
+def updateMyOrders(userId, cartId, amt):
+    if newQty == 0:
+        deleteProduct(userId, cartId)
+    else:
+        myCart.update_one({"userId":userId, "cartId": cartId},
+        {"$set": {"amt":amt} })       
+
+"""
+addToMyOrders(userId, cartId)
+pprint(myOrders.find_one())
+"""
+
+"""
+getOrderDetails(cartId)
+pprint(findProduct(userId, cartId))
+"""
+
+"""
+addToMyOrders(userId, cartId)
+"""
+
+updateMyOrders(userId, cartId)
 
