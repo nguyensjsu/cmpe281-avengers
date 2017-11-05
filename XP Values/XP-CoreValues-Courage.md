@@ -1,4 +1,10 @@
-# Courage 
+# Courage
+WEEK #6:
+
+This week the team discussed about integrating front end server with backend web application server. The designed REST API endpoints were lacking versioning in their URI. Some of the team members discussed and suggested to include vesioning in the URI. Therefore, the old URI was changed and updated with versioning.
+========================================================================================================
+
+
 WEEK #5:
 
 The team worked on deploying different database clusters on aws. It is observed that some of the databases selected earlier are not feasible for clustering and partitioning. Therefore, the team had to change over to MongoDB for better clustering features. The team also worked on back end code by designing APIs for integrating different microservices.  
