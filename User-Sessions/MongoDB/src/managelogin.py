@@ -42,15 +42,18 @@ def generate_userid():
 #----------------------- BASIC CRUD METHODS FOR USER INFORMATION -----------------------------------#
 # Adds user information to the Users table
 def add_user(user):
-    result = user_data.insert_one(
-            {
-                'id': user.id,
-                'firstname': user.first_name,
-                'lastname': user.last_name,
-                'email': user.email,
-                'password': user.password
-            }
-        )
+    if verify_unique_email(user.email):
+        result = user_data.insert_one(
+                {
+                    'id': user.id,
+                    'firstname': user.first_name,
+                    'lastname': user.last_name,
+                    'email': user.email,
+                    'password': user.password
+                }
+            )
+    else:
+        print("Email already exists. Log in or use a new email.")
 
 
 # Fetches user details based on user ID
@@ -64,6 +67,14 @@ def verify_user(email, password):
         return False
     else:
         return True
+
+# Verify the email for register is unique
+def verify_unique_email(email):
+    result =  user_data.find_one({'email': email})
+    if result is None:
+        return True
+    else:
+        return False
 
 # Delete user based on user ID
 def delete_user(id):
@@ -142,6 +153,9 @@ if __name__ == '__main__':
 
     new_user = User("A", "B", "abc@gmail.com", "password")
     add_user(new_user)
+    print("Test unique email: ")
+    repeat_user = User("Amita", "Kamat", "abc@gmail.com", "password")
+    add_user(repeat_user)
 
     print ( 'User details: ' + str(get_user(new_user.id)))
 
