@@ -40,20 +40,32 @@ def generate_userid():
 
 
 #----------------------- BASIC CRUD METHODS FOR USER INFORMATION -----------------------------------#
+
+# Creates a user
+def create_user(first_name, last_name, email, password):
+    new_user = User(first_name, last_name, email, password)
+    return add_user(new_user)
+
+
 # Adds user information to the Users table
 def add_user(user):
     if verify_unique_email(user.email):
-        result = user_data.insert_one(
-                {
-                    'id': user.id,
-                    'firstname': user.first_name,
-                    'lastname': user.last_name,
-                    'email': user.email,
-                    'password': user.password
-                }
-            )
+        try:
+            user_data.insert_one(
+                    {
+                        'id': user.id,
+                        'firstname': user.first_name,
+                        'lastname': user.last_name,
+                        'email': user.email,
+                        'password': user.password
+                    }
+                )
+            return user.id
+        except:
+            return None
     else:
         print("Email already exists. Log in or use a new email.")
+        return 0
 
 
 # Fetches user details based on user ID
