@@ -18,18 +18,18 @@ mongo = PyMongo(app)
 @app.route('/v1/books', methods=['GET'])
 def books():
     books = mongo.db.books_collection
-        try:
-            output = books.find()
-            data = dumps(output)
-        except Exception as e:
-            return jsonify({"Status":"Error"})
+    try:
+        output = books.find()
+        data = dumps(output)
+    except Exception as e:
+        return jsonify({"Status":"Error"})
     return jsonify({"Status": "OK", "data": json.loads(data)})
 
 # The GET request with oid returns a particular document having that Id
 # The PUT request decrements the quantity of the book in the inventory
 
 @app.route('/v1/books/<oid>', methods=['GET','PUT'])
-def get_book_by_id(oid):
+def book_by_id(oid):
     books = mongo.db.books_collection
     if request.method =='PUT':
         try:
@@ -38,14 +38,16 @@ def get_book_by_id(oid):
                                                'Qty': -1\
                                               }})
         except Exception as e:
+            print(e)
             return jsonify({"Status": "Error"})
+        return jsonify({"Status":"OK"})
     elif request.method == 'GET':
         try:
             output = books.find_one({'_id': ObjectId(oid)})
             data = dumps(output)
         except Exception as e:
             return jsonify({"Status":"Error"})
-    return jsonify({"Status": "OK", "data": json.loads(data)})
+        return jsonify({"Status": "OK", "data": json.loads(data)})
 
 if __name__ == '__main__':
     app.run(debug=True)
