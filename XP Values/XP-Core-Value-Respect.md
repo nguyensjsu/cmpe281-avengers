@@ -1,3 +1,9 @@
+Week #6
+
+This week the CRUD operations for all modules are ready. Everyone has been working on databases using the local databases. Only one teammate have deployed the MongoDB on an AWS cluster and tested the code on the cluster. This is because they are all working on the UI part and will be working on deploying the db on public cloud in the coming week and we respect this decision. 
+
+Also this week, we started working on the User Interface for all the modules. The UI's have been created for 3 modules and is pending for 2 modules. We are also reviewing the options for frontend server and looking to use Nodejs for it. Everyone have agreed upon this and will be working on it's implementation in the coming week. We also need to work on integrating all the components and start end to end testing.
+
 Week #5
 
 This week we have decided to change the NoSQL databases for shopping cart module and User Sessions module, because the deployment of DynamoDB and Redis on AWS is not feasible. Even though we have migrated the databases twice during the project, everyone in the team respected the decision because deploying the NoSQL database as a cluster on AWS is more important than trying different NoSQL DBS for each module. Thus, it has been decided that all 5 NoSQL DB's will be MongoDB which will be deployed on 5 users accounts as seperate clusters.
