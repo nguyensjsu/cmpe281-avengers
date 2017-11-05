@@ -33,56 +33,79 @@ python server.py &
 ```
 Test the api with GET request to get all the books in the database
 ```shell
-curl localhost:5000/books
+curl localhost:5000/v1/books
 ```
 Response would be like:
 ```json
 {
-  "Status": "OK", 
-  "data": [
-    {
-      "_id": {
-        "$oid": "59ea4f507c494b5e85c1954d"
-      }, 
-      "author": "ABCD EFGH", 
-      "price": 10.0, 
-      "title": "Python Crash course"
-    }, 
-    {
-      "_id": {
-        "$oid": "59ea51397c494b650987eaa8"
-      }, 
-      "author": "ABCD EFGH", 
-      "price": 10.0, 
-      "title": "Python Crash course"
-    }, 
-    {
-      "_id": {
-        "$oid": "59ef95771fe8881db48299b8"
-      }, 
-      "author": "sample author", 
-      "price": "$10.00", 
-      "title": "sample book"
-    }
-  ]
+    "Status": "OK",
+    "data": [
+        {
+            "Qty": 10,
+            "_id": {
+                "$oid": "59ea51397c494b650987eaa8"
+            },
+            "author": "ABCD EFGH",
+            "price": 10,
+            "title": "Python Crash course"
+        },
+        {
+            "Qty": 10,
+            "_id": {
+                "$oid": "59ef95771fe8881db48299b8"
+            },
+            "author": "sample author",
+            "price": "$10.00",
+            "title": "sample book"
+        }
+    ]
 }
 ```
 Test the api with GET request to get a particular book by passing object Id
 ```shell
-curl http://localhost:5000/books/59ef95771fe8881db48299b8
+curl http://localhost:5000/v1/books/59ea51397c494b650987eaa8
 ```
 Response would be like:
 ```json
 {
     "Status": "OK",
     "data": {
+        "Qty": 10,
         "_id": {
-            "$oid": "59ef95771fe8881db48299b8"
+            "$oid": "59ea51397c494b650987eaa8"
         },
-        "author": "sample author",
-        "price": "$10.00",
-        "title": "sample book"
+        "author": "ABCD EFGH",
+        "price": 10,
+        "title": "Python Crash course"
     }
 }
 ```
-
+Test the api with PUT request to decrement quantity of a particular book
+```shell
+curl -X PUT http://localhost:5000/v1/books/59ea51397c494b650987eaa8
+```
+Response would be like:
+```json
+{
+    "Status": "OK"
+}
+```
+Test the api with GET request to check the decremented value by passing object Id
+```shell
+curl http://localhost:5000/v1/books/59ea51397c494b650987eaa8
+```
+Response would be like:
+```json
+{
+    "Status": "OK",
+    "data": {
+        "Qty": 9,
+        "_id": {
+            "$oid": "59ea51397c494b650987eaa8"
+        },
+        "author": "ABCD EFGH",
+        "price": 10,
+        "title": "Python Crash course"
+    }
+}
+```

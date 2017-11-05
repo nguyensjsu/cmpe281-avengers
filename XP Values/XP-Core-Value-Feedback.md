@@ -40,4 +40,9 @@ In the team meeting, we discussed the languages that can be used for the backend
 # Week #5
 
 In the team meeting, we discuused the architecture of our project. Taking feedback from everybody we came up with how we need to connect the different clusters with the web server. We discussed on the different databases we were trying to use. After discussing and getting feedback on how to create a cluster for the database in AWS, whether it is possible, whether we can connect to it through python code, etc, we came to know different issues with deploying different NOSQL databases on AWS. We finally decide on using mongodb for all the modules and deploy it separately as a cluster on our accounts. Getting feedback helped us figure out the issues and change our databases in time to avoid lot of rework and loss of time. We also discussed and got feedback on the UI design and AI design to include versions.
+  
+    
+# Week #6  
+  
+In this week's team meeting, we discussed the UI for register, login and catalog page. We discussed the positive points and the things that need to be improved or changed. We took each other's feedback to implement the changes in UI. We discussed how to deploy mongdb in a cluster and got feedback from a team member who tried deploying it. We discussed the issues encountered during deployment. We discussed implementing REST API's to perform db operations, took a feeback from a team member to add versioning in API routes for better routing design and decided to implement versioning. We discussed integration of the modules and took feedback of each team member to make the integration process easier.
  
