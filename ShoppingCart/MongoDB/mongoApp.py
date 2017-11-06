@@ -16,7 +16,7 @@ from flask import Flask,render_template,jsonify,json,request
 from fabric.api import *
 from pprint import pprint
 
-application = Flask(__name__)
+app = Flask(__name__)
 mongo_cluster = ("mongodb://haroon:haroon@cluster0-shard-00-00-pjkz1.mongodb.net:27017,"
                 "cluster0-shard-00-01-pjkz1.mongodb.net:27017,"
                 "cluster0-shard-00-02-pjkz1.mongodb.net:27017"
@@ -40,9 +40,6 @@ quantity = 3
 userDetails = {
                "userName" : "haroonShareef"
               }
-
-def getUserDetails():
-    return userDetails
 
 userId = userDetails["userName"]
 
@@ -115,12 +112,20 @@ updateCart : This method updates the user cart
 
 if newQty is 0 : call the delete method and remove this item from cart
 """
+@application.route("/cart/<userId>/<productId>",methods=['PUT'])
 def updateCart(userId, productId, newQty):
-    if newQty == 0:
-        deleteProduct(userId, productId)
-    else:
-        myCart.update_one({"userId":userId, "productId": productId},
-        {"$set": {"quantity":newQty} })
+    try:
+        result = json.loads(request.get_data(as_text=True))
+        userId = result['userId']
+        productId = result['productId']
+        quantity = result['quantity']
+        if newQty == 0:
+            deleteProduct(userId, productId)
+        else:
+            myCart.update_one({"userId":userId, "productId": productId},
+            {"$set": {"quantity":newQty} })
+    except Exception, e:
+        return jsonify(status='ERROR',message=str(e))
 
 #write a method to delete an item from the cart
 """
@@ -128,10 +133,12 @@ deleteProduct: This method removes a product from the cart
     userId:
     productId:
 """
+@application.route("/cart/<userId>/<productId>",methods=['DELETE'])
 def deleteProduct(userId, productId):
-    result = myCart.delete_one({"userId":userId, "productId" : productId})
-    #add logic to return the response
-    pprint(dir(result))
+    try:
+        myCart.delete_one({"userId":userId, "productId" : productId})
+    except Exception, e:
+        return jsonify(status='ERROR',message=str(e))
 
 
 #write a method to create after checking the availability in db, if already
@@ -170,23 +177,55 @@ def addToCart2(productId, quantity):
     #write logic to return the response
     pass
 
-"""
-deleteProduct(userId, productId)
-pprint(findProduct(userId, productId))
-"""
+@app.route('/v1/cart/', methods=['POST'])
+def updateItemInCart():
+    #APICallToProductCatalog
+    #productDetails = "curl http://localhost:5000/books/"+productId
+    """
+    productDetails = {
+    "_id": productId,
+    "title": "Datastructures and algorithms made easy",
+    "price": 30.41,
+    "productImage": "Red and white colored book"
+    }
+    """
+    myCart.update_one(
+           {
+            "userId":userId, "productId": productId,
+            "productName": productName, "price":price,
+            "productImage": productImage
+           },
+           {
+            "$inc": {"quantity":quantity}
+           },
+           {
+            upsert: True
+           }
+    )
+    #document to insert
+    item = findProduct(userId, productId)
+    if item is not None:
+        #code for update if product already exists
+        updateCart(userId, productId, quantity)
+        pass
 
-"""
-addToCart(productId,quantity)
-pprint(myCart.find_one())
-"""
+    else:
+        item = {}
+        #Check the schema for user database
+        item['userId'] = userDetails['userName']
+        item['productId'] = productDetails['_id']
+        item['productName'] = productDetails['title']
+        item['price'] = productDetails['price']
 
-"""
-getCartDetails(userId)
-pprint(findProduct(userId, productId))
-"""
+        #check the exact attribute name for the image
+        item['productImage'] = productDetails['productImage']
+        item['quantity'] = quantity
+        cartId = myCart.insert_one(item).inserted_id
+    #write logic to return the response
+    pass
 
-"""
-addToCart2(productId, quantity)
-"""
 
-updateCart(userId, productId,7)
+if __name__ = '__main__':
+    app.run()
+
+
