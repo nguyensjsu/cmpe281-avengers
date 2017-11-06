@@ -15,8 +15,10 @@ from bson.objectid import ObjectId
 from flask import Flask,render_template,jsonify,json,request
 from fabric.api import *
 from pprint import pprint
+from bson.json_util import dumps
 
 app = Flask(__name__)
+
 mongo_cluster = ("mongodb://haroon:haroon@cluster0-shard-00-00-pjkz1.mongodb.net:27017,"
                 "cluster0-shard-00-01-pjkz1.mongodb.net:27017,"
                 "cluster0-shard-00-02-pjkz1.mongodb.net:27017"
@@ -32,16 +34,6 @@ myCart = db["shoppingCart"]
 
 #productId = get from frontend
 productId = "59ef95771fe8881db48299b8"
-
-#get quantity from frontend
-quantity = 3
-
-#API call to user database
-userDetails = {
-               "userName" : "haroonShareef"
-              }
-
-userId = userDetails["userName"]
 
 """
 addTocart: This method adds a product to the cart
@@ -112,7 +104,7 @@ updateCart : This method updates the user cart
 
 if newQty is 0 : call the delete method and remove this item from cart
 """
-@application.route("/cart/<userId>/<productId>",methods=['PUT'])
+@app.route("/cart/<userId>/<productId>",methods=['PUT'])
 def updateCart(userId, productId, newQty):
     try:
         result = json.loads(request.get_data(as_text=True))
@@ -133,63 +125,36 @@ deleteProduct: This method removes a product from the cart
     userId:
     productId:
 """
-@application.route("/cart/<userId>/<productId>",methods=['DELETE'])
-def deleteProduct(userId, productId):
+@app.route("/v1/cart",methods=['DELETE'])
+def deleteProduct():
     try:
-        myCart.delete_one({"userId":userId, "productId" : productId})
+        userId = request.json['userId']
+        productId = request.json['productId']
+        result = myCart.delete_one({"userId":userId, "productId" : productId})
+        #data = dumps(result)
+        return jsonify({"Status" : "OK", "data" : "data"})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
 
 
-#write a method to create after checking the availability in db, if already
-#present update the quantity
-
-def addToCart2(productId, quantity):
+"""
+insertOrUpdateItemInCart: This method updates the quantity
+     of the product if it is available or else inserts the
+     product in the shopping cart
+"""
+@app.route('/v1/cart', methods=['POST'])
+def insertOrUpdateItemInCart():
     #APICallToProductCatalog
     #productDetails = "curl http://localhost:5000/books/"+productId
-
-    productDetails = {
-    "_id": productId,
-    "title": "Datastructures and algorithms made easy",
-    "price": 30.41,
-    "productImage": "Red and white colored book"
-    }
-
-    #document to insert
-    item = findProduct(userId, productId)
-    if item is not None:
-        #code for update if product already exists
-        updateCart(userId, productId, quantity)
-        pass
-
-    else:
-        item = {}
-        #Check the schema for user database
-        item['userId'] = userDetails['userName']
-        item['productId'] = productDetails['_id']
-        item['productName'] = productDetails['title']
-        item['price'] = productDetails['price']
-
-        #check the exact attribute name for the image
-        item['productImage'] = productDetails['productImage']
-        item['quantity'] = quantity
-        cartId = myCart.insert_one(item).inserted_id
-    #write logic to return the response
-    pass
-
-@app.route('/v1/cart/', methods=['POST'])
-def updateItemInCart():
-    #APICallToProductCatalog
-    #productDetails = "curl http://localhost:5000/books/"+productId
-    """
-    productDetails = {
-    "_id": productId,
-    "title": "Datastructures and algorithms made easy",
-    "price": 30.41,
-    "productImage": "Red and white colored book"
-    }
-    """
-    myCart.update_one(
+    #It is assumed that user Id is obtained from user db
+    #ProductId and productName from productCatalog
+    userId = request.json['userId']
+    productName = request.json['productName']
+    productId = request.json['productId']
+    price = request.json['price']
+    productImage = request.json['productImage']
+    quantity = request.json['quantity']
+    output = myCart.update_one(
            {
             "userId":userId, "productId": productId,
             "productName": productName, "price":price,
@@ -198,34 +163,12 @@ def updateItemInCart():
            {
             "$inc": {"quantity":quantity}
            },
-           {
-            upsert: True
-           }
-    )
-    #document to insert
-    item = findProduct(userId, productId)
-    if item is not None:
-        #code for update if product already exists
-        updateCart(userId, productId, quantity)
-        pass
-
-    else:
-        item = {}
-        #Check the schema for user database
-        item['userId'] = userDetails['userName']
-        item['productId'] = productDetails['_id']
-        item['productName'] = productDetails['title']
-        item['price'] = productDetails['price']
-
-        #check the exact attribute name for the image
-        item['productImage'] = productDetails['productImage']
-        item['quantity'] = quantity
-        cartId = myCart.insert_one(item).inserted_id
-    #write logic to return the response
-    pass
+           upsert = True)
+    #data = dumps(output)
+    return jsonify({"Status": "OK", "data": "data"})
 
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     app.run()
 
 
