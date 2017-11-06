@@ -81,7 +81,9 @@ findProduct : returns the details of a product for
     userId    : user id for whom product details are needed
     productId : product whose details are required
 """
-def findProduct(userId, productId):
+
+@app.route("/v1/cart/<productId>",methods=['GET'])
+def findProduct(productId):
     """
     NOTE: If we want to project only select few columns
     then use additional arg to find_one
@@ -89,37 +91,39 @@ def findProduct(userId, productId):
     myCart.find_one({"userId":userId, "productId" : productId},
     {userId:1, productId:1, _id:0})
     """
-    item = {}
-    item = myCart.find_one({"userId":userId, "productId" : productId})
-    pprint(type(item))
-    return item
+    try:
+        result = json.loads(request.get_data(as_text=True))
+        userId = result['userId']
+        #productId = result['productId']
+        item = myCart.find_one({"userId":userId, "productId" : productId})
+        return jsonify({"Status" : "OK", "data" : item})
+    except Exception, e:
+        return jsonify(status='ERROR',message=str(e))
 
 
-#create a method to update
 """
-updateCart : This method updates the user cart
+updateCart : This method updates an item in the cart
     userId:
     productId:
     newQty:
 
 if newQty is 0 : call the delete method and remove this item from cart
 """
-@app.route("/cart/<userId>/<productId>",methods=['PUT'])
-def updateCart(userId, productId, newQty):
+@app.route("/v1/cart",methods=['PUT'])
+def updateCart():
     try:
         result = json.loads(request.get_data(as_text=True))
         userId = result['userId']
         productId = result['productId']
         quantity = result['quantity']
-        if newQty == 0:
-            deleteProduct(userId, productId)
-        else:
-            myCart.update_one({"userId":userId, "productId": productId},
-            {"$set": {"quantity":newQty} })
+        #if quantity == 0 we need to delete the item from cart
+        result = myCart.update_one({"userId":userId, "productId": productId},
+        {"$set": {"quantity": quantity} })
+        return jsonify({"Status" : "OK", "data" : "data"})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
 
-#write a method to delete an item from the cart
+
 """
 deleteProduct: This method removes a product from the cart
     userId:
