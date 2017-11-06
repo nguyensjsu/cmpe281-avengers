@@ -44,7 +44,17 @@ def generate_userid():
 # Creates a user
 def create_user(first_name, last_name, email, password):
     new_user = User(first_name, last_name, email, password)
-    return add_user(new_user)
+    result = add_user(new_user)
+    if result == 0 or result is None:
+        return result
+    else:
+        new_session = Session(result)
+        session_id = add_session(new_session)
+        if session_id is None:
+            return 1
+        else:
+            return session_id
+
 
 
 # Adds user information to the Users table
@@ -110,12 +120,17 @@ def update_user(user):
 #----------------------- BASIC CRUD METHODS FOR SESSION INFORMATION -----------------------------------#
 # Adds a session entry to the Sessions table
 def add_session(session):
-    result = sessions_data.insert_one(
-        {
-            'userid': session.userID,
-            'sessionid': session.sessionID
-        }
-    )
+    try:
+        sessions_data.insert_one(
+            {
+                'userid': session.userID,
+                'sessionid': session.sessionID
+            }
+        )
+        return session.sessionID
+    except:
+        return None;
+
 
 
 # Fetches session details based on user ID
@@ -153,6 +168,7 @@ def verify_login_create_session(id, email, password):
         # if valid create a session, store it and return session value to the client.
         delete_session(id)
         session = Session(id)
+        print ("session :" + str(session.sessionID))
         add_session(session)
         return session.sessionID
     else:

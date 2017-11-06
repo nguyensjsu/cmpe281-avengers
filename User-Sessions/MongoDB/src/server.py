@@ -16,10 +16,14 @@ def manage_users():
         result = create_user(data["firstname"], data["lastname"], data["email"], data["password"])
         if result == 0:
             return "Email already exists. Log in or use a new email."
+        if result == 1:
+            return "Created user. Error creating session. Please login again."
         if result is None:
             return "Failed to add user. Please try again"
         else:
-            return "Added user with id: " + str(result)
+            return "Added user with session: " + str(result)
+
+
 
 
 if __name__ == "__main__":
