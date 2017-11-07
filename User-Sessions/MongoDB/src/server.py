@@ -2,6 +2,7 @@ from flask import Flask, request
 from managelogin import create_user
 from managelogin import verify_login_create_session
 from managelogin import verify_session
+from managelogin import delete_session
 
 app = Flask(__name__)
 
@@ -28,7 +29,7 @@ def manage_users():
     # TODO: Create appropriate http response
 
 
-@app.route("/v1/login", methods = ['POST', 'GET'])
+@app.route("/v1/login", methods = ['POST', 'GET', 'DELETE'])
 def login():
     if request.method == 'POST':
         data = request.json
@@ -51,6 +52,19 @@ def login():
             return "Invalid session"
 
         # TODO: Create appropriate http response
+
+    if request.method == 'DELETE':
+        data = request.json
+        result = delete_session(data["id"])
+        if result is None:
+            return "Error deleting session."
+        if result.deleted_count == 0:
+            return "Session does not exist for the user."
+        else:
+            return "Successfully signed out."
+
+        # TODO: Create appropriate http response
+
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')

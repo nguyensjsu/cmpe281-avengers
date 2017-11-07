@@ -140,7 +140,10 @@ def get_session(userID):
 
 # Delete session entry based on User ID
 def delete_session(userID):
-    return sessions_data.delete_one({'userid': userID})
+    try:
+        return sessions_data.delete_one({'userid': userID})
+    except:
+        return None
 
 
 # Update session value for a user
