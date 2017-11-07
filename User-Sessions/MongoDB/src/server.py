@@ -1,6 +1,7 @@
 from flask import Flask, request
 from managelogin import create_user
 from managelogin import verify_login_create_session
+from managelogin import verify_session
 
 app = Flask(__name__)
 
@@ -27,7 +28,7 @@ def manage_users():
     # TODO: Create appropriate http response
 
 
-@app.route("/v1/login", methods = ['POST'])
+@app.route("/v1/login", methods = ['POST', 'GET'])
 def login():
     if request.method == 'POST':
         data = request.json
@@ -37,7 +38,18 @@ def login():
         if result == 0:
             return "User valid. Error creating session. Please try again."
         else:
-            return "Session created: " + str(result)
+            return "Session created: " + result.decode("utf-8")
+
+        # TODO: Create appropriate http response
+
+    if request.method == 'GET':
+        data = request.json
+        result = verify_session(data["id"], data["session"].encode('utf-8'))
+        if result:
+            return "Valid session"
+        else:
+            return "Invalid session"
+
         # TODO: Create appropriate http response
 
 if __name__ == "__main__":
