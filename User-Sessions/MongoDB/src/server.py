@@ -3,6 +3,7 @@ from managelogin import create_user
 from managelogin import verify_login_create_session
 from managelogin import verify_session
 from managelogin import delete_session
+from managelogin import get_user
 
 app = Flask(__name__)
 
@@ -27,6 +28,18 @@ def manage_users():
             return "Added user with session: " + str(result)
 
     # TODO: Create appropriate http response
+
+
+@app.route("/v1/users/<id>", methods = ['GET'])
+def get_user_details(id):
+    if request.method == 'GET':
+        result = get_user(id)
+        if result is None:
+            return "User does not exist"
+        else:
+            return "User exists: " + str(result)
+
+        # TODO: Create appropriate http response
 
 
 @app.route("/v1/login", methods = ['POST', 'GET', 'DELETE'])
