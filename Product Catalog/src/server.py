@@ -1,3 +1,4 @@
+import pymongo
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
 from bson.json_util import dumps
@@ -5,6 +6,7 @@ import json
 import bson
 from bson.objectid import ObjectId
 from bson import json_util
+from pymongo import errors
 
 app = Flask(__name__)
 
@@ -14,15 +16,20 @@ app.config['MONGO_URI'] = 'mongodb://localhost:27017/books'
 mongo = PyMongo(app)
 
 #  The GET request returns all the books in the database.
-
+global books
+ 
 @app.route('/v1/books', methods=['GET'])
 def books():
-    books = mongo.db.books_collection
+    if mongo is None:
+        return "No server"
     try:
+        books = mongo.db.books_collection
         output = books.find()
         data = dumps(output)
-    except Exception as e:
-        return jsonify({"Status":"Error"})
+    except pymongo.errors.ConnectionFailure as e:
+        return jsonify({"Status": "Error","Message":"Connection lost with database server"})
+    except pymongo.errors.ServerSelectionTimeoutError as e:
+        return jsonify({"Status": "Error","Message":"Could not connect to database server"})
     return jsonify({"Status": "OK", "data": json.loads(data)})
 
 # The GET request with oid returns a particular document having that Id
@@ -30,7 +37,13 @@ def books():
 
 @app.route('/v1/books/<oid>', methods=['GET','PUT'])
 def book_by_id(oid):
-    books = mongo.db.books_collection
+    try:
+        books = mongo.db.books_collection
+    except pymongo.errors.ConnectionFailure as e:
+        return jsonify({"Status": "Error","Message":"Connection lost with database server"})
+    except pymongo.errors.ServerSelectionTimeoutError as e:
+        return jsonify({"Status": "Error","Message":"Could not connect to database server"})
+    
     if request.method =='PUT':
         try:
             output = books.update_one({'_id': ObjectId(oid)},\
