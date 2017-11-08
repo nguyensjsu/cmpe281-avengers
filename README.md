@@ -10,6 +10,9 @@
 
 ## Link to Cumulative Flow Diagram
 https://docs.google.com/spreadsheets/d/1HU1S8RE7AaSchyCZFdp_s2n7W_vHUCRXeyHO0INXkAc/edit?usp=sharing
+
+## Link to Burndown Chart (Sprint Task Sheet)
+https://docs.google.com/spreadsheets/d/1lMXWemXAj-7vbFc5gqzqQhYOF1j_ZS1fGVpb0VUqfik/edit#gid=0
   
   
 ## Domain for the project:

@@ -37,3 +37,12 @@ In this week, every member has shown the simplicity core value by working on the
 Everyone has created the REST apis for respective sub-modules' functionalities in python. While designing the REST api for particular sub-module everyone has kept it simple and in the similar format so that it will be easy to integrate. 
 
 Also, some team members has worked on the frontend to see the proof of concept which will make development easy. Everyone has researched on how to create cluster for each sub-module's databases in the AWS account.
+Everyone has created the REST apis for respective sub-modules' functionalities in python. While designing the REST api for particular sub-module everyone has kept it simple and in the similar format so that it will be easy to integrate.
+
+Also, some team members has worked on the frontend to see the proof of concept which will make development easy. Everyone has researched on how to create cluster for each sub-module's databases in the AWS account.
+
+**Week#6 : 29/10 - 04/11**
+
+This week everyone has modified the REST apis for individula's sub-modules such that it will be easy to integrate and interact with other sub-modules. Also, while modifiying the REST apis everyone has made it so simple that each operations gets easily differentiated by looking at the REST api. 
+
+Everyone is also creating the simple UML diagrams which shows the simplicity XP core value.
