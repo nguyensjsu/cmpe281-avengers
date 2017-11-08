@@ -53,7 +53,7 @@ def addToMyOrders(userId, cartId):
     cartId = myCart.insert_one(item).inserted_id
     #print(cartId)
     
-    """
+"""
 getCartDetails: display the transactions details 
     cartId: id of cart whose cart content is to be displayed
 """
@@ -61,6 +61,22 @@ def getCartDetails(cartId):
     items = myCart.find({"cartId":cartId})
     for item in items:
         pprint(item)
+        
+ #method to delete the transaction  
+ -@application.route("/cart/<cartId>>",methods=['DELETE'])
+ -def deleteOrders(orderId, cartId):
+ +@app.route("/v1/cart",methods=['DELETE'])
+ +def deleteOrders():
+      try:
+ -        myOrders.delete_one({"orderId":orderId, "cartId" : cartId})
+ +        orderId = request.json['orderId']
+ +        cartId = request.json['cartId']
+ +        result = myCart.delete_one({"orderId":orderId, "cartId" : cartId})
+ +        #data = dumps(result)
+ +        return jsonify({"Status" : "OK", "data" : "data"})
+      except Exception, e:
+          return jsonify(status='ERROR',message=str(e))
+    
  #method to update the transactions
 """
 updateMyOrders : This method updates the orders
