@@ -34,6 +34,9 @@ In this week, every member has shown the simplicity core value by working on the
 
 **Week#5 : 22/10 - 28/10**
 
+Everyone has created the REST apis for respective sub-modules' functionalities in python. While designing the REST api for particular sub-module everyone has kept it simple and in the similar format so that it will be easy to integrate. 
+
+Also, some team members has worked on the frontend to see the proof of concept which will make development easy. Everyone has researched on how to create cluster for each sub-module's databases in the AWS account.
 Everyone has created the REST apis for respective sub-modules' functionalities in python. While designing the REST api for particular sub-module everyone has kept it simple and in the similar format so that it will be easy to integrate.
 
 Also, some team members has worked on the frontend to see the proof of concept which will make development easy. Everyone has researched on how to create cluster for each sub-module's databases in the AWS account.
