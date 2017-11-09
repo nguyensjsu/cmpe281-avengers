@@ -3,6 +3,7 @@ var router = express.Router();
 
 var Product = require('../models/product');
 var Cart = require('../models/cart');
+var Order = require('../models/order');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -42,7 +43,7 @@ router.get('/shopping-cart', function(req, res, next) {
 	res.render('shop/shopping-cart', {products: cart.generateArray(), totalPrice: cart.totalPrice});
 });
 
-router.get('/checkout', function(req, res, next) {
+router.get('/checkout', isLoggedIn, function(req, res, next) {
 	if(!req.session.cart) {
 		return res.redirect('/shopping-cart');
 	}
@@ -51,7 +52,7 @@ router.get('/checkout', function(req, res, next) {
 	res.render('shop/checkout', {total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
 });
 
-router.post('/checkout', function(req, res, next) {
+router.post('/checkout', isLoggedIn, function(req, res, next) {
 	if(!req.session.cart) {
 		return res.redirect('/shopping-cart');
 	}
@@ -71,10 +72,29 @@ router.post('/checkout', function(req, res, next) {
 			req.flash('error', err.message);
 			return res.redirect('/checkout');
 		}
-		req.flash('success', 'Successfully bought the Book !!!');
-		req.session.cart = null;
-		res.redirect('/');
+		//create order json object to store into the databse
+		var order = new Order({
+			user: req.user,
+			cart: cart,
+			address: req.body.address,
+			name: req.body.name,
+			paymentId: charge.id
+		});
+		//store the order json into the mongodb
+		order.save(function(err, result){
+			req.flash('success', 'Successfully bought the Book !!!');
+			req.session.cart = null;
+			res.redirect('/');
+		});
 	});
 });
+
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	req.session.oldUrl = req.url;
+	res.redirect('/user/signin');
+}
 
 module.exports = router;
