@@ -1,6 +1,7 @@
 var passport = require('passport');
 var User = require('../models/user');
 var LocalStrategy = require('passport-local').Strategy;
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 //store the user in the session
 passport.serializeUser(function(user, done) {
@@ -15,10 +16,14 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use('local.signup', new LocalStrategy({
+	firstnamefield: 'firstname',
+	lastnamefield: 'lastname',
 	usernameField: 'email',
 	passwordField: 'password',
 	passReqToCallback: true
 }, function(req, email, password, done) {
+	req.checkBody('firstname', 'Required First Name').notEmpty();
+	req.checkBody('lastname', 'Required Last Name').notEmpty();
 	req.checkBody('email', 'Invalid email').notEmpty().isEmail();
 	req.checkBody('password', 'Invalid password').notEmpty().isLength({min:4});
 	var errors = req.validationErrors();
@@ -37,14 +42,37 @@ passport.use('local.signup', new LocalStrategy({
 			return done(null, false, {message: 'Email is already in use'});
 		}
 		var newUser = new User();
+		var state_changed = false;
+		newUser.firstname = req.body.firstname;
+		newUser.lastname = req.body.lastname;
 		newUser.email = email;
 		newUser.password = newUser.encryptPassword(password);
-		newUser.save(function(err, result) {
-			if(err) {
-				return done(err);
-			}
-			return done(null, newUser);
-		});
+        	var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+		//console.log("email: " + req.email);
+		xmlhttp.onreadystatechange = function() {
+			if (this.status === 200 && !state_changed) {
+				console.log("API call successful. Status: " + this.status);
+				state_changed = true;
+				newUser.save(function(err, result) {
+					if(err) {
+						return done(err);
+					}
+					return done(null, newUser);
+				});
+		        }
+		}
+		console.log("before POST");
+		xmlhttp.open("POST", "http://localhost:5000/v1/users");
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		//xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		/*xmlhttp.send(JSON.stringify({firstname: document.getElementById("firstname").value,
+	 				     lastname: document.getElementById("lastname").value,
+	 				     email: document.getElementById("email").value,
+	 				     password: document.getElementById("password").value}));*/
+		xmlhttp.send(JSON.stringify({'firstname': req.body.firstname,
+	 				     'lastname': req.body.lastname,
+	 				     'email': email,
+	 				     'password': password}));
 	})
 }));
 
