@@ -1,19 +1,19 @@
-"Last, First",Ttile,Image URL,Price,Quantity
-"Austen, Jane",Pride and Prejudice,https://ae01.alicdn.com/kf/HTB1wihvPpXXXXa7XXXXq6xXFXXXM/Pride-And-Prejudice-Book-Cover-Locket-Necklace-keyring-silver-Bronze-tone-B0964.jpg,8,20
-"Gilman, Charlotte Perkins",The Yellow Wallpaper,https://upload.wikimedia.org/wikipedia/en/c/cb/Yellowwp_med.jpg,5,31
-"Carroll, Lewis",Alice's Adventures in Wonderland,https://flavorwire.files.wordpress.com/2011/01/alice2.jpg,5,19
-"Shelley, Mary Wollstonecraft","Frankenstein; Or, The Modern Prometheus",https://i.pinimg.com/236x/6f/42/51/6f42515ae46ab86b8bcfe0daa8c72d9e--frankenstein-cgi.jpg,6,11
-"Kafka, Franz",Metamorphosis,https://images.gr-assets.com/books/1359061917l/485894.jpg,3,18
-"Twain, Mark",Adventures of Huckleberry Finn,"https://images-na.ssl-images-amazon.com/images/I/512ppxsL48L._SX360_BO1,204,203,200_.jpg",5,10
-"Wilde, Oscar",The Importance of Being Earnest: A Trivial Comedy for Serious People,"https://images-na.ssl-images-amazon.com/images/I/41F-eUCoG3L._SY344_BO1,204,203,200_.jpg",5,22
-"Twain, Mark",The Adventures of Tom Sawyer,http://www.loyalbooks.com/image/detail/49.jpg,6,25
-"Douglass, Frederick","Narrative of the Life of Frederick Douglass, an American Slave","https://images-na.ssl-images-amazon.com/images/I/41sRYV05b6L._SX332_BO1,204,203,200_.jpg",9,10
-"Ibsen, Henrik",A Doll's House : a play,http://ecx.images-amazon.com/images/I/51rMTBQJUpL.jpg,7,17
-"Melville, Herman","Moby Dick; Or, The Whale","https://images-na.ssl-images-amazon.com/images/I/51i92xhipjL._SX332_BO1,204,203,200_.jpg",16,20
-"Doyle, Arthur Conan",The Adventures of Sherlock Holmes,http://www.socialbookshelves.com/wp-content/uploads/2013/09/eBook_601_32587.jpg,6,21
-"Dickens, Charles",Great Expectations,https://images.gr-assets.com/books/1313169443l/896853.jpg,9,16
-"Joyce, James",Ulysses,https://images.gr-assets.com/books/1339600422l/8131775.jpg,9,14
-"Dickens, Charles",A Tale of Two Cities,https://images.gr-assets.com/books/1344922523l/1953.jpg,6,24
-"Stoker, Bram",Dracula,http://mediad.publicbroadcasting.net/p/wkar/files/styles/medium/public/dracula_book_cover.jpg,6,28
-"Machiavelli, Niccolo",The Prince,https://images.gr-assets.com/books/1410229777l/480329.jpg,7,10
-"Wilde, Oscar",The Picture of Dorian Gray,http://jonvilma.com/images/the-picture-of-dorian-gray-2.jpg,7,12
+Author,Ttile,Image URL,Price,Quantity
+Jane Austen,Pride and Prejudice,https://ae01.alicdn.com/kf/HTB1wihvPpXXXXa7XXXXq6xXFXXXM/Pride-And-Prejudice-Book-Cover-Locket-Necklace-keyring-silver-Bronze-tone-B0964.jpg,8,20
+Charlotte Perkins Gilman,The Yellow Wallpaper,https://upload.wikimedia.org/wikipedia/en/c/cb/Yellowwp_med.jpg,5,31
+Lewis Carroll,Alice's Adventures in Wonderland,https://flavorwire.files.wordpress.com/2011/01/alice2.jpg,5,19
+Mary Wollstonecraft Shelley,Frankenstein Or The Modern Prometheus,https://i.pinimg.com/236x/6f/42/51/6f42515ae46ab86b8bcfe0daa8c72d9e--frankenstein-cgi.jpg,6,11
+Franz Kafka,Metamorphosis,https://images.gr-assets.com/books/1359061917l/485894.jpg,3,18
+Mark Twain,Adventures of Huckleberry Finn,"https://images-na.ssl-images-amazon.com/images/I/512ppxsL48L._SX360_BO1,204,203,200_.jpg",5,10
+Oscar Wilde,The Importance of Being Earnest: A Trivial Comedy for Serious People,"https://images-na.ssl-images-amazon.com/images/I/41F-eUCoG3L._SY344_BO1,204,203,200_.jpg",5,22
+Mark Twain,The Adventures of Tom Sawyer,http://www.loyalbooks.com/image/detail/49.jpg,6,25
+Frederick Douglass,"Narrative of the Life of Frederick Douglass, an American Slave","https://images-na.ssl-images-amazon.com/images/I/41sRYV05b6L._SX332_BO1,204,203,200_.jpg",9,10
+Henrik Ibsen,A Doll's House : a play,http://ecx.images-amazon.com/images/I/51rMTBQJUpL.jpg,7,17
+Herman Melville,Moby Dick Or The Whale,"https://images-na.ssl-images-amazon.com/images/I/51i92xhipjL._SX332_BO1,204,203,200_.jpg",16,20
+Arthur Conan Doyle,The Adventures of Sherlock Holmes,http://www.socialbookshelves.com/wp-content/uploads/2013/09/eBook_601_32587.jpg,6,21
+Charles Dickens,Great Expectations,https://images.gr-assets.com/books/1313169443l/896853.jpg,9,16
+James Joyce,Ulysses,https://images.gr-assets.com/books/1339600422l/8131775.jpg,9,14
+Charles Dickens,A Tale of Two Cities,https://images.gr-assets.com/books/1344922523l/1953.jpg,6,24
+Bram Stoker,Dracula,http://mediad.publicbroadcasting.net/p/wkar/files/styles/medium/public/dracula_book_cover.jpg,6,28
+Niccolo Machiavelli,The Prince,https://images.gr-assets.com/books/1410229777l/480329.jpg,7,10
+Oscar Wilde,The Picture of Dorian Gray,http://jonvilma.com/images/the-picture-of-dorian-gray-2.jpg,7,12
