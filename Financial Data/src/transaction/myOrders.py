@@ -54,7 +54,7 @@ def addToMyOrders(userId, cartId):
     #print(cartId)
     
 """
-getCartDetails: display the transactions details 
+getOrderDetails: display the transactions details 
     cartId: id of cart whose cart content is to be displayed
 """
 def getCartDetails(cartId):
