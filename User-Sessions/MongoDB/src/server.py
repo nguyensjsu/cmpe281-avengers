@@ -1,9 +1,10 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from managelogin import create_user
 from managelogin import verify_login_create_session
 from managelogin import verify_session
 from managelogin import delete_session
 from managelogin import get_user
+import json
 
 app = Flask(__name__)
 
@@ -25,7 +26,7 @@ def manage_users():
         if result is None:
             return "Failed to add user. Please try again"
         else:
-            return "Added user with session: " + str(result)
+            return jsonify(result)
 
     # TODO: Create appropriate http response
 

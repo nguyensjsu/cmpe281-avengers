@@ -53,7 +53,8 @@ def create_user(first_name, last_name, email, password):
         if session_id is None:
             return 1
         else:
-            return session_id
+            session_str = session_id.decode('utf-8');
+            return {'id': new_user.id, 'session': session_str}
 
 
 

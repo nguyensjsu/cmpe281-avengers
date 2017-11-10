@@ -2,6 +2,10 @@ var passport = require('passport');
 var User = require('../models/user');
 var LocalStrategy = require('passport-local').Strategy;
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+var express = require('express');
+var app = express();
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
 
 //store the user in the session
 passport.serializeUser(function(user, done) {
@@ -42,33 +46,25 @@ passport.use('local.signup', new LocalStrategy({
 			return done(null, false, {message: 'Email is already in use'});
 		}
 		var newUser = new User();
-		var state_changed = false;
 		newUser.firstname = req.body.firstname;
 		newUser.lastname = req.body.lastname;
 		newUser.email = email;
 		newUser.password = newUser.encryptPassword(password);
         	var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-		//console.log("email: " + req.email);
 		xmlhttp.onreadystatechange = function() {
-			if (this.status === 200 && !state_changed) {
+			if (this.readyState === 4 && this.status === 200) {
 				console.log("API call successful. Status: " + this.status);
+				response = JSON.parse(this.responseText);
 				state_changed = true;
-				newUser.save(function(err, result) {
-					if(err) {
-						return done(err);
-					}
-					return done(null, newUser);
-				});
+				req.session.sessionvalue = response.session;
+				req.session.id = response.id;
+				console.log("session:" + JSON.stringify(req.session.sessionvalue));
+				return done(null, newUser);
 		        }
 		}
 		console.log("before POST");
 		xmlhttp.open("POST", "http://localhost:5000/v1/users");
 		xmlhttp.setRequestHeader("Content-Type", "application/json");
-		//xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-		/*xmlhttp.send(JSON.stringify({firstname: document.getElementById("firstname").value,
-	 				     lastname: document.getElementById("lastname").value,
-	 				     email: document.getElementById("email").value,
-	 				     password: document.getElementById("password").value}));*/
 		xmlhttp.send(JSON.stringify({'firstname': req.body.firstname,
 	 				     'lastname': req.body.lastname,
 	 				     'email': email,
