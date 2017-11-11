@@ -1,4 +1,10 @@
 # Courage
+
+WEEK #7:
+
+This week the team worked on UI - User login, Shopping Cart checkout and other functionalities. The team compiled a dataset of books  with details of Title, Author, Quantity in inventory, Price and an URL to the cover page. Other details such as book description, ISBN number, etc may be added if required. The team are putting more effort in integrating backend database server with database cluster services.
+=======================================================================================================
+
 WEEK #6:
 
 This week the team discussed about integrating front end server with backend web application server. The designed REST API endpoints were lacking versioning in their URI. Some of the team members discussed and suggested to include vesioning in the URI. Therefore, the old URI was changed and updated with versioning.
