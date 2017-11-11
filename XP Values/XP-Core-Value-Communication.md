@@ -55,10 +55,22 @@ The team talks about all of their challenges and issues so that each can help ou
 
 WEEK#6 29/10 - 04/11
 
-The week started with discussion of tasks for the coming week and the wor to be done. Effective exchange of information was done regarding building of the frontend and backend of the project.
+The week started with discussion of tasks for the coming week and the work to be done. Effective exchange of information was done regarding building of the frontend and backend of the project.
 
 Because of each one's rigorous efforts and hardwork, we were able to do a major portion of the work this week. Each one completed a majority of work on their independant modules and also continuously discussing about the integration of them.
 
 wewere facing quite difficult times since the technologies being used are quite challenging and new to us, so implementation needed a lot of time and efforts. Everyone gave enogh time each day to work on the issues and discussed the same oftenly
 
 By the end of week, each one had completed the task pushed. Everyone updated the task board, burndown sheets and discussed the further implementation for coming week.
+
+WEEK#7 05/11 - 11/11
+
+Communication s about talking about the risks and the issues and helps to articulate the project goal. Sine the project is coming to its end we discussed  the ways to integrate each module and find ways to test the.Each one needs to create a cluster on AWS.
+
+The main question in this meeting was where the server side code that interacts with MongoDB reside. 
+
+We all discussed the possibilities such as putting it in the server where UI code will reside or putting it in the clusters for different domains and call the APIs through the UI. 
+
+After discussing the requirements of the project and taking feedback from every team member about this issue, we decided to put the server side code on the bastion host which would be connecting to our respective mongodb clusters based on the feedback provided by the members who have tried deploying mongodb clusters on AWS.
+
+We kept discussing on how to proceed with this ans and achieve success. Discussed issues related to any problems that each member was facing.
