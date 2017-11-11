@@ -46,3 +46,9 @@ As a whole, this week everyone has written the REST apis for the individual's su
 Also, everyone is in process to draw various UML diagrams for the book-store.
 
 To see in a bigger picture, in this week everyone has done with writing the REST apis for sub-modules. Integration part will be done in the next week. 
+
+**Week#7 : 05/11 - 11/11**
+
+In this week everyone has started integrating their module's REST api's server with the front end code. While doing this, everyone has made sure that everyone will follow the similar pattern for writing the REST api, front end logic so that it will be easy to interact between each modules with each other in the same way. And as a whole it will make an unified way for the entire book store.
+
+To see in a bigger picture, in this week everyone has done itegration for individuals' sub-modules including front end, REST apis, database in the cluster. The whole system's integration will be done in the next week. 
