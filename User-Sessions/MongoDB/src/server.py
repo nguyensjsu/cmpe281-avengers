@@ -62,8 +62,10 @@ def login():
             return "Invalid credentials. Please try again."
         if result == 0:
             return "User valid. Error creating session. Please try again."
+        if result == 1:
+            return "User does not exist"
         else:
-            return "Session created: " + result.decode("utf-8")
+            return jsonify(result)
 
         # TODO: Create appropriate http response
 

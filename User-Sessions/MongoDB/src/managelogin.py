@@ -88,11 +88,16 @@ def get_user(id):
 
 # Verify the user credentials
 def verify_user(email, password):
-    result = user_data.find_one({'email': email, 'password' : password})
-    if result is None:
-        return None
+    result = verify_unique_email(email)
+    print(str(result))
+    if result is False:
+        result = user_data.find_one({'email': email, 'password' : password})
+        if result is None:
+            return None
+        else:
+            return result["id"]
     else:
-        return result["id"]
+        return 0
 
 # Verify the email for register is unique
 def verify_unique_email(email):
@@ -175,6 +180,8 @@ def verify_session(id, session_value):
 # Verify login and create session
 def verify_login_create_session(email, password):
     id = verify_user(email, password)
+    if id == 0:
+        return 1
     if id is not None:
         try:
             # if valid create a session, store it and return session value to the client.
@@ -182,7 +189,8 @@ def verify_login_create_session(email, password):
             session = Session(id)
             print ("session :" + str(session.sessionID))
             add_session(session)
-            return session.sessionID
+            session_str = session.sessionID.decode('utf-8');
+            return {'id': id, 'session': session_str}
         except:
             return 0
     else:

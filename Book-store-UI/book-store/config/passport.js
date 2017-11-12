@@ -91,12 +91,28 @@ passport.use('local.signin', new LocalStrategy({
 		if (err) {
 			return done(err);
 		}
-		if (!user) {
+		/*if (!user) {
 			return done(null, false, {message: 'Email not Found.'});
 		}
 		if(!user.validPassword(password)) {
 			return done(null, false, {message: 'Incorrect Password'});
+		}*/
+		var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState === 4 && this.status === 200) {
+				console.log("API call successful for sign in. Status: " + this.status);
+				response = JSON.parse(this.responseText);
+				req.session.sessionvalue = response.session;
+				req.session.id = response.id;
+				console.log("session:" + JSON.stringify(req.session.sessionvalue));
+				return done(null, null);
+		        }
 		}
-		return done(null, user);
+		console.log("before POST for Login");
+		xmlhttp.open("POST", "http://localhost:5000/v1/login");
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		xmlhttp.send(JSON.stringify({'email': email,
+	 				     'password': password}));
+		//return done(null, null);
 	})
 }));
