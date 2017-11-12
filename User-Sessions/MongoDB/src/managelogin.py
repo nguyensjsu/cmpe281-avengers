@@ -14,8 +14,11 @@ sessions_data = db['Sessions']
 
 # Class for user details
 class User:
-    def __init__(self, first_name, last_name, email, password):
-        self.id = generate_userid()
+    def __init__(self, first_name, last_name, email, password, id = 0 ):
+        if id == 0:
+            self.id = generate_userid()
+        else:
+            self.id = id
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -106,17 +109,20 @@ def delete_user(id):
 
 # Update user details
 def update_user(user):
-    user_data.update_one(
-        {"id": user.id},
-            {
-            "$set": {
-                'firstname': user.first_name,
-                'lastname': user.last_name,
-                'email': user.email,
-                'password': user.password
+    try:
+        return user_data.update_one(
+            {"id": user.id},
+                {
+                "$set": {
+                    'firstname': user.first_name,
+                    'lastname': user.last_name,
+                    'email': user.email,
+                    'password': user.password
+                }
             }
-        }
-    )
+        )
+    except:
+        return None
 
 #----------------------- BASIC CRUD METHODS FOR SESSION INFORMATION -----------------------------------#
 # Adds a session entry to the Sessions table

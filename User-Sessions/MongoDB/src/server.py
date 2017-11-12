@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify
-from managelogin import create_user
+from managelogin import create_user, update_user
 from managelogin import verify_login_create_session
 from managelogin import verify_session
 from managelogin import delete_session
 from managelogin import get_user
+from managelogin import User
 import json
 
 app = Flask(__name__)
@@ -31,7 +32,7 @@ def manage_users():
     # TODO: Create appropriate http response
 
 
-@app.route("/v1/users/<id>", methods = ['GET'])
+@app.route("/v1/users/<id>", methods = ['GET', 'PUT'])
 def get_user_details(id):
     if request.method == 'GET':
         result = get_user(id)
@@ -41,6 +42,15 @@ def get_user_details(id):
             return "User exists: " + str(result)
 
         # TODO: Create appropriate http response
+
+    if request.method == 'PUT':
+        data = request.json
+        user = User(data["firstname"], data["lastname"], data["email"], data["password"], id)
+        result = update_user(user)
+        if result is None:
+            return "Error modifying user details. Please try again."
+        else:
+            return "User details modified."
 
 
 @app.route("/v1/login", methods = ['POST', 'GET', 'DELETE'])
