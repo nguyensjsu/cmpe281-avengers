@@ -1,3 +1,10 @@
+Week #7
+
+This week we were considering all the options of integrating the frontend and the backend codes. We have a backend code which connects to mongodb cluster on aws running in private subnet and connected to a bastion host. The other backend code is the nodejs code which connects to the UI frontend.
+We needed to decide whether to put the nodejs and python server code connecting to mongodb cluster together or seperately. In the end we decided to put them separately, where in each module's python backend will be deployed on respective bastion host on each account.
+
+Contrary to python code, the nodejs code will be aggregate of all the 5 modules and will be deployed as one server on a load-balanced instance cluster. Everyone respected this suggestion, and we are going ahead with this options because of it's feasibility and efficiency.
+
 Week #6
 
 This week the CRUD operations for all modules are ready. Everyone has been working on databases using the local databases. Only one teammate have deployed the MongoDB on an AWS cluster and tested the code on the cluster. This is because they are all working on the UI part and will be working on deploying the db on public cloud in the coming week and we respect this decision. 
