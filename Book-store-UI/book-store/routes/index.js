@@ -90,7 +90,7 @@ router.post('/checkout', isLoggedIn, function(req, res, next) {
 });
 
 function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated()) {
+	if (!req.session.sessionvalue == undefined && !req.session.sessionvalue == "" && req.isAuthenticated()) {
 		return next();
 	}
 	req.session.oldUrl = req.url;
