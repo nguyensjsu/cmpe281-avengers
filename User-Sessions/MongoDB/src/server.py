@@ -35,11 +35,12 @@ def manage_users():
 @app.route("/v1/users/<id>", methods = ['GET', 'PUT'])
 def get_user_details(id):
     if request.method == 'GET':
-        result = get_user(id)
+        result = get_user(str(id))
         if result is None:
             return "User does not exist"
         else:
-            return "User exists: " + str(result)
+            return jsonify({'firstname': result['firstname'], 'lastname': result['lastname'], 'email': result['email'],
+                            'password': result['password'], 'id' : result['id']})
 
         # TODO: Create appropriate http response
 
