@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var csurf = require('csurf');
 var passport = require('passport');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 var csurfProtection = csurf();
 router.use(csurfProtection);
@@ -10,9 +11,23 @@ router.get('/profile', isLoggedIn, function(req, res, next) {
 	res.render('user/profile');
 });
 
-router.get('/logout', isLoggedIn, function (req, res, next) {
-	req.logout();  //passport method
-	res.redirect('/');
+router.get('/logout', function (req, res, next) {
+	console.log("Delete session called for id :" + req.session.currentuser.id);
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			console.log("API call successful for sign out. Status: " + this.status);
+			console.log("output:" + this.responseText);
+			req.session.sessionvalue =  "";
+                        req.session.currentuser = "";
+			req.logout();
+			res.redirect('/');
+	        }
+	}
+	console.log("before DELETE for Logout");
+	xmlhttp.open("DELETE", "http://localhost:5000/v1/login");
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	xmlhttp.send(JSON.stringify({'id': req.session.currentuser.id}));
 });
 
 router.use('/', notLoggedIn, function(req, res, next) {
