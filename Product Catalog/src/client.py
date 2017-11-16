@@ -11,14 +11,14 @@ class mongo_client:
     def __init__(self):
         try:
             self.client = MongoClient()
-            self.db = self.client.books
-            self.collection = self.db.books_collection
         except pymongo.errors.ConnectionFailure as e:
             return jsonify({"Status": "Error",\
                             "Message":"Connection lost with database server"})
         except pymongo.errors.ServerSelectionTimeoutError as e:
             return jsonify({"Status": "Error",\
                             "Message":"Could not connect to database server"})
+        self.db = self.client.books
+        self.collection = self.db.books_collection
 
    
     def get_all(self):
@@ -42,7 +42,8 @@ class mongo_client:
             output = books.update_one({'_id': ObjectId(oid)},\
                                       {'$inc':{\
                                                'Qty': -1\
-                                              }})
+                                              }},\
+                                       safe=True)
             data = dumps(output)
         except Exception as e:
             return jsonify({"Status":"Error"})
