@@ -189,8 +189,10 @@ def verify_login_create_session(email, password):
             session = Session(id)
             print ("session :" + str(session.sessionID))
             add_session(session)
-            session_str = session.sessionID.decode('utf-8');
-            return {'id': id, 'session': session_str}
+            session_str = session.sessionID.decode('utf-8')
+            user = get_user(id)
+            print(str(user))
+            return {'id': id, 'firstname': user['firstname'], 'lastname': user['lastname'],'email': user['email'], 'firstname': user['password'], 'session': session_str}
         except:
             return 0
     else:

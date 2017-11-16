@@ -137,10 +137,17 @@ passport.use('local.signin', new LocalStrategy({
 			if (this.readyState === 4 && this.status === 200) {
 				console.log("API call successful for sign in. Status: " + this.status);
 				response = JSON.parse(this.responseText);
+				var newUser = new User();
+				newUser.firstname = response.firstname;
+				newUser.lastname = response.lastname;
+				newUser.email = response.email;
+				newUser.password = newUser.encryptPassword(response.password);
+				newUser.id = response.id;
 				req.session.sessionvalue = response.session;
 				req.session.id = response.id;
 				console.log("session:" + JSON.stringify(req.session.sessionvalue));
-				return done(null, null);
+				console.log(req.isAuthenticated());
+				return done(null, newUser);
 		        }
 		}
 		console.log("before POST for Login");
