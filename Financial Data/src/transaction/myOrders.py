@@ -49,7 +49,7 @@ def addToMyOrders(userId, cartId):
 
     #Check the schema for user database
     item['userId'] = userDetails['userName']
-
+    item["timestamp"] = timestamp
     #check the exact attribute name for the image
     cartId = myCart.insert_one(item).inserted_id
     #print(cartId)
@@ -58,7 +58,7 @@ def addToMyOrders(userId, cartId):
 getOrderDetails: display the transactions details 
     cartId: id of cart whose cart content is to be displayed
 """
-def getCartDetails(cartId):
+def getDetails(cartId):
     items = myCart.find({"cartId":cartId})
     for item in items:
         pprint(item)
@@ -93,6 +93,19 @@ def updateMyOrders(userId, cartId, amt):
         myCart.update_one({"userId":userId, "cartId": cartId},
         {"$set": {"amt":amt} })       
 
+        
+        
+"""
+deleteOrders: This method removes an Order from order history
+    userId:
+    orderId :
+"""
+def deleteProduct(userId, orderId):
+    result = myCart.delete_one({"userId":userId, "orderId" : orderId})
+    #add logic to return the response
+    pprint(dir(result))
+    
+    
 """
 addToMyOrders(userId, cartId)
 pprint(myOrders.find_one())
