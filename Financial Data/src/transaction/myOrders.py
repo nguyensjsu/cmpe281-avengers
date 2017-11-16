@@ -49,7 +49,7 @@ def addToMyOrders(userId, cartId):
 
     #Check the schema for user database
     item['userId'] = userDetails['userName']
-
+    item["timestamp"] = timestamp
     #check the exact attribute name for the image
     cartId = myCart.insert_one(item).inserted_id
     #print(cartId)
