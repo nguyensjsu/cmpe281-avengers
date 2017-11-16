@@ -29,3 +29,55 @@ setFormattedTotals() {
     let totals = this.data.totals;
     this.data.formattedTotals = format.format(totals);
 }
+
+app.post('/cart/update', (req, res) => {
+let ids = req.body["product_id[]"];
+let qtys = req.body["qty[]"];
+if(Security.isValidNonce(req.body.nonce, req)) {
+    Cart.updateCart(ids, qtys);
+    Cart.saveCart(req);
+    res.redirect('/cart');
+} else {
+    res.redirect('/');
+}
+});
+
+updateCart(ids = [], qtys = []) {
+    let map = [];
+    let updated = false;
+
+    ids.forEach(id => {
+       qtys.forEach(qty => {
+          map.push({
+              id: parseInt(id, 10),
+              qty: parseInt(qty, 10)
+          });
+       });
+    });
+    map.forEach(obj => {
+        this.data.items.forEach(item => {
+           if(item.id === obj.id) {
+               if(obj.qty > 0 && obj.qty !== item.qty) {
+                   item.qty = obj.qty;
+                   updated = true;
+               }
+           }
+        });
+    });
+    if(updated) {
+        this.calculateTotals();
+    }
+}
+
+emptyCart(request) {
+    this.data.items = [];
+    this.data.totals = 0;
+    this.data.formattedTotals = '';
+    if(request.session) {
+        request.session.cart.items = [];
+        request.session.cart.totals = 0;
+        request.session.cart.formattedTotals = '';
+    }
+
+
+}
