@@ -32,17 +32,24 @@ router.get('/logout', function (req, res, next) {
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
 			console.log("API call successful for sign out. Status: " + this.status);
-			console.log("output:" + this.responseText);
-			req.session.sessionvalue =  "";
-                        req.session.currentuser = "";
-			req.logout();
-			res.redirect('/');
+			response = this.responseText;
+			if(response.result == "0")
+				console.log("Session deleted successfully.");
+			else if (response.result == "1")	
+				console.log("Error deleting sesion.");	
+			else	
+				console.log("Session does not exist for the user.");		
 	        }
 	}
 	console.log("before DELETE for Logout");
+        var id = req.session.currentuser.id;
+	req.session.sessionvalue =  "";
+        req.session.currentuser = "";
+	req.logout();
+	res.redirect('/');
 	xmlhttp.open("DELETE", "http://localhost:5000/v1/login");
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
-	xmlhttp.send(JSON.stringify({'id': req.session.currentuser.id}));
+	xmlhttp.send(JSON.stringify({'id': id}));
 });
 
 router.use('/', notLoggedIn, function(req, res, next) {

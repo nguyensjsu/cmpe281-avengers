@@ -84,11 +84,13 @@ def login():
         data = request.json
         result = delete_session(data["id"])
         if result is None:
-            return "Error deleting session."
+            return jsonify({"result": 1});
+            #return "Error deleting session."
         if result.deleted_count == 0:
-            return "Session does not exist for the user."
+            return jsonify({"result": 2});
+            #return "Session does not exist for the user."
         else:
-            return "Successfully signed out."
+            return jsonify({"result": 0});
 
         # TODO: Create appropriate http response
 
