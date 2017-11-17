@@ -36,8 +36,10 @@ class mongo_client:
             data = dumps(output)
         except Exception as e:
             print(e)
-            return jsonify({"Status":"Error"})
-        return jsonify({"Status": "OK", "data": json.loads(data)})
+            # return jsonify({"Status":"Error"})
+            return json.dumps({"Status":"Error"})
+        return json.dumps({"Status": "OK", "data": json.loads(data)})
+        #return jsonify({"Status": "OK", "data": json.loads(data)})
 
     def put_one(self,oid):
         try:
@@ -50,8 +52,6 @@ class mongo_client:
         except Exception as e:
             return jsonify({"Status":"Error"})
         return jsonify({"Status":"OK"})
-
-
 
 
 

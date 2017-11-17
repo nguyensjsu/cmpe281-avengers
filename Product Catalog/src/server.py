@@ -29,7 +29,10 @@ def book_by_id(oid):
         data = client.put_one(oid)
     elif request.method == 'GET':
         data = client.get_one(oid)
-    return data
+        data1 = json.loads(data)
+        # TODO: Modify data1 here?
+    return jsonify(data1)
+    #return data
 
 if __name__ == '__main__':
     app.run(debug=True)
