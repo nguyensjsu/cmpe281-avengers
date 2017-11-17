@@ -1,5 +1,5 @@
 import pymongo
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,abort
 from flask_pymongo import PyMongo
 from bson.json_util import dumps
 import json
@@ -19,7 +19,7 @@ client = mongo_client()
 def books():
     response = client.get_all()
     data = json.loads(response)
-    if data["data"] == 'null':
+    if data["data"] is None:
         abort(404)
     return jsonify(data)
 
@@ -29,12 +29,17 @@ def books():
 @app.route('/v1/books/<oid>', methods=['GET','PUT'])
 def book_by_id(oid):    
     if request.method =='PUT':
-        data = client.put_one(oid)
+        response = client.put_one(oid)
+        data = json.loads(response)
+        if data["Status"] == 'OK':
+             return jsonify({"Status":"OK"})
     elif request.method == 'GET':
-        data = client.get_one(oid)
-        data1 = json.loads(data)
-        # TODO: Modify data1 here?
-    return jsonify(data1)
+        response = client.get_one(oid)
+        data = json.loads(response)
+        print(data['data'])
+        if data["data"] is None:
+             abort(404)
+        return jsonify(data)
     #return data
 
 
