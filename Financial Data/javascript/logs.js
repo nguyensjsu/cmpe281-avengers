@@ -23,6 +23,22 @@ router.use('/', notLoggedIn, function(req, res, next){
 	next();
 });
 
+router.get('/', isLoggedIn, function(req, res, next) {
+ -	res.render('user/');
+ 	Order.find({user: req.user}, function(err, orders){
+ 		if(err){
+ 			return res.write('Error!');
+ 		}
+ 		var cart;
+ 		orders.forEach(function(order){
+ 			cartItems = new Cart(order.cart);
+ 			order.items = cartItems.generateArray(); 
+ 			res.render('user/', { orders: orders });
+ 		});
+ 	});
+ 	
+  });
+
 
 module.exports = router;
 
