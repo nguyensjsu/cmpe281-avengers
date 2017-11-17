@@ -26,14 +26,16 @@ class mongo_client:
             output = self.collection.find()
             data = dumps(output)
         except Exception as e:
+            print(e)
             return jsonify({"Status":"Error"})
         return jsonify({"Status": "OK", "data": json.loads(data)})
 
     def get_one(self,oid):
         try:
-            output = self.find_one({'_id': ObjectId(oid)})
+            output = self.collection.find_one({'_id': ObjectId(oid)})
             data = dumps(output)
         except Exception as e:
+            print(e)
             return jsonify({"Status":"Error"})
         return jsonify({"Status": "OK", "data": json.loads(data)})
 
