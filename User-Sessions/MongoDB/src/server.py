@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify
-from managelogin import create_user
+from managelogin import create_user, update_user
 from managelogin import verify_login_create_session
 from managelogin import verify_session
 from managelogin import delete_session
 from managelogin import get_user
+from managelogin import User
 import json
 
 app = Flask(__name__)
@@ -31,16 +32,26 @@ def manage_users():
     # TODO: Create appropriate http response
 
 
-@app.route("/v1/users/<id>", methods = ['GET'])
+@app.route("/v1/users/<id>", methods = ['GET', 'PUT'])
 def get_user_details(id):
     if request.method == 'GET':
-        result = get_user(id)
+        result = get_user(str(id))
         if result is None:
             return "User does not exist"
         else:
-            return "User exists: " + str(result)
+            return jsonify({'firstname': result['firstname'], 'lastname': result['lastname'], 'email': result['email'],
+                            'password': result['password'], 'id' : result['id']})
 
         # TODO: Create appropriate http response
+
+    if request.method == 'PUT':
+        data = request.json
+        user = User(data["firstname"], data["lastname"], data["email"], data["password"], id)
+        result = update_user(user)
+        if result is None:
+            return "Error modifying user details. Please try again."
+        else:
+            return "User details modified."
 
 
 @app.route("/v1/login", methods = ['POST', 'GET', 'DELETE'])
@@ -52,8 +63,10 @@ def login():
             return "Invalid credentials. Please try again."
         if result == 0:
             return "User valid. Error creating session. Please try again."
+        if result == 1:
+            return "User does not exist"
         else:
-            return "Session created: " + result.decode("utf-8")
+            return jsonify(result)
 
         # TODO: Create appropriate http response
 
@@ -71,11 +84,13 @@ def login():
         data = request.json
         result = delete_session(data["id"])
         if result is None:
-            return "Error deleting session."
+            return jsonify({"result": 1});
+            #return "Error deleting session."
         if result.deleted_count == 0:
-            return "Session does not exist for the user."
+            return jsonify({"result": 2});
+            #return "Session does not exist for the user."
         else:
-            return "Successfully signed out."
+            return jsonify({"result": 0});
 
         # TODO: Create appropriate http response
 

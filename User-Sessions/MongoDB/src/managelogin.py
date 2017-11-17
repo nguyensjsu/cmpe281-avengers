@@ -14,8 +14,11 @@ sessions_data = db['Sessions']
 
 # Class for user details
 class User:
-    def __init__(self, first_name, last_name, email, password):
-        self.id = generate_userid()
+    def __init__(self, first_name, last_name, email, password, id = 0 ):
+        if id == 0:
+            self.id = generate_userid()
+        else:
+            self.id = id
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -85,11 +88,16 @@ def get_user(id):
 
 # Verify the user credentials
 def verify_user(email, password):
-    result = user_data.find_one({'email': email, 'password' : password})
-    if result is None:
-        return None
+    result = verify_unique_email(email)
+    print(str(result))
+    if result is False:
+        result = user_data.find_one({'email': email, 'password' : password})
+        if result is None:
+            return None
+        else:
+            return result["id"]
     else:
-        return result["id"]
+        return 0
 
 # Verify the email for register is unique
 def verify_unique_email(email):
@@ -106,17 +114,20 @@ def delete_user(id):
 
 # Update user details
 def update_user(user):
-    user_data.update_one(
-        {"id": user.id},
-            {
-            "$set": {
-                'firstname': user.first_name,
-                'lastname': user.last_name,
-                'email': user.email,
-                'password': user.password
+    try:
+        return user_data.update_one(
+            {"id": user.id},
+                {
+                "$set": {
+                    'firstname': user.first_name,
+                    'lastname': user.last_name,
+                    'email': user.email,
+                    'password': user.password
+                }
             }
-        }
-    )
+        )
+    except:
+        return None
 
 #----------------------- BASIC CRUD METHODS FOR SESSION INFORMATION -----------------------------------#
 # Adds a session entry to the Sessions table
@@ -169,6 +180,8 @@ def verify_session(id, session_value):
 # Verify login and create session
 def verify_login_create_session(email, password):
     id = verify_user(email, password)
+    if id == 0:
+        return 1
     if id is not None:
         try:
             # if valid create a session, store it and return session value to the client.
@@ -176,7 +189,10 @@ def verify_login_create_session(email, password):
             session = Session(id)
             print ("session :" + str(session.sessionID))
             add_session(session)
-            return session.sessionID
+            session_str = session.sessionID.decode('utf-8')
+            user = get_user(id)
+            print(str(user))
+            return {'id': id, 'firstname': user['firstname'], 'lastname': user['lastname'],'email': user['email'], 'firstname': user['password'], 'session': session_str}
         except:
             return 0
     else:

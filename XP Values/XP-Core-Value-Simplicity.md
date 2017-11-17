@@ -46,3 +46,9 @@ Also, some team members has worked on the frontend to see the proof of concept w
 This week everyone has modified the REST apis for individula's sub-modules such that it will be easy to integrate and interact with other sub-modules. Also, while modifiying the REST apis everyone has made it so simple that each operations gets easily differentiated by looking at the REST api. 
 
 Everyone is also creating the simple UML diagrams which shows the simplicity XP core value.
+
+**Week#7 : 05/11 - 11/11**
+
+Everyone has started integrating individual's code with the front end code. Also, while integrating the REST apis with the front end code, everyone has made it so simple that each operations gets easily differentiated by looking at the REST api and front end logic. 
+
+Also, everyone is also working with the databases on cluster rather than the localhost database now which makes the development in distributed world so simple.

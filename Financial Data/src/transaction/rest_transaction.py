@@ -32,7 +32,15 @@ def insert_transaction():
     data = dumps(output)
     return jsonify({"Status": "OK", "data": data})
 
-
+@app.route('/myorders/delete/<oid>', methods=['DELETE'])
+def delete_myorders(oid):
+    books = mongo.db.myorders_collection
+    try:
+        output = myorders.delete_one({'_id': ObjectId(oid)})
+    #data = dumps(output,default=json_util.default)
+        return jsonify({"Status": "OK"})
+    except e:
+        return jsonify({"Error":"404"})
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -7,16 +7,48 @@ var app = express();
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
+
+String.prototype.format = function () {
+        var args = [].slice.call(arguments);
+        return this.replace(/(\{\d+\})/g, function (a){
+            return args[+(a.substr(1,a.length-2))||0];
+        });
+};
+
 //store the user in the session
 passport.serializeUser(function(user, done) {
 	done(null, user.id);
 });
 
-passport.deserializeUser(function(id, done) {
-	//find() in the MongoDB by id
-	User.findById(id, function(err, user) {
-		done(err, user);
-	});
+passport.deserializeUser(function(req, id, done) {
+	if(req.session.currentuser == undefined || req.session.currentuser == "")
+	{
+		var xmlhttp = new XMLHttpRequest(); 
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState === 4 && this.status === 200) {
+				if (this.responseText){
+					console.log("API Get call successful. readyState: " + this.readyState);
+					response = JSON.parse(this.responseText);
+					var user = new User();
+					user.id = response.id;
+					user.firstname = response.firstname;
+					user.lastname = response.lastname;
+					user.email = response.email;
+					user.password = user.encryptPassword(response.password);
+					req.session.currentuser = user;		
+					done(null, user);
+				}
+			}
+		}
+		console.log("before GET");
+		url = "http://localhost:5000/v1/users/{0}";
+		url_id = url.format(id.replace(/"/g, ''))
+		console.log(url_id);
+		xmlhttp.open("GET", url_id);
+		xmlhttp.send();
+	}
+	else
+		done(null, req.session.currentuser);
 });
 
 passport.use('local.signup', new LocalStrategy({
@@ -50,15 +82,18 @@ passport.use('local.signup', new LocalStrategy({
 		newUser.lastname = req.body.lastname;
 		newUser.email = email;
 		newUser.password = newUser.encryptPassword(password);
-        	var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+        	var xmlhttp = new XMLHttpRequest();  
 		xmlhttp.onreadystatechange = function() {
 			if (this.readyState === 4 && this.status === 200) {
 				console.log("API call successful. Status: " + this.status);
 				response = JSON.parse(this.responseText);
 				state_changed = true;
 				req.session.sessionvalue = response.session;
+				newUser.id = JSON.stringify(response.id);
 				req.session.id = response.id;
-				console.log("session:" + JSON.stringify(req.session.sessionvalue));
+				console.log("session:" + JSON.stringify(req.session.sessionvalue));		
+				console.log(req.user);
+				console.log(req.isAuthenticated());
 				return done(null, newUser);
 		        }
 		}
@@ -91,12 +126,34 @@ passport.use('local.signin', new LocalStrategy({
 		if (err) {
 			return done(err);
 		}
-		if (!user) {
+		/*if (!user) {
 			return done(null, false, {message: 'Email not Found.'});
 		}
 		if(!user.validPassword(password)) {
 			return done(null, false, {message: 'Incorrect Password'});
+		}*/
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState === 4 && this.status === 200) {
+				console.log("API call successful for sign in. Status: " + this.status);
+				response = JSON.parse(this.responseText);
+				var newUser = new User();
+				newUser.firstname = response.firstname;
+				newUser.lastname = response.lastname;
+				newUser.email = response.email;
+				newUser.password = newUser.encryptPassword(response.password);
+				newUser.id = response.id;
+				req.session.sessionvalue = response.session;
+				req.session.id = response.id;
+				console.log("session:" + JSON.stringify(req.session.sessionvalue));
+				console.log(req.isAuthenticated());
+				return done(null, newUser);
+		        }
 		}
-		return done(null, user);
+		console.log("before POST for Login");
+		xmlhttp.open("POST", "http://localhost:5000/v1/login");
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		xmlhttp.send(JSON.stringify({'email': email,
+	 				     'password': password}));
 	})
 }));
