@@ -1,4 +1,7 @@
 # Courage
+WEEK #8:
+This week the team completed the frontend GUI. The frontend to backend integration were done and tested. Unnecessary Apis in the server were removed and the functionalities were enhanced to maintain modularity. Exception handling is added extensibly to cover all the corner cases. Custom exceptions were thrown to know the document retrieved from mongodb is empty.
+=====================================================================================================
 
 WEEK #7:
 
