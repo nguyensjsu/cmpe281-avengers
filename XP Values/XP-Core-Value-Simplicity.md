@@ -52,3 +52,7 @@ Everyone is also creating the simple UML diagrams which shows the simplicity XP 
 Everyone has started integrating individual's code with the front end code. Also, while integrating the REST apis with the front end code, everyone has made it so simple that each operations gets easily differentiated by looking at the REST api and front end logic. 
 
 Also, everyone is also working with the databases on cluster rather than the localhost database now which makes the development in distributed world so simple.
+
+**Week#8 : 12/11 - 18/11**
+
+In this final week of the project, the whole project is integrated by keeping all architecture, apis, logic as simple as possible. While integrating with the databases on the cluster, we have kept the document name and the fields simple such that integration becomes easy. Also, everyone has created UML diagrams for the whole project. 
