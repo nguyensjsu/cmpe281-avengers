@@ -8,6 +8,9 @@ from bson.objectid import ObjectId
 from bson import json_util
 from pymongo import errors
 from client import mongo_client
+from logger import setup_logger
+
+logger = setup_logger()
 
 app = Flask(__name__)
 
