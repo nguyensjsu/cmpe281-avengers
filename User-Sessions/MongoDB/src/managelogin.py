@@ -198,34 +198,5 @@ def verify_login_create_session(email, password):
     else:
         return id
 
-
-if __name__ == '__main__':
-
-    ### Tests to test the above methods ###
-
-    new_user = User("A", "B", "abc@gmail.com", "password")
-    add_user(new_user)
-    print("Test unique email: ")
-    repeat_user = User("Amita", "Kamat", "abc@gmail.com", "password")
-    add_user(repeat_user)
-
-    print ( 'User details: ' + str(get_user(new_user.id)))
-
-    print ("Test Invalid login : " + str(verify_login_create_session(new_user.id, new_user.email, 'password1')))
-    print ("Test Valid login : " + str(verify_login_create_session(new_user.id, new_user.email, 'password')))
-
-    new_user.first_name = "A"
-    new_user.last_name = "K"
-    update_user(new_user)
-    print('User details after update: ' + str(get_user(new_user.id)))
-
-    delete_session(new_user.id)
-    session_id = verify_login_create_session(new_user.id, new_user.email, 'password')
-    print ("Test Valid session : " + str(verify_session(new_user.id, session_id)))
-    print ("Test Invalid session : " + str(verify_session(new_user.id, 'invalid-sessiond')))
-    delete_user(new_user.id)
-    delete_session(new_user.id)
-
-    print('User details after delete: ' + str(get_user(new_user.id)))
-    print('Session details after delete: ' + str(get_session(new_user.id)))
+    
 
