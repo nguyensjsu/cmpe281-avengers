@@ -1,3 +1,13 @@
+Week #8
+
+The art of maximizing the amount of work completed is essential. This was the last week for implementation of the project. Each one had dedicatedly worked on their modules and simultaneously worked effectively toward the whole project. 
+
+We had been integrating the modules and trying to make them work. We had various conflicting functions, API and variables. Deciding common terms, respecting each ones opinion played and important role and then we drew a conclusion. 
+
+We have both python as well as nodejs code for backend. The nodejs code is tightly coupled and we had to deploy the backend code for different modules in different clusters according to the requirements. We integrated python code with the UI. Some issues that we faced also included an issue related to free-tier account on AWS. We were not able to create more number of nodes on AWS as per the architecture needs, and so each team member raised a concern/ticket to AWS support, to get the issue resolved as soon as possible.
+
+Overall, we had a long, hardworking week where each team member co-operated and contributed respectfully to complete the project in good shape.
+
 Week #7
 
 This week we were considering all the options of integrating the frontend and the backend codes. We have a backend code which connects to mongodb cluster on aws running in private subnet and connected to a bastion host. The other backend code is the nodejs code which connects to the UI frontend.
