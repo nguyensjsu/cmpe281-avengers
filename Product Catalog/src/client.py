@@ -9,14 +9,17 @@ import json
 
 class mongo_client:
     def __init__(self):
+        error_message = ''
         try:
             self.client = MongoClient()
         except pymongo.errors.ConnectionFailure as e:
-            return jsonify({"Status": "Error",\
+            error_message = json.dumps({"Status": "Error",\
                             "Message":"Connection lost with database server"})
         except pymongo.errors.ServerSelectionTimeoutError as e:
-            return jsonify({"Status": "Error",\
+            error_message = json_dumps({"Status": "Error",\
                             "Message":"Could not connect to database server"})
+        if error_message != '':
+            raise Exception(error_message) 
         self.db = self.client.books
         self.collection = self.db.books_collection
 

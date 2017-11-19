@@ -14,8 +14,12 @@ logger = setup_logger()
 
 app = Flask(__name__)
 
-client = mongo_client()
-
+try:
+    client = mongo_client()
+except Exception as e:
+    data = json.loads(e.args[0])
+    abort(500,data)
+    
 #The GET request returns all the books in the database.
 
 @app.route('/v1/books', methods=['GET'])
@@ -70,6 +74,11 @@ def book_by_id(oid):
 @app.errorhandler(404)
 def not_found(e):
     return 'Not found'
+
+
+@app.errorhandler(500)
+def server_error(e):
+    return jsonify({e})
 
 
 if __name__ == '__main__':
