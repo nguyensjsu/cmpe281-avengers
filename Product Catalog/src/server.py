@@ -10,20 +10,28 @@ from pymongo import errors
 from client import mongo_client
 from logger import setup_logger
 
+app = Flask(__name__)
+
 logger = setup_logger()
 
-app = Flask(__name__)
+app.logger.addHandler(logger)
+
+app.logger.info("Getting Mongo Client handler")
 
 try:
     client = mongo_client()
 except Exception as e:
     data = json.loads(e.args[0])
     abort(500,data)
+
+app.logger.info("Connected to Mongo Client")
+
     
 #The GET request returns all the books in the database.
 
 @app.route('/v1/books', methods=['GET'])
 def get_books():
+    app.logger.info("Recieved a GET all request")
     response = client.get_all()
     data = json.loads(response)
 
@@ -32,6 +40,7 @@ def get_books():
         if the response data is empty '''
 
     if data["data"] is None:
+        app.logger.info("Document Not Found")
         abort(404)
     return jsonify(data)
 
@@ -41,6 +50,7 @@ def get_books():
 @app.route('/v1/books/<oid>', methods=['GET','PUT'])
 def book_by_id(oid):    
     if request.method =='PUT':
+        app.logger.info("Recieved a PUT request")
 
         ''' Decrement one quantity from the inventory'''
 
@@ -53,11 +63,12 @@ def book_by_id(oid):
         if data["Status"] == 'OK':
             return jsonify({"Status":"OK"})
         else:
+            app.logger.info("Document Not Found")
             return jsonify({"Status":"Error",\
                             "Message":"Could not complete the request"})
 
     elif request.method == 'GET':
-
+        app.logger.info("Recieved a GET One Request")
         ''' Retrieve the document by its _id'''
 
         response = client.get_one(oid)
@@ -68,6 +79,7 @@ def book_by_id(oid):
         
         if data["data"] is None:
              abort(404)
+             app.logger.info("Document Not Found")
         return jsonify(data)
 
 
@@ -79,6 +91,20 @@ def not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return jsonify({e})
+
+'''
+def get_mongo_client():
+    global client
+    app.logger.info("Getting Mongo Client handler")
+    try:
+        client = mongo_client()
+    except Exception as e:
+        data = json.loads(e.args[0])
+        abort(500,data)
+
+    app.logger.info("Connected to Mongo Client")
+
+'''
 
 
 if __name__ == '__main__':
