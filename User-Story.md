@@ -2,7 +2,7 @@
 
 Authentication: User can signup/login/logout
 
-Items for sale: Multiple User can view lists of items for sale and search by name.
+Items on Product Catalog: Multiple User can view lists of items on the Product Catalog that are for sale and search by name.
 
 Shopping Cart: Multiple User can add items to shopping cart and the app remembers it next time you login. Users can view all the items in their shopping cart. User can delete items in the shopping cart.
 
@@ -13,8 +13,6 @@ Checkout: User can checkout, items in the shopping cart will move to a different
 # Registration:
 
 Create a signup page /signup
-
-Add a url/controller/template /signup
 
 /signup has a form, username, email, and password.
 
@@ -47,33 +45,27 @@ When /logout is called, redirect user to the home page
 
 # Items
 
-Create a new Item Model with the following fields:
+Create a new Product Catalog with the following fields:
 Name, Description, Price
 
 Create several in the admin or shell
 
-Create new routes and templates to show a listing of the items
+Create new routes and templates to show a listing of the items(books)
 
 /items ->shows all items
 
 Create new route and template to show just one listing
 
-Create more then 10 items
+Create more than 10 items
 
 
 Shopping cart/order
 
-Create a new Model called Order (This is the shopping cart!)
-An order belongs to multiple users, and has multiple items. 
-A user can have many orders. An order has a status column, which is an integer field:
+Create a new Model called Cart (This is the shopping cart!)
+A cart belongs to multiple users, and has multiple items. 
+A user can have many orders. 
 
-1 - In shopping cart
-
-2 - Purchased
-
-For any given group of users, you can only have one order with a status equal to 1.
-
-When a user adds an item to the shopping cart, if there is no order with a status equal to 1, then create a new order for the user.
+When a user adds an item to the shopping cart, then it  create a new order for the user.
 
 Create a new route and view for /cart
 /cart shows what items are in that users cart
@@ -90,4 +82,4 @@ Update the /item/ template to have a "purchase" button - when clicked, the item 
 
 # Order History Form
 
-View the order history for the group of users.
+View the order history for the group of users. The user can see all the orders in "MyOrders" section.
