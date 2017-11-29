@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+<div class="jumbotron text-center">
+	<div class="container">
+<h1>User Activity Logs</h1>
+<table class="table">
+	<tr>
+     <td>User</td>
+     <td>IP Address</td>
+     <td>Message</td>
+     <td>Timestamp</td>
+   </tr>
+<% for(var i=0; i < data.length; i++) { %>
+   <tr>
+     <td><%= data[i].user %></td>
+     <td><%= data[i].ipAddress %></td>
+     <td><%= data[i].message %></td>
+     <td><%= data[i].timestamp %></td>
+   </tr>
+<% } %>
+</table>
+</div>
+</div>
+</body>
+</html>
