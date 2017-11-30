@@ -99,7 +99,9 @@ def findProduct():
         userId = result['userId']
         productId = result['productId']
         item = myCart.find_one({"userId":long(userId), "productId" : long(productId)})
-        return jsonify({"Status" : "OK", "data" : item})
+        data = dumps(item)
+        print(str(item))
+        return jsonify({"Status" : "OK", "data" : data})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
 
