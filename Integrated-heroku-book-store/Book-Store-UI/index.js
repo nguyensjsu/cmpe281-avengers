@@ -30,6 +30,7 @@ app.set('view engine', 'ejs');
 
 var isLoggedIn = false;
 var array = [];
+var userId = "";
 
 app.get('/signup', function(request, response) {
   response.render('user/signup');
@@ -50,6 +51,7 @@ app.post('/signup', function(request, response) {
 				res = JSON.parse(this.responseText);
 				state_changed = true;
 				request.session.sessionvalue = res.session;
+				userId = res.id;
 				newUser.id = JSON.stringify(res.id);
 				request.session.id = res.id;
 				console.log("session:" + JSON.stringify(request.session.sessionvalue));		
@@ -176,6 +178,50 @@ function activityLog(log, response) {
 // });
 
 app.get('/add-to-cart/:id', function(request, response) {
+	console.log("haroon testing params");
+	var xmlhttp = new XMLHttpRequest();
+	var productId = request.params.id;
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			state_changed = true;
+			data = this.responseText;
+			//data is in string format
+			data = JSON.parse(data);
+            //data is in json format
+			data = data.data;
+			//data now contains output from product catalog
+            author = data.Author;
+            imageUrl = data.Image_URL;
+            price = data.Price;
+            title = data.Title;
+
+            console.log("user id is :"+userId);	        
+	        var xmlhttp1 = new XMLHttpRequest();  
+	        xmlhttp1.onreadystatechange = function() {
+		    if (this.readyState === 4 && this.status === 200) {
+			    state_changed = true;
+			    
+			    
+			//response.render('pages/index', {products: array, login: isLoggedIn});
+		    }
+	        }
+            xmlhttp1.open("POST", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
+    
+	        xmlhttp1.setRequestHeader("Content-Type", "application/json");
+	        xmlhttp1.send(JSON.stringify({"userId":userId,"productId":productId,"title":title}));	
+			response.render('pages/index', {products: array, login: isLoggedIn});
+		}
+	}
+
+    xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books/"+productId);  //Product Catalog server
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	xmlhttp.send();
+});
+
+app.post('/add-to-cart/:product', function(request, response) {
+	var product = request.params.product;
+	console.log(product);
+
 	// var productId = req.params.id;
 	// var cart = new Cart(req.session.cart ? req.session.cart : {});
 
@@ -188,7 +234,7 @@ app.get('/add-to-cart/:id', function(request, response) {
 	// 	console.log(req.session.cart);
 	// 	res.redirect('/');
 	// });
-	console.log("inside add-to-cart");
+	console.log("inside add-to-cart-post");
 	
 
 	//called Aartee's UserActivityLog's POSt method
@@ -211,17 +257,20 @@ app.get('/', function(request, response){
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
 			state_changed = true;
+			//console.log("data" + this.responseText);
 			var data = JSON.parse(this.responseText);
-			console.log("data" + this.responseText);
+			//console.log("data 1st parse" + data);
 			data = JSON.parse(data.data);
-			console.log("data" + data);
+			//console.log("data second parse" + data);
 			array = [];
+
 			//console.log("data " + data[0].message);
 			for(d in data){
 				//if(data[d].user != null || data[d].ipAddress != null || data[d].message != null || data[d].timestamp != null){
 					array.push(data[d]);
 				//}
 			}
+			//console.log(array);
 			response.render('pages/index', {products: array, login: isLoggedIn});
 		}
 	}
@@ -233,11 +282,27 @@ app.get('/', function(request, response){
 });
 
 app.get('/shopping-cart', function(request, response) {
-	// if(!req.session.cart) {
-	// 	return res.render('shop/shopping-cart', {products: null});
-	// }
-	// var cart = new Cart(req.session.cart);
-	// res.render('shop/shopping-cart', {products: cart.generateArray(), totalPrice: cart.totalPrice});
+	console.log("In Shopping cart");
+	var xmlhttp = new XMLHttpRequest();  
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			state_changed = true;
+			var data = JSON.parse(this.responseText);
+			console.log("data" + this.responseText);
+			data = JSON.parse(data.data);
+			console.log("data" + data);
+			//console.log("data " + data[0].message);
+			var array = [];
+			for(d in data){
+					array.push(data[d]);
+			}
+			response.render('shop/shopping-cart', {products: array});
+		}
+	}
+    xmlhttp.open("GET", "http://0.0.0.0:9999/v1/shoppingCart/");  //User Activity Logs Python server
+    //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	xmlhttp.send(JSON.stringify({'userId': userId}));
 	response.render('shop/shopping-cart');
 });
 

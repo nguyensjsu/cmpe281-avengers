@@ -9,7 +9,9 @@
   <% include ../partials/nav.ejs %>
 
 <div class="row">
-<% for(var i=0; i < products.length; i++) { %>
+<% for(var i=0; i < products.length; i++) { 
+ var prod = "/add-to-cart/"+products[i]._id.$oid;
+ %>
       <div class="col-sm-4">
           <div class="thumbnail">
               <img src=<%= products[i].Image_URL %> alt="..." class="img-responsive" >
@@ -18,7 +20,7 @@
                 <p class="description"><Strong>Author: </Strong><%= products[i].Author %></p>
                 <div class="clearfix">
                   <div class="price pull-left" ><Strong>Price: </Strong>$<%= products[i].Price %></div>
-                  <a href="/add-to-cart/<%= products[i]._id %>" class="btn btn-primary pull-right" role="button">Add to Shopping cart</a>
+                  <a href= <%= prod %> class="btn btn-primary pull-right" role="button">Add to Shopping cart</a>
                 </div>
               </div>
           </div>

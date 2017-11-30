@@ -19,22 +19,22 @@ from bson.json_util import dumps
 
 app = Flask(__name__)
 
+"""
 mongo_cluster = ("mongodb://haroon:haroon@281-hackathon-shard-00-00-pjkz1.mongodb.net:27017,"
     "281-hackathon-shard-00-01-pjkz1.mongodb.net:27017,"
     "281-hackathon-shard-00-02-pjkz1.mongodb.net:27017"
-    "/test?ssl=true&replicaSet=281-hackathon-shard-0&authSource=admin")
+    "/cmpe282?ssl=true&replicaSet=281-hackathon-shard-0&authSource=admin")
+"""
 
-
-client = MongoClient(mongo_cluster)
-
+#client = MongoClient(mongo_cluster)
+client = MongoClient()
 #Database name
-db = client["cmpe281"]
+db = client["cmpe282"]
 
 #Collection name
 myCart = db["shoppingCart"]
 
 #productId = get from frontend
-productId = "59ef95771fe8881db48299b8"
 
 """
 addTocart: This method adds a product to the cart
@@ -106,6 +106,21 @@ def findProduct():
         return jsonify(status='ERROR',message=str(e))
 
 
+@app.route("/v1/shoppingCart/",methods=['GET'])
+def getCartDetails():
+    """
+    Displays the complete shopping cart for the user
+    """
+    try:
+        result = json.loads(request.get_data(as_text=True))
+        userId = result['userId']
+        items = myCart.find({"userId":long(userId)})
+        data = dumps(items)
+        print(str(items))
+        return jsonify({"Status" : "OK", "data" : data})
+    except Exception, e:
+        return jsonify(status='ERROR',message=str(e))
+
 """
 updateCart : This method updates an item in the cart
     userId:
@@ -158,12 +173,18 @@ def insertOrUpdateItemInCart():
     #It is assumed that user Id is obtained from user db
     #ProductId and productName from productCatalog
     try:
+        result = json.loads(request.get_data(as_text=True))
+        print("result is :"+result)
         userId = request.json['userId']
+        print("user id is :"+userId)
         productName = request.json['productName']
+        print(productName)
         productId = request.json['productId']
         price = request.json['price']
         productImage = request.json['productImage']
         quantity = request.json['quantity']
+
+
         output = myCart.update_one(
            {
             "userId":userId, "productId": productId,
@@ -174,8 +195,9 @@ def insertOrUpdateItemInCart():
             "$inc": {"quantity":quantity}
            },
            upsert = True)
-        data = dumps(output)
-        return jsonify({"Status": "OK", "data": data})
+        #data = dumps(output)
+        print("Post sucessful")
+        return jsonify({"Status": "OK"})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
 
