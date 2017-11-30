@@ -28,38 +28,94 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-// app.get('/', function(request, response) {
-//   response.render('pages/index');
-// });
+var isLoggedIn = false;
+var array = [];
 
 app.get('/signup', function(request, response) {
   response.render('user/signup');
 });
 
 app.post('/signup', function(request, response) {
-	if(request.session.oldUrl){
-		var oldUrl = request.session.oldUrl;
-		request.session.oldUrl = null;
-		response.redirect(oldUrl);
-	} else {
-		response.redirect('/user/profile');
-	}
+	var newUser = {};
+	newUser.firstname = request.body.firstname;
+	newUser.lastname = request.body.lastname;
+	newUser.email = request.body.email;
+	//TO DO - Password encryption
+	newUser.password = request.body.password;
+
+    var xmlhttp = new XMLHttpRequest();  
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState === 4 && this.status === 200) {
+				console.log("API call successful. Status: " + this.status);
+				res = JSON.parse(this.responseText);
+				state_changed = true;
+				request.session.sessionvalue = res.session;
+				newUser.id = JSON.stringify(res.id);
+				request.session.id = res.id;
+				console.log("session:" + JSON.stringify(request.session.sessionvalue));		
+				console.log(request.user);
+				request.session.currentuser = newUser;
+				isLoggedIn = true;
+
+				var log = {
+					"user" : request.session.currentuser.firstname,
+					"message" : request.session.currentuser.firstname+" Signed up!",
+					"timestamp" : new Date()
+				};
+				activityLog(log, response);
+
+				response.render('pages/index', {products: array, login: isLoggedIn});
+		        }
+		}
+		console.log("before POST");
+		xmlhttp.open("POST", "http://localhost:9000/v1/users");
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		xmlhttp.send(JSON.stringify({'firstname': request.body.firstname,
+	 				     'lastname': request.body.lastname,
+	 				     'email': request.body.email,
+	 				     'password': request.body.password}));
 });
 
 app.get('/signin', function(request, response) { //URL
-	// var messages = request.flash('error');
-	// res.render('user/signin', {csurfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});  //view file views/user/signin.hbs
 	response.render('user/signin');
 });
 
 app.post('/signin', function(request, response) {
-	if(req.session.oldUrl){
-		var oldUrl = req.session.oldUrl;
-		req.session.oldUrl = null;
-		res.redirect(oldUrl);
-	} else {
-		res.redirect('/user/profile');
-	}
+	var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (this.readyState === 4 && this.status === 200) {
+				console.log("API call successful for sign in. Status: " + this.status);
+				res = JSON.parse(this.responseText);
+				var newUser = {};
+				newUser.firstname = res.firstname;
+				console.log("firstname : " + res.firstname);
+				newUser.lastname = res.lastname;
+				newUser.email = res.email;
+				newUser.password = res.password;
+				newUser.id = res.id;
+				request.session.sessionvalue = res.session;
+				request.session.id = res.id;
+				request.session.currentuser = newUser;
+				console.log("session:" + JSON.stringify(request.session.sessionvalue));
+				//console.log(req.isAuthenticated());
+				//return done(null, newUser);
+				isLoggedIn = true;
+
+				var log = {
+					"user" : request.session.currentuser.firstname,
+					"message" : request.session.currentuser.firstname+" Signed in!",
+					"timestamp" : new Date()
+				};
+				activityLog(log, response);
+
+				response.render('pages/index', {products: array, login: isLoggedIn});
+		        }
+		}
+		console.log("before POST for Login");
+		xmlhttp.open("POST", "http://localhost:9000/v1/login");
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		xmlhttp.send(JSON.stringify({'email': request.body.email,
+	 				     'password': request.body.password}));
 });
 
 app.get('/logout', function (request, response) {
@@ -68,24 +124,31 @@ app.get('/logout', function (request, response) {
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
 			console.log("API call successful for sign out. Status: " + this.status);
-			response = this.responseText;
-			if(response.result == "0")
+			res = this.responseText;
+			if(res.result == "0")
 				console.log("Session deleted successfully.");
-			else if (response.result == "1")	
-				console.log("Error deleting sesion.");	
+			else if (res.result == "1")	
+				console.log("Error deleting session.");	
 			else	
 				console.log("Session does not exist for the user.");		
 	        }
 	}
 	console.log("before DELETE for Logout");
     var id = request.session.currentuser.id;
+    var log = {
+		"user" : request.session.currentuser.firstname,
+		"message" : request.session.currentuser.firstname+" Logged out!",
+		"timestamp" : new Date()
+	};
+	activityLog(log, response);
+
 	request.session.sessionvalue =  "";
     request.session.currentuser = "";
-	request.logout();
-	res.redirect('/');
 	xmlhttp.open("DELETE", "http://localhost:9000/v1/login");
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
 	xmlhttp.send(JSON.stringify({'id': id}));
+	isLoggedIn = false;
+	response.render('pages/index', {products: array, login: isLoggedIn});
 });
 
 app.get('/user/profile', function(request,response){
@@ -95,27 +158,14 @@ app.get('/user/profile', function(request,response){
 // app.post('/logs/insert', function(request, response){
 function activityLog(log, response) {
 	console.log("inside activity log function");
-	var data = {
-		"log_id" : 1,
-		"user" : "Aartee",
-		"ipAddress" : "10.0.0.0",
-		"message" : "Sample message",
-		"timestamp" : "12:00:01"
-	};
 	var xmlhttp = new XMLHttpRequest();  
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
 			resptext = JSON.parse(this.responseText);
 			state_changed = true;
-			// var data = {
-			// 	tmp: resptext.shortUrl,
-			// 	noSuccess: 0,
-			// 	isValidURL: 1
-			// }
 			response.render('pages/logs', {data: log});
 		}
 	}
-	
     xmlhttp.open("POST", "http://localhost:7000/logs/insert");
     //xmlhttp.open("POST", "http://control-panel-elb-492600712.us-west-1.elb.amazonaws.com:8081/v1/shorten");
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
@@ -151,7 +201,7 @@ app.get('/add-to-cart/:id', function(request, response) {
 		"timestamp" : "12:00:01"
 	};
 	activityLog(log, response);
-	response.redirect('/');
+	response.redirect('/', {login: isLoggedIn});
 
 });
 
@@ -165,14 +215,14 @@ app.get('/', function(request, response){
 			console.log("data" + this.responseText);
 			data = JSON.parse(data.data);
 			console.log("data" + data);
+			array = [];
 			//console.log("data " + data[0].message);
-			var array = [];
 			for(d in data){
 				//if(data[d].user != null || data[d].ipAddress != null || data[d].message != null || data[d].timestamp != null){
 					array.push(data[d]);
 				//}
 			}
-			response.render('pages/index', {products: array});
+			response.render('pages/index', {products: array, login: isLoggedIn});
 		}
 	}
     xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books");  //User Activity Logs Python server
@@ -191,23 +241,15 @@ app.get('/shopping-cart', function(request, response) {
 	response.render('shop/shopping-cart');
 });
 
-app.get('/checkout', isLoggedIn, function(request, response) {
+app.get('/checkout', function(request, response) {
 	// if(!req.session.cart) {
 	// 	return res.redirect('/shopping-cart');
 	// }
 	// var cart = new Cart(req.session.cart);
 	// var errMsg = req.flash('error')[0];
 	// res.render('shop/checkout', {total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
-	response.redirect('/');
+	response.redirect('/', {login: isLoggedIn});
 });
-
-function isLoggedIn(req, res, next) {
-	// if (!req.session.sessionvalue == undefined && !req.session.sessionvalue == "" && req.isAuthenticated()) {
-	// 	return next();
-	// }
-	// req.session.oldUrl = req.url;
-	res.redirect('/signin');
-}
 
 app.get('/logs', function(request, response){
 	console.log("In GET Logs ");
@@ -219,7 +261,7 @@ app.get('/logs', function(request, response){
 			console.log("data" + this.responseText);
 			data = JSON.parse(data.data);
 			console.log("data" + data);
-			console.log("data " + data[0].message);
+			//console.log("data " + data[0].message);
 			var array = [];
 			for(d in data){
 				if(data[d].user != null || data[d].ipAddress != null || data[d].message != null || data[d].timestamp != null){

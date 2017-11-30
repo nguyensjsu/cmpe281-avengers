@@ -23,17 +23,17 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> User Management <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            {{# if login}}
+            <%if (login == true) { %>
               <li><a href="/user/profile">User Account</a></li>
               <li role="separator" class="divider"></li>
               <li><a href="/logs">Activity Logs</a></li>
               <li role="separator" class="divider"></li>
               <li><a href="/logout">Logout</a></li>
-            {{else}}
+            <% } else { %>  
               <li><a href="/signin">Sign In</a></li>
               <li role="separator" class="divider"></li>
               <li><a href="/signup">Sign Up</a></li>
-            {{/if}} 
+            <% } %> 
           </ul>
         </li>
       </ul>
