@@ -174,32 +174,32 @@ def insertOrUpdateItemInCart():
     #ProductId and productName from productCatalog
     try:
         result = json.loads(request.get_data(as_text=True))
-        print("result is :"+result)
         userId = request.json['userId']
-        print("user id is :"+userId)
-        productName = request.json['productName']
-        print(productName)
         productId = request.json['productId']
+        title = request.json['title']
+        author = request.json['author']
         price = request.json['price']
-        productImage = request.json['productImage']
-        quantity = request.json['quantity']
-
-
+        imageUrl = request.json['imageUrl']
+        
         output = myCart.update_one(
            {
-            "userId":userId, "productId": productId,
-            "productName": productName, "price":price,
-            "productImage": productImage
+            "userId":userId,
+            "productId": productId,
+            "title": title,
+            "author": author,
+            "price":price,
+            "imageUrl": imageUrl
            },
            {
-            "$inc": {"quantity":quantity}
+            "$inc": {"quantity":1}
            },
            upsert = True)
         #data = dumps(output)
         print("Post sucessful")
-        return jsonify({"Status": "OK"})
+        print(result)
+        return jsonify({"Status": "OK", "result" : result})
     except Exception, e:
-        return jsonify(status='ERROR',message=str(e))
+        return jsonify(status='ERROR',message=str(e),result = result)
 
 
 if __name__ == '__main__':

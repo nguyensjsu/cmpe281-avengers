@@ -190,12 +190,19 @@ app.get('/add-to-cart/:id', function(request, response) {
             //data is in json format
 			data = data.data;
 			//data now contains output from product catalog
-            author = data.Author;
-            imageUrl = data.Image_URL;
-            price = data.Price;
-            title = data.Title;
+            
+            var requestData = {
+            "author" : data.Author,
+            "imageUrl" : data.Image_URL,
+            "price" : data.Price,
+            "title" : data.Title,
+            "productId" : productId,
+            "userId" : userId
+        }
 
+            
             console.log("user id is :"+userId);	        
+            console.log(requestData)
 	        var xmlhttp1 = new XMLHttpRequest();  
 	        xmlhttp1.onreadystatechange = function() {
 		    if (this.readyState === 4 && this.status === 200) {
@@ -208,7 +215,7 @@ app.get('/add-to-cart/:id', function(request, response) {
             xmlhttp1.open("POST", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
     
 	        xmlhttp1.setRequestHeader("Content-Type", "application/json");
-	        xmlhttp1.send(JSON.stringify({"userId":userId,"productId":productId,"title":title}));	
+	        xmlhttp1.send(JSON.stringify(requestData));	
 			response.render('pages/index', {products: array, login: isLoggedIn});
 		}
 	}
@@ -218,38 +225,6 @@ app.get('/add-to-cart/:id', function(request, response) {
 	xmlhttp.send();
 });
 
-app.post('/add-to-cart/:product', function(request, response) {
-	var product = request.params.product;
-	console.log(product);
-
-	// var productId = req.params.id;
-	// var cart = new Cart(req.session.cart ? req.session.cart : {});
-
-	// Product.findById(productId, function(err, product) {
-	// 	if(err) {
-	// 		return res.redirect('/');
-	// 	}
-	// 	cart.add(product, product.id);
-	// 	req.session.cart = cart; //storing the cart into the session
-	// 	console.log(req.session.cart);
-	// 	res.redirect('/');
-	// });
-	console.log("inside add-to-cart-post");
-	
-
-	//called Aartee's UserActivityLog's POSt method
-	//Create Json of 5 attributes like
-	var log = {
-		"log_id": 345,  //not required, Aartee will change python server accordingly
-		"user" : "Aartee",
-		"ipAddress" : "10.0.0.0",
-		"message" : "Added this item",
-		"timestamp" : "12:00:01"
-	};
-	activityLog(log, response);
-	response.redirect('/', {login: isLoggedIn});
-
-});
 
 app.get('/', function(request, response){
 	console.log("In GET Products ");
