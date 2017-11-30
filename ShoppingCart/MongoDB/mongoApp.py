@@ -119,7 +119,7 @@ def updateCart():
         #if quantity == 0 we need to delete the item from cart
         result = myCart.update_one({"userId":userId, "productId": productId},
         {"$set": {"quantity": quantity} })
-        return jsonify({"Status" : "OK", "data" : "data"})
+        return jsonify({"Status" : "OK", "data" : data})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
 
@@ -136,7 +136,7 @@ def deleteProduct():
         productId = request.json['productId']
         result = myCart.delete_one({"userId":userId, "productId" : productId})
         #data = dumps(result)
-        return jsonify({"Status" : "OK", "data" : "data"})
+        return jsonify({"Status" : "OK", "data" : data})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
 
@@ -169,7 +169,7 @@ def insertOrUpdateItemInCart():
            },
            upsert = True)
     #data = dumps(output)
-    return jsonify({"Status": "OK", "data": "data"})
+    return jsonify({"Status": "OK", "data": output})
 
 
 if __name__ == '__main__':
