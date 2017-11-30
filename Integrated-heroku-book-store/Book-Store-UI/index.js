@@ -262,23 +262,29 @@ app.get('/shopping-cart', function(request, response) {
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
 			state_changed = true;
+			
+			console.log("after get from python db" + this.responseText);
 			var data = JSON.parse(this.responseText);
-			console.log("data" + this.responseText);
-			data = JSON.parse(data.data);
-			console.log("data" + data);
+			console.log(data);
+			cartBooks = JSON.parse(data.data);
+			console.log(cartBooks);
+
+			cartArray = [];
+
 			//console.log("data " + data[0].message);
-			var array = [];
-			for(d in data){
-					array.push(data[d]);
+			for(data in cartBooks){
+					cartArray.push(cartBooks[data]);
 			}
-			response.render('shop/shopping-cart', {products: array});
+			response.render('shop/shopping-cart', {cartItems: cartArray, login: isLoggedIn});
+			
 		}
 	}
-    xmlhttp.open("GET", "http://0.0.0.0:9999/v1/shoppingCart/");  //User Activity Logs Python server
+    xmlhttp.open("POST", "http://0.0.0.0:9999/v1/shoppingCart");  //User Activity Logs Python server
     //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
-	xmlhttp.send(JSON.stringify({'userId': userId}));
-	response.render('shop/shopping-cart');
+	var requestData = {"userId": userId};
+	console.log(requestData);
+	xmlhttp.send(JSON.stringify(requestData));
 });
 
 app.get('/checkout', function(request, response) {

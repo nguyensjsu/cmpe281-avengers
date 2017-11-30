@@ -106,20 +106,7 @@ def findProduct():
         return jsonify(status='ERROR',message=str(e))
 
 
-@app.route("/v1/shoppingCart/",methods=['GET'])
-def getCartDetails():
-    """
-    Displays the complete shopping cart for the user
-    """
-    try:
-        result = json.loads(request.get_data(as_text=True))
-        userId = result['userId']
-        items = myCart.find({"userId":long(userId)})
-        data = dumps(items)
-        print(str(items))
-        return jsonify({"Status" : "OK", "data" : data})
-    except Exception, e:
-        return jsonify(status='ERROR',message=str(e))
+
 
 """
 updateCart : This method updates an item in the cart
@@ -160,6 +147,22 @@ def deleteProduct():
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
 
+
+@app.route("/v1/shoppingCart",methods=['POST'])
+def getCartDetails():
+    """
+    Displays the complete shopping cart for the user
+    """
+    try:
+        result = json.loads(request.get_data(as_text=True))
+        userId = request.json['userId']
+        print("user id :"+userId)
+        items = myCart.find({"userId":userId})
+        data = dumps(items)
+        print(str(items))
+        return jsonify({"Status" : "OK", "data" : data})
+    except Exception, e:
+        return jsonify(status='ERROR',message=str(e))
 
 """
 insertOrUpdateItemInCart: This method updates the quantity
