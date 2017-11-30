@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+<div class="jumbotron text-center">
+	<div class="container">
+<h1>Order History</h1>
+<table class="table">
+    <tr>
+     <td>MY ORDERS</td>
+   </tr>
+	<tr>
+     <td>Order Date</td>
+     <td>Items</td>
+     <td>Total Amount</td>
+   </tr>
+<% for(var i=0; i < data.length; i++) { %>
+   <tr>
+     <td><%= data[i].date %></td>
+     <td><%= data[i].items %></td>
+     <td><%= data[i].total %></td>
+   </tr>
+<% } %>
+</table>
+</div>
+</div>
+</body>
+</html>
