@@ -19,10 +19,11 @@ from bson.json_util import dumps
 
 app = Flask(__name__)
 
-mongo_cluster = ("mongodb://haroon:haroon@cluster0-shard-00-00-pjkz1.mongodb.net:27017,"
-                "cluster0-shard-00-01-pjkz1.mongodb.net:27017,"
-                "cluster0-shard-00-02-pjkz1.mongodb.net:27017"
-                "/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin")
+mongo_cluster = ("mongodb://haroon:haroon@281-hackathon-shard-00-00-pjkz1.mongodb.net:27017,"
+    "281-hackathon-shard-00-01-pjkz1.mongodb.net:27017,"
+    "281-hackathon-shard-00-02-pjkz1.mongodb.net:27017"
+    "/test?ssl=true&replicaSet=281-hackathon-shard-0&authSource=admin")
+
 
 client = MongoClient(mongo_cluster)
 
@@ -82,8 +83,8 @@ findProduct : returns the details of a product for
     productId : product whose details are required
 """
 
-@app.route("/v1/cart/<productId>",methods=['GET'])
-def findProduct(productId):
+@app.route("/v1/cart/",methods=['GET'])
+def findProduct():
     """
     NOTE: If we want to project only select few columns
     then use additional arg to find_one
@@ -93,9 +94,11 @@ def findProduct(productId):
     """
     try:
         result = json.loads(request.get_data(as_text=True))
+
+        print(str(result))
         userId = result['userId']
-        #productId = result['productId']
-        item = myCart.find_one({"userId":userId, "productId" : productId})
+        productId = result['productId']
+        item = myCart.find_one({"userId":long(userId), "productId" : long(productId)})
         return jsonify({"Status" : "OK", "data" : item})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
@@ -152,13 +155,14 @@ def insertOrUpdateItemInCart():
     #productDetails = "curl http://localhost:5000/books/"+productId
     #It is assumed that user Id is obtained from user db
     #ProductId and productName from productCatalog
-    userId = request.json['userId']
-    productName = request.json['productName']
-    productId = request.json['productId']
-    price = request.json['price']
-    productImage = request.json['productImage']
-    quantity = request.json['quantity']
-    output = myCart.update_one(
+    try:
+        userId = request.json['userId']
+        productName = request.json['productName']
+        productId = request.json['productId']
+        price = request.json['price']
+        productImage = request.json['productImage']
+        quantity = request.json['quantity']
+        output = myCart.update_one(
            {
             "userId":userId, "productId": productId,
             "productName": productName, "price":price,
@@ -168,8 +172,10 @@ def insertOrUpdateItemInCart():
             "$inc": {"quantity":quantity}
            },
            upsert = True)
-    #data = dumps(output)
-    return jsonify({"Status": "OK", "data": output})
+        data = dumps(output)
+        return jsonify({"Status": "OK", "data": data})
+    except Exception, e:
+        return jsonify(status='ERROR',message=str(e))
 
 
 if __name__ == '__main__':
