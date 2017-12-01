@@ -201,7 +201,7 @@ def verify_login_create_session(email, password):
             session_str = session.sessionID.decode('utf-8')
             user = get_user(id)
             print(str(user))
-            return {'id': id, 'firstname': user['firstname'], 'lastname': user['lastname'],'email': user['email'], 'firstname': user['password'], 'session': session_str}
+            return {'id': id, 'firstname': user['firstname'], 'lastname': user['lastname'],'email': user['email'], 'password': user['password'], 'session': session_str}
         except:
             return 0
     else:
