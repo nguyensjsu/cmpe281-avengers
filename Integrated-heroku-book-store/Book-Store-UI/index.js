@@ -197,7 +197,7 @@ app.get('/add-to-cart/:id', function(request, response) {
             "price" : data.Price,
             "title" : data.Title,
             "productId" : productId,
-            "userId" : userId
+            "userId" : "haroon"
         }
 
             
@@ -282,20 +282,52 @@ app.get('/shopping-cart', function(request, response) {
     xmlhttp.open("POST", "http://0.0.0.0:9999/v1/shoppingCart");  //User Activity Logs Python server
     //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
-	var requestData = {"userId": userId};
+	var requestData = {"userId": "haroon"};
 	console.log(requestData);
 	xmlhttp.send(JSON.stringify(requestData));
 });
 
 app.get('/checkout', function(request, response) {
-	// if(!req.session.cart) {
-	// 	return res.redirect('/shopping-cart');
-	// }
-	// var cart = new Cart(req.session.cart);
-	// var errMsg = req.flash('error')[0];
-	// res.render('shop/checkout', {total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
-	response.redirect('/', {login: isLoggedIn});
+	console.log("Inside checkout page");
+	var xmlhttp = new XMLHttpRequest();
+	var userId = request.params.id;
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			state_changed = true;
+			data = this.responseText;
+			console.log(data);
+			//data is in string format
+			data = JSON.parse(data);
+            //data is in json format
+			data = data.data;
+			//data now contains output from shopping cart
+            
+            // Write code to add multiple documents to mongodb
+
+            console.log(data);
+	        var xmlhttp1 = new XMLHttpRequest();  
+	        xmlhttp1.onreadystatechange = function() {
+		    if (this.readyState === 4 && this.status === 200) {
+			    state_changed = true;
+			    
+			    
+			//response.render('pages/index', {products: array, login: isLoggedIn});
+		    }
+	        }
+            xmlhttp1.open("POST", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
+    
+	        xmlhttp1.setRequestHeader("Content-Type", "application/json");
+	        xmlhttp1.send(JSON.stringify(requestData));	
+			response.render('pages/order', {products: array, login: isLoggedIn});
+		}
+	}
+
+    xmlhttp.open("POST", "http://0.0.0.0:9999/v1/checkout");  //Product Catalog server
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	var requestData = {"userId": "haroon"};
+	xmlhttp.send(JSON.stringify(requestData));	
 });
+
 
 app.get('/logs', function(request, response){
 	console.log("In GET Logs ");
@@ -344,10 +376,11 @@ app.get('/myOrders', function(request, response){
 			response.render('pages/logs', {data: array});
 		}
 	}
-    xmlhttp.open("GET", "http://127.0.0.1:7000/logs");  //User Activity Logs Python server
-    //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
+    xmlhttp.open("POST", "http://0.0.0.0:9999/v1/shoppingCart");  //Shopping Cart Python server
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
-	xmlhttp.send();
+	var requestData = {"userId": userId};
+	console.log(requestData);
+	xmlhttp.send(JSON.stringify(requestData));
 });
 
 app.listen(process.env.PORT || 5000, function() {
