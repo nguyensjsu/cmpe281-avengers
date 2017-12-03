@@ -47,6 +47,30 @@ def get_books():
 # The GET request with oid returns a particular document having that Id
 # The PUT request decrements the quantity of the book in the inventory
 
+@app.route('/v1/search/title/<title>')
+def get_title(title):
+    response = client.get_title()
+    return response
+
+
+@app.route('/v1/search/author/<author>')
+def get_author(author):
+    response = client.get_author()
+    return response
+
+
+@app.route('/v1/sort/hightolow')
+def sort_high():
+    response = client.sort_hightolow()
+    return response
+
+
+@app.route('/v1/sort/lowtohigh')
+def sort_low():
+    response = client.sort_lowtohigh()
+    return response
+
+
 @app.route('/v1/books/<oid>', methods=['GET','PUT'])
 def book_by_id(oid):    
     if request.method =='PUT':
@@ -59,7 +83,7 @@ def book_by_id(oid):
 
         ''' Manually check if the query was successful.
             If not, Send an error response'''
- 
+
         if data["Status"] == 'OK':
             return jsonify({"Status":"OK"})
         else:
