@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import uuid
 import os, base64
 import json
+import datetime
 
 client = MongoClient('mongodb://localhost:27017/')
 
@@ -30,6 +31,8 @@ class Session:
     def __init__(self, userID):
         self.userID = userID,
         self.sessionID = generate_session()
+        self.expires = datetime.datetime.now() + datetime.timedelta(hours=3)
+        print("datetime : " + str(self.expires))
 
 
 # Generates a new session value
@@ -136,7 +139,8 @@ def add_session(session):
         sessions_data.insert_one(
             {
                 'userid': session.userID,
-                'sessionid': session.sessionID
+                'sessionid': session.sessionID,
+                'expires' : session.expires
             }
         )
         return session.sessionID
@@ -175,7 +179,12 @@ def verify_session(id, session_value):
     if result is None:
         return False
     else:
-        return True
+        currentdate = datetime.datetime.now()
+        print("current : " + str(currentdate))
+        if currentdate < result["expires"]:
+            return True
+        else:
+            return False
 
 # Verify login and create session
 def verify_login_create_session(email, password):
