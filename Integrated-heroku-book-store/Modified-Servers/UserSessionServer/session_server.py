@@ -74,9 +74,9 @@ def login():
         data = request.json
         result = verify_session(data["id"], data["session"].encode('utf-8'))
         if result:
-            return "Valid session"
+            return jsonify({"result": 0, "message":"Valid session"});
         else:
-            return "Invalid session"
+            return jsonify({"result": 1, "message":"Invalid session"});
 
         # TODO: Create appropriate http response
 
