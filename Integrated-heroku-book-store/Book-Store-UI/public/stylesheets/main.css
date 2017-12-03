@@ -28,5 +28,13 @@
 .bookImage {
 	width: 150px;	
 	max-height: 200px;
+	margin-top: 10px;	
+}
+
+.bookTitle {
+	width: 95%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
