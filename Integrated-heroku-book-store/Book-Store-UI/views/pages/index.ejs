@@ -9,14 +9,15 @@
   <% include ../partials/nav.ejs %>
 
 <div class="row">
-<% for(var i=0; i < products.length; i++) { 
+<% for(var i=0; i < products.length; i++) {
+ var booktitle = products[i].Title.toString(); 
  var prod = "/add-to-cart/"+products[i]._id.$oid;
  %>
       <div class="col-sm-4">
           <div class="thumbnail">
-              <img src=<%= products[i].Image_URL %> alt="..." class="img-responsive" >
+              <img src=<%= products[i].Image_URL %> alt="..." class="img-responsive bookImage" >
               <div class="caption">
-                <h3><%= products[i].Title %></h3>
+                <h3 title="<%= booktitle %>"> <%= booktitle %></h3>
                 <p class="description"><Strong>Author: </Strong><%= products[i].Author %></p>
                 <div class="clearfix">
                   <div class="price pull-left" ><Strong>Price: </Strong>$<%= products[i].Price %></div>
