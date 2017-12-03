@@ -5,29 +5,42 @@
 </head>
 
 <body>
-  <div class = "container">
   <% include ../partials/nav.ejs %>
+  <div class = "container">
+    <div class = "container">
+      <div class="dropdown" style="margin-left: 25px">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Sort on Price <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a href="/user/profile">High-Low</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="/logs">Low-High</a></li>
+        </ul>
+      </div>
+      <form action="/signin" method="post" style="float: left; width: 100%; padding: 20px">
+       <input type="text" id="search" name="search" class="form-control" placeholder="Search Based on Author Name/Title" style="width: 85%; margin-right: 25px; display: inline-block">
+       <button type="submit" class="btn btn-primary" style="display: inline-block">Search</button>
+      </form>
 
-<div class="row">
-<% for(var i=0; i < products.length; i++) {
- var booktitle = products[i].Title.toString(); 
- var prod = "/add-to-cart/"+products[i]._id.$oid;
- %>
-      <div class="col-sm-4">
-          <div class="thumbnail">
-              <img src=<%= products[i].Image_URL %> alt="..." class="img-responsive bookImage" >
-              <div class="caption">
-                <h3 class= "bookTitle" title="<%= booktitle %>"> <%= booktitle %></h3>
-                <p class="description bookTitle" title="<%= products[i].Author %>"><Strong>Author: </Strong><%= products[i].Author %></p>
-                <div class="clearfix">
-                  <div class="price pull-left" title="$<%= products[i].Price %>"><Strong>Price: </Strong>$<%= products[i].Price %></div>
-                  <a href= <%= prod %> title="Add to Shopping cart" class="btn btn-primary pull-right" role="button">Add to Shopping cart</a>
+      <div class="row">
+      <% for(var i=0; i < products.length; i++) {
+       var booktitle = products[i].Title.toString(); 
+       var prod = "/add-to-cart/"+products[i]._id.$oid;
+       %>
+            <div class="col-sm-4">
+                <div class="thumbnail">
+                    <img src=<%= products[i].Image_URL %> alt="..." class="img-responsive bookImage" >
+                    <div class="caption">
+                      <h3 class= "bookTitle" title="<%= booktitle %>"> <%= booktitle %></h3>
+                      <p class="description bookTitle" title="<%= products[i].Author %>"><Strong>Author: </Strong><%= products[i].Author %></p>
+                      <div class="clearfix">
+                        <div class="price pull-left" title="$<%= products[i].Price %>"><Strong>Price: </Strong>$<%= products[i].Price %></div>
+                        <a href= <%= prod %> title="Add to Shopping cart" class="btn btn-primary pull-right" role="button">Add to Shopping cart</a>
+                      </div>
+                    </div>
                 </div>
-              </div>
-          </div>
-        </div>  
-<% } %>
-</div>
+              </div>  
+      <% } %>
+      </div>
 </div>
 
 </body>
