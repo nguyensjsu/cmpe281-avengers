@@ -33,7 +33,7 @@ var array = [];
 var userId = "";
 
 app.get('/signup', function(request, response) {
-  response.render('user/signup');
+  response.render('user/signup', {login: isLoggedIn});
 });
 
 app.post('/signup', function(request, response) {
@@ -79,7 +79,7 @@ app.post('/signup', function(request, response) {
 });
 
 app.get('/signin', function(request, response) { //URL
-	response.render('user/signin');
+	response.render('user/signin', {login: isLoggedIn});
 });
 
 app.post('/signin', function(request, response) {
