@@ -177,7 +177,21 @@ def getCartDetails():
         items = myCart.find({"userId":userId})
         data = dumps(items)
         print(str(items))
-        return jsonify({"Status" : "OK", "data" : data})
+        stats = myCart.aggregate(
+            [
+                { "$group":          
+                    {   
+                        "_id": { "userId": "$userId" },
+                        "totalAmount": 
+                            { "$sum": 
+                                 { "$multiply": [ "$price", "$quantity" ] }
+                                 },
+         "totalQuantity": { "$sum": "$quantity" } }
+         }
+         ]
+         )
+        statistics = dumps(stats)
+        return jsonify({"Status" : "OK", "data" : data, "stats":statistics})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
 
@@ -198,7 +212,7 @@ def insertOrUpdateItemInCart():
         productId = request.json['productId']
         title = request.json['title']
         author = request.json['author']
-        price = request.json['price']
+        price = float(request.json['price'])
         imageUrl = request.json['imageUrl']
         
         output = myCart.update_one(
