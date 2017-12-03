@@ -176,11 +176,82 @@ function activityLog(log, response) {
 }
 	
 // });
-
+/*
 app.get('/add-to-cart/:id', function(request, response) {
 	console.log("haroon testing params");
-	var xmlhttp = new XMLHttpRequest();
 	var productId = request.params.id;
+	console.log(request.session);
+    console.log("session value:"+request.session.sessionvalue);
+    console.log("session id:"+request.session.id);
+    //Check whether the user is logged in
+	var xmlhttp2 = new XMLHttpRequest();  
+	xmlhttp2.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			state_changed = true;
+			var data = JSON.parse(this.responseText);
+			console.log("data" + this.responseText);
+			data = JSON.parse(data.data);
+			console.log("data" + data);
+			//console.log("data " + data[0].message);
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			state_changed = true;
+			data = this.responseText;
+			//data is in string format
+			data = JSON.parse(data);
+            //data is in json format
+			data = data.data;
+			//data now contains output from product catalog
+            
+            var requestData = {
+            "author" : data.Author,
+            "imageUrl" : data.Image_URL,
+            "price" : data.Price,
+            "title" : data.Title,
+            "productId" : productId,
+            "userId" : "haroon"
+        }
+
+            
+            console.log("user id is :"+userId);	        
+            console.log(requestData)
+	        var xmlhttp1 = new XMLHttpRequest();  
+	        xmlhttp1.onreadystatechange = function() {
+		    if (this.readyState === 4 && this.status === 200) {
+			    state_changed = true;
+			    
+			    
+			//response.render('pages/index', {products: array, login: isLoggedIn});
+		    }
+	        }
+            xmlhttp1.open("POST", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
+    
+	        xmlhttp1.setRequestHeader("Content-Type", "application/json");
+	        xmlhttp1.send(JSON.stringify(requestData));	
+			response.render('pages/index', {products: array, login: isLoggedIn});
+		}
+	}
+
+    xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books/"+productId);  //Product Catalog server
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	xmlhttp.send();
+		}
+	}
+    xmlhttp2.open("GET", "http://127.0.0.1:9000/v1/login"+"?id="+userId+"&session="+session);  //User Activity Logs Python server
+	xmlhttp2.setRequestHeader("Content-Type", "application/json");
+	xmlhttp2.send();
+
+
+});
+
+*/
+app.get('/add-to-cart/:id', function(request, response) {
+	console.log("haroon testing params");
+	
+	var productId = request.params.id;
+	var xmlhttp = new XMLHttpRequest();
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
 			state_changed = true;
@@ -265,17 +336,24 @@ app.get('/shopping-cart', function(request, response) {
 			
 			console.log("after get from python db" + this.responseText);
 			var data = JSON.parse(this.responseText);
-			console.log(data);
 			cartBooks = JSON.parse(data.data);
 			console.log(cartBooks);
-
+            cartStats = JSON.parse(data.stats);
+            console.log(cartStats);
 			cartArray = [];
-
+            cartStatsArray = [];
 			//console.log("data " + data[0].message);
 			for(data in cartBooks){
 					cartArray.push(cartBooks[data]);
 			}
-			response.render('shop/shopping-cart', {cartItems: cartArray, login: isLoggedIn});
+			for(stat in cartStats){
+					cartStatsArray.push(cartStats[stat]);
+			}
+			console.log("cartStatsArray");
+			console.log(cartStatsArray.totalAmount);
+			console.log(cartStatsArray[0].totalAmount);
+			response.render('shop/shopping-cart', {cartItems: cartArray, login: isLoggedIn,
+			cartStatistics : cartStatsArray } );
 			
 		}
 	}

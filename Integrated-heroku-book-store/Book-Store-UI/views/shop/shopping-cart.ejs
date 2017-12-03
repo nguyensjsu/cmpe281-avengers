@@ -3,6 +3,7 @@
 <head>
   <% include ../partials/header.ejs %>
 </head>
+<% include ../partials/nav.ejs %>
 <body>
 <!--{{# if cartItems }} -->
 	<div class="row">
@@ -14,10 +15,13 @@
 			<ul class="list-group">
 
 					<li class="list-group-item">
-						<img src=<%= cartItems[i].imageUrl %> alt="..." class="img-responsive" >
-						<span class="badge"><%= cartItems[i].quantity %></span>
-						<strong><%= cartItems[i].title %></strong>
-						<span class="label label-success"><%= cartItems[i].price %></span>
+						<img src=<%= cartItems[i].imageUrl %> alt="..." class="img-responsive bookImage" >
+						
+						<h3 class= "bookTitle" title="<%= cartItems[i].title %>"> <%= cartItems[i].title %></h3>
+						<!--<strong><%= cartItems[i].title %></strong>-->
+                        <div class="label label-success" title="$<%= cartItems[i].price %>"><Strong>Price: </Strong>$<%= cartItems[i].price %></div>
+                        <span class="badge"><%= cartItems[i].quantity %></span>
+						<!--<span class="label label-success"><%= cartItems[i].price %></span>-->
 						<div class="btn-group">
 							<button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action<span class="caret"></span></button>
 							<ul class="dropdown-menu">
@@ -33,7 +37,7 @@
 
 	<div class="row">
 		<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-			<strong>Total: {{ totalPrice }}</strong>
+			<strong>Total: <%= cartStatistics[0].totalAmount %> $</strong>
 		</div>
 	</div>
 	<hr>
