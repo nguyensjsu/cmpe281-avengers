@@ -20,20 +20,19 @@
       <form action="/find" method="post" style="float: left; width: 100%; padding: 20px" >
       <div class="row">    
         <div class="col-xs-8 col-xs-offset-2">
-            <div class="input-group">
-     
+            <div class="input-group">     
                 <div class="input-group-btn search-panel" >
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="display: inline-block">
                         <span id="search_concept">Select</span> <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
                       <li><a href="#author">Author</a></li>
-                      <li><a href="#Title">Title</a></li>
+                      <li><a href="#title">Title</a></li>
                     </ul>
                 </div>
-                <input type="text" class="form-control" name="x" placeholder="Search term...">
+                <input type="text" class="form-control" name="search" placeholder="Search products by Title or Author...">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    <button class="btn btn-default" type="submit" style="display: inline-block"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
                 </div>
         </div>
