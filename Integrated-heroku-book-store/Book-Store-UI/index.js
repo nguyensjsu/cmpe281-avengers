@@ -176,77 +176,98 @@ function activityLog(log, response) {
 }
 	
 // });
-/*
+
 app.get('/add-to-cart/:id', function(request, response) {
 	console.log("haroon testing params");
 	var productId = request.params.id;
 	console.log(request.session);
+	
+	try{
+	var uSession = request.session.sessionvalue;
+    var uId = request.session.currentuser.id;
+    }
+    catch(e) {
+    	//Display alert box and redirect to signin page
+    	if(e.name == "TypeError")
+    	    response.render('user/signin', {login: isLoggedIn});
+    }
     console.log("session value:"+request.session.sessionvalue);
-    console.log("session id:"+request.session.id);
+    console.log("session id:"+request.session.currentuser.id);
+    
     //Check whether the user is logged in
 	var xmlhttp2 = new XMLHttpRequest();  
 	xmlhttp2.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
 			state_changed = true;
 			var data = JSON.parse(this.responseText);
-			console.log("data" + this.responseText);
-			data = JSON.parse(data.data);
-			console.log("data" + data);
-			//console.log("data " + data[0].message);
+			console.log(data);
+			resResult = data.result;
+			// If logged in and session is valid
+            if(resResult == 0) {
 
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		if (this.readyState === 4 && this.status === 200) {
-			state_changed = true;
-			data = this.responseText;
-			//data is in string format
-			data = JSON.parse(data);
-            //data is in json format
-			data = data.data;
-			//data now contains output from product catalog
+                var xmlhttp = new XMLHttpRequest();
+	            xmlhttp.onreadystatechange = function() {
+
+          		if (this.readyState === 4 && this.status === 200) {
+		    	state_changed = true;
+			    data = this.responseText;
+			    //data is in string format
+			    data = JSON.parse(data);
+                //data is in json format
+
+			    data = data.data;
+			    //data now contains output from product catalog
             
-            var requestData = {
-            "author" : data.Author,
-            "imageUrl" : data.Image_URL,
-            "price" : data.Price,
-            "title" : data.Title,
-            "productId" : productId,
-            "userId" : "haroon"
-        }
+                var requestData = {
+                "author" : data.Author,
+                "imageUrl" : data.Image_URL,
+                "price" : data.Price,
+                "title" : data.Title,
+                "productId" : productId,
+                "userId" : "haroon"
+                }
 
             
-            console.log("user id is :"+userId);	        
-            console.log(requestData)
-	        var xmlhttp1 = new XMLHttpRequest();  
-	        xmlhttp1.onreadystatechange = function() {
-		    if (this.readyState === 4 && this.status === 200) {
-			    state_changed = true;
+                console.log("user id is :"+userId);	        
+                console.log(requestData);
+
+                //add to cart
+	            var xmlhttp1 = new XMLHttpRequest();  
+	            xmlhttp1.onreadystatechange = function() {
+		        if (this.readyState === 4 && this.status === 200) {
+			        state_changed = true;
 			    
-			    
-			//response.render('pages/index', {products: array, login: isLoggedIn});
-		    }
-	        }
-            xmlhttp1.open("POST", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
+		            }
+	            }
+                xmlhttp1.open("POST", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
     
-	        xmlhttp1.setRequestHeader("Content-Type", "application/json");
-	        xmlhttp1.send(JSON.stringify(requestData));	
-			response.render('pages/index', {products: array, login: isLoggedIn});
-		}
-	}
+	            xmlhttp1.setRequestHeader("Content-Type", "application/json");
+	            xmlhttp1.send(JSON.stringify(requestData));	
+			    response.render('pages/index', {products: array, login: isLoggedIn});
+		        }
 
-    xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books/"+productId);  //Product Catalog server
-	xmlhttp.setRequestHeader("Content-Type", "application/json");
-	xmlhttp.send();
+	        }
+
+            xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books/"+productId);  //Product Catalog server
+	        xmlhttp.setRequestHeader("Content-Type", "application/json");
+	        xmlhttp.send();
+            } //if valid session
+
+            else {
+
+            }
+
 		}
 	}
-    xmlhttp2.open("GET", "http://127.0.0.1:9000/v1/login"+"?id="+userId+"&session="+session);  //User Activity Logs Python server
+    //xmlhttp2.open("GET", "http://127.0.0.1:9000/v1/login?id="+uId+"&session="+uSession);  //User Activity Logs Python server
+    xmlhttp2.open("POST", "http://127.0.0.1:9000/v1/verifySession");  //User Activity Logs Python server
 	xmlhttp2.setRequestHeader("Content-Type", "application/json");
-	xmlhttp2.send();
+	xmlhttp2.send(JSON.stringify({'id':uId, 'session':uSession}));	
 
 
 });
 
-*/
+/*
 app.get('/add-to-cart/:id', function(request, response) {
 	console.log("haroon testing params");
 	
@@ -295,7 +316,7 @@ app.get('/add-to-cart/:id', function(request, response) {
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
 	xmlhttp.send();
 });
-
+*/
 
 app.get('/', function(request, response){
 	console.log("In GET Products ");

@@ -71,8 +71,16 @@ def login():
         # TODO: Create appropriate http response
 
     if request.method == 'GET':
-        data = request.json
+        print("in get method")
+        print(request)
+        print(str(request.json))
+        data = str(request.json)
+        print(data)
+        
+        #id = request.args.get('id')
+        #session = request.args.get('session')
         result = verify_session(data["id"], data["session"].encode('utf-8'))
+        #result = verify_session(id, session.encode('utf-8'))
         if result:
             return jsonify({"result": 0, "message":"Valid session"});
         else:
@@ -93,6 +101,18 @@ def login():
             return jsonify({"result": 0});
 
         # TODO: Create appropriate http response
+@app.route("/v1/verifySession", methods = ['POST'])
+def verifySession():
+    if request.method == 'POST':
+        data = request.json        
+        #id = request.args.get('id')
+        #session = request.args.get('session')
+        result = verify_session(data["id"], data["session"].encode('utf-8'))
+        #result = verify_session(id, session.encode('utf-8'))
+        if result:
+            return jsonify({"result": 0, "message":"Valid session"});
+        else:
+            return jsonify({"result": 1, "message":"Invalid session"});
 
 
 if __name__ == "__main__":
