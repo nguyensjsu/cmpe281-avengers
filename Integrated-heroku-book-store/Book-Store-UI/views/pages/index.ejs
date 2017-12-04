@@ -11,14 +11,36 @@
       <div class="dropdown" style="margin-left: 25px">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i> Sort on Price <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="/user/profile">High-Low</a></li>
+          <li><a href="/hightolow">High-Low</a></li>
           <li role="separator" class="divider"></li>
-          <li><a href="/logs">Low-High</a></li>
+          <li><a href="/lowtohigh">Low-High</a></li>
         </ul>
       </div>
-      <form action="/signin" method="post" style="float: left; width: 100%; padding: 20px">
-       <input type="text" id="search" name="search" class="form-control" placeholder="Search Based on Author Name/Title" style="width: 85%; margin-right: 25px; display: inline-block">
+      
+      <form action="/find" method="post" style="float: left; width: 100%; padding: 20px" >
+      <div class="row">    
+        <div class="col-xs-8 col-xs-offset-2">
+            <div class="input-group">
+     
+                <div class="input-group-btn search-panel" >
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="display: inline-block">
+                        <span id="search_concept">Select</span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#author">Author</a></li>
+                      <li><a href="#Title">Title</a></li>
+                    </ul>
+                </div>
+                <input type="text" class="form-control" name="x" placeholder="Search term...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+                </div>
+        </div>
+    </div>
+      <!--  <input type="text" id="search" name="search" class="form-control" placeholder="Search Based on Author Name/Title" style="width: 85%; margin-right: 25px; display: inline-block">
        <button type="submit" class="btn btn-primary" style="display: inline-block">Search</button>
+       --> 
       </form>
 
       <div class="row">

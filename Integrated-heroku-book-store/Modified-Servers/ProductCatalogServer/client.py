@@ -39,7 +39,8 @@ class mongo_client:
             data = dumps(output)
         except Exception as e:
             return json.dumps({"Status":"Error"})
-        return json.dumps({"Status": "OK", "data": json.loads(data)})
+        # return json.dumps({"Status": "OK", "data": json.loads(data)})
+        return jsonify({"Status": "OK", "data": data})
 
     def put_one(self,oid):
         try:
@@ -51,7 +52,8 @@ class mongo_client:
             data = dumps(output)
         except Exception as e:
             return json.dumps({"Status":"Error"})
-        return json.dumps({"Status":"OK"})
+        # return json.dumps({"Status":"OK"})
+        return jsonify({"Status": "OK", "data": data})
 
     def get_title(self,title):
         try:
@@ -59,7 +61,8 @@ class mongo_client:
             data = dumps(output)
         except Exception as e:
             return json.dumps({"Status":"Error"})
-        return json.dumps({"Status": "OK", "data": json.loads(data)})
+        # return json.dumps({"Status": "OK", "data": json.loads(data)})
+        return jsonify({"Status": "OK", "data": data})
     
 
     def get_author(self,author):
@@ -68,7 +71,8 @@ class mongo_client:
             data = dumps(output)
         except Exception as e:
             return json.dumps({"Status":"Error"})
-        return json.dumps({"Status": "OK", "data": json.loads(data)})
+        # return json.dumps({"Status": "OK", "data": json.loads(data)})
+        return jsonify({"Status": "OK", "data": data})
 
     def sort_hightolow(self):
         try:
@@ -76,7 +80,8 @@ class mongo_client:
             data = dumps(output)
         except Exception as e:
             return json.dumps({"Status":"Error"})
-        return json.dumps({"Status": "OK", "data": json.loads(data)})
+        # return json.dumps({"Status": "OK", "data": json.loads(data)})
+        return jsonify({"Status": "OK", "data": data})
 
     def sort_lowtohigh(self):
         try:
@@ -84,7 +89,8 @@ class mongo_client:
             data = dumps(output)
         except Exception as e:
             return json.dumps({"Status":"Error"})
-        return json.dumps({"Status": "OK", "data": json.loads(data)})
+        # return json.dumps({"Status": "OK", "data": json.loads(data)})
+        return jsonify({"Status": "OK", "data": data})
 
 
 

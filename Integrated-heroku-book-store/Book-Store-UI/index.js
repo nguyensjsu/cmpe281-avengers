@@ -78,6 +78,8 @@ app.post('/signup', function(request, response) {
 	 				     'password': request.body.password}));
 });
 
+
+
 app.get('/signin', function(request, response) { //URL
 	response.render('user/signin', {login: isLoggedIn});
 });
@@ -347,6 +349,72 @@ app.get('/', function(request, response){
 	xmlhttp.send();
 
 });
+
+
+app.get('/hightolow', function(request, response){
+	console.log("Sorting products from high to low ");
+	var xmlhttp = new XMLHttpRequest();  
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			state_changed = true;
+			//console.log("data" + this.responseText);
+			var data = JSON.parse(this.responseText);
+			//console.log("data 1st parse" + data);
+			data = JSON.parse(data.data);
+			//console.log("data second parse" + data);
+			array = [];
+
+			//console.log("data " + data[0].message);
+			for(d in data){
+				//if(data[d].user != null || data[d].ipAddress != null || data[d].message != null || data[d].timestamp != null){
+					array.push(data[d]);
+				//}
+			}
+			//console.log(array);
+			response.render('pages/index', {products: array, login: isLoggedIn});
+		}
+	}
+    xmlhttp.open("GET", "http://0.0.0.0:8080/v1/sort/hightolow");  //User Activity Logs Python server
+    //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	xmlhttp.send();
+
+});
+
+
+app.get('/lowtohigh', function(request, response){
+	console.log("Sorting products from high to low ");
+	var xmlhttp = new XMLHttpRequest();  
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			state_changed = true;
+			//console.log("data" + this.responseText);
+			var data = JSON.parse(this.responseText);
+			//console.log("data 1st parse" + data);
+			data = JSON.parse(data.data);
+			//console.log("data second parse" + data);
+			array = [];
+
+			//console.log("data " + data[0].message);
+			for(d in data){
+				//if(data[d].user != null || data[d].ipAddress != null || data[d].message != null || data[d].timestamp != null){
+					array.push(data[d]);
+				//}
+			}
+			//console.log(array);
+			response.render('pages/index', {products: array, login: isLoggedIn});
+		}
+	}
+    xmlhttp.open("GET", "http://0.0.0.0:8080/v1/sort/lowtohigh");  //User Activity Logs Python server
+    //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
+	xmlhttp.setRequestHeader("Content-Type", "application/json");
+	xmlhttp.send();
+
+});
+
+
+
+
 
 app.get('/shopping-cart', function(request, response) {
 	console.log("In Shopping cart");
