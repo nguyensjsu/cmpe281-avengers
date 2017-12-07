@@ -447,20 +447,17 @@ app.get('/shopping-cart', function(request, response) {
 	console.log("haroon testing shopping-cart");
 	
 	try{
+
+	    if(request.session.sessionvalue === undefined || request.session.currentuser === undefined || request.session.sessionvalue === "" || request.session.currentuser === "")
+	    {
+	    	response.render('user/signin', {login: isLoggedIn});
+	    }
+        
+	else{
 	var uSession = request.session.sessionvalue;
-    var uId = request.session.currentuser.id;
-    if(uSession === undefined || uId === undefined || uSession === "")
-    {
-    	response.render('user/signin', {login: isLoggedIn});
-    }
-    }
-    catch(e) {
-    	//Display alert box and redirect to signin page
-    	if(e.name == "TypeError")
-    	    response.render('user/signin', {login: isLoggedIn});
-    }
-    console.log("session value:"+request.session.sessionvalue);
-    console.log("session id:"+request.session.currentuser.id);
+    	var uId = request.session.currentuser.id;
+    	console.log("session value:"+request.session.sessionvalue);
+    	console.log("session id:"+request.session.currentuser.id);
     
     //Check whether the user is logged in
 	var xmlhttp2 = new XMLHttpRequest();  
@@ -516,6 +513,13 @@ app.get('/shopping-cart', function(request, response) {
     xmlhttp2.open("POST", "http://127.0.0.1:9000/v1/verifySession");  //User Activity Logs Python server
 	xmlhttp2.setRequestHeader("Content-Type", "application/json");
 	xmlhttp2.send(JSON.stringify({'id':uId, 'session':uSession}));	
+	}
+	}
+	catch(e) {
+	    	//Display alert box and redirect to signin page
+	    	if(e.name == "TypeError")
+	    	    response.render('user/signin', {login: isLoggedIn});
+	    }
 
 
 });
