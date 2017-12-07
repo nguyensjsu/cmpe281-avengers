@@ -20,9 +20,23 @@
       <ul class="list-group">
           <li class="list-group-item">
             <h3> <%=orders.length %></h3>
+            <div class="row">
+            <% for(var j=0; j < orders[i].orderData.length; j++) { 
+            %>
+            <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+            <img src=<%= orders[i].orderData[j].imageUrl %> alt="..." class="img-responsive bookImage" >
+            
+            <h3 class= "bookTitle" title="<%= orders[i].orderData[j].title %>"> <%= orders[i].orderData[j].title %></h3>
+            <div class="label label-success" title="$<%= orders[i].orderData[j].price %>"><Strong>Price: </Strong>$<%= orders[i].orderData[j].price %></div>
+            <span class="badge"><%= orders[i].orderData[j].quantity %></span>
+            </div>
+            <% } %>
+            </div>            
             <div class="label label-success" title="$<%= orders[i]._id %>"><Strong>Order Id: </Strong>$<%= orders[i]._id %></div>
-            <div class="label label-success" title="$<%= orders[i].timestamp %>"><Strong>Order Date: </Strong>$<%= orders[i].timestamp %>
+            <div class="label label-success" title="$<%= orders[i].timestamp %>"><Strong>Order Date: </Strong>$<%= orders[i].timestamp %></div>
             <div class="label label-success" title="$<%= orders[i].userId %>"><Strong>User Id: </Strong>$<%= orders[i].userId %></div>
+            <div class="label label-success" title="$<%= orders[i].stats[0].totalAmount %>"><Strong>Total Amount: </Strong>$<%= orders[i].stats[0].totalAmount %></div>
+              <div class="label label-success" title="$<%= orders[i].stats[0].totalQuantity %>"><Strong>Total Quantity: </Strong>$<%= orders[i].stats[0].totalQuantity %></div>
           </li>
       </ul>
     </div>
