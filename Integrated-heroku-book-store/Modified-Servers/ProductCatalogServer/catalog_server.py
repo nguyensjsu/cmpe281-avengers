@@ -49,13 +49,13 @@ def get_books():
 
 @app.route('/v1/search/title/<title>')
 def get_title(title):
-    response = client.get_title()
+    response = client.get_title(title)
     return response
 
 
 @app.route('/v1/search/author/<author>')
 def get_author(author):
-    response = client.get_author()
+    response = client.get_author(author)
     return response
 
 

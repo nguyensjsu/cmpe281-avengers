@@ -58,7 +58,7 @@ class mongo_client:
 
     def get_title(self,title):
         try:
-            output = self.collection.find({'Title': title})
+            output = self.collection.find({'Title': {'$regex':title}})
             data = dumps(output)
         except Exception as e:
             return json.dumps({"Status":"Error"})
@@ -68,7 +68,7 @@ class mongo_client:
 
     def get_author(self,author):
         try:
-            output = self.collection.find({'Author': author})
+            output = self.collection.find({'Author': {'$regex':author}})
             data = dumps(output)
         except Exception as e:
             return json.dumps({"Status":"Error"})
@@ -92,6 +92,10 @@ class mongo_client:
             return json.dumps({"Status":"Error"})
         # return json.dumps({"Status": "OK", "data": json.loads(data)})
         return jsonify({"Status": "OK", "data": data})
+
+
+
+
 
 
 

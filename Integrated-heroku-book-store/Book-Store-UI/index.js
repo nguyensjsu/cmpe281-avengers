@@ -412,50 +412,14 @@ app.get('/lowtohigh', function(request, response){
 });
 
 
-app.post('/title', function(request, response) {
-	console.log("Finding product");
-	var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange = function() {
-			if (this.readyState === 4 && this.status === 200) {
-				state_changed = true;
-			//console.log("data" + this.responseText);
-			var data = JSON.parse(this.responseText);
-			//console.log("data 1st parse" + data);
-			data = JSON.parse(data.data);
-			//console.log("data second parse" + data);
-			array = [];
-
-			//console.log("data " + data[0].message);
-			for(d in data){
-				//if(data[d].user != null || data[d].ipAddress != null || data[d].message != null || data[d].timestamp != null){
-					array.push(data[d]);
-				//}
-			}
-			//console.log(array);
-			response.render('pages/index', {products: array, login: isLoggedIn});
-		}
-	}
-    var my_url = "http://0.0.0.0:8080/v1/search/title"+request.search;
-    xmlhttp.open("GET", my_url);  //User Activity Logs Python server
-    //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
-	xmlhttp.setRequestHeader("Content-Type", "application/json");
-	xmlhttp.send();
-
-});
 
 
 app.post('/find', function(request, response) {
-	console.log(request.body);
-	//console.log("Finding product");
-    //console.log(request.search);
-
-
-});
-
-app.post('/author', function(request, response) {
-	console.log("Finding product");
+	// console.log(JSON.parse(request.body));
+	console.log(typeof(request.body.filter));
 	var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange = function() {
+	var my_url = "";
+	xmlhttp.onreadystatechange = function() {
 			if (this.readyState === 4 && this.status === 200) {
 				state_changed = true;
 			//console.log("data" + this.responseText);
@@ -475,13 +439,21 @@ app.post('/author', function(request, response) {
 			response.render('pages/index', {products: array, login: isLoggedIn});
 		}
 	}
-    var my_url = "http://0.0.0.0:8080/v1/search/author"+request.search;
+	if(request.body.filter === "Author"){
+           my_url = "http://0.0.0.0:8080/v1/search/author/"+request.body.search;
+	} else {
+		my_url = "http://0.0.0.0:8080/v1/search/title/"+request.body.search;
+	}
+	//console.log("Finding product");
+    //console.log(request.search);
     xmlhttp.open("GET", my_url);  //User Activity Logs Python server
     //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
 	xmlhttp.send();
 
+
 });
+
 
 
 /*
