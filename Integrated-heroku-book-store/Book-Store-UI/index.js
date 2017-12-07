@@ -418,6 +418,10 @@ app.get('/shopping-cart', function(request, response) {
 	try{
 	var uSession = request.session.sessionvalue;
     var uId = request.session.currentuser.id;
+    if(uSession === 'undefined' || uId === 'undefined')
+    {
+    	response.render('user/signin', {login: isLoggedIn});
+    }
     }
     catch(e) {
     	//Display alert box and redirect to signin page
