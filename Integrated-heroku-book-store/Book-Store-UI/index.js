@@ -446,8 +446,9 @@ app.post('/title', function(request, response) {
 
 
 app.post('/find', function(request, response) {
-	console.log("Finding product");
-    console.log(request.search);
+	console.log(request.body);
+	//console.log("Finding product");
+    //console.log(request.search);
 
 
 });
