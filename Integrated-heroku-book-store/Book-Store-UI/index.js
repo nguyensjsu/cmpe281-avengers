@@ -366,13 +366,57 @@ app.get('/lowtohigh', function(request, response){
 
 app.post('/find', function(request, response) {
 	// console.log(JSON.parse(request.body));
-	console.log(typeof(request.body.filter));
-	var xmlhttp = new XMLHttpRequest();
-	var my_url = "";
+	if(request.body.search != ""){
+		console.log(typeof(request.body.filter));
+		var xmlhttp = new XMLHttpRequest();
+		var my_url = "";
 
-	xmlhttp.onreadystatechange = function() {
-			if (this.readyState === 4 && this.status === 200) {
-				state_changed = true;
+		xmlhttp.onreadystatechange = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					state_changed = true;
+				//console.log("data" + this.responseText);
+				var data = JSON.parse(this.responseText);
+				//console.log("data 1st parse" + data);
+				data = JSON.parse(data.data);
+				//console.log("data second parse" + data);
+				array = [];
+
+				//console.log("data " + data[0].message);
+				for(d in data){
+					//if(data[d].user != null || data[d].ipAddress != null || data[d].message != null || data[d].timestamp != null){
+						array.push(data[d]);
+					//}
+				}
+				//console.log(array);
+				response.render('pages/index', {products: array, login: isLoggedIn});
+			}
+		}
+		if(request.body.filter === "Author"){
+		   my_url = "http://0.0.0.0:8080/v1/search/author/"+request.body.search;
+		} else {
+			my_url = "http://0.0.0.0:8080/v1/search/title/"+request.body.search;
+		}
+	
+	    	if(!(request.session.sessionvalue === undefined || request.session.currentuser === undefined || request.session.sessionvalue === "" || request.session.currentuser === "")){
+			var log = {
+							"user" : request.session.currentuser.firstname,
+							"message" : request.session.currentuser.firstname+" Searched For "+ request.body.search +" in "+request.body.filter,
+							"timestamp" : new Date()
+						};
+			activityLog(log, response);
+		}
+		//console.log("Finding product");
+	    //console.log(request.search);
+	    xmlhttp.open("GET", my_url);  //User Activity Logs Python server
+	    //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		xmlhttp.send();
+	}
+	else{
+		var xmlhttp = new XMLHttpRequest();  
+		xmlhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			state_changed = true;
 			//console.log("data" + this.responseText);
 			var data = JSON.parse(this.responseText);
 			//console.log("data 1st parse" + data);
@@ -389,27 +433,13 @@ app.post('/find', function(request, response) {
 			//console.log(array);
 			response.render('pages/index', {products: array, login: isLoggedIn});
 		}
+		}
+	    xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books");  //User Activity Logs Python server
+	    //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
+		xmlhttp.setRequestHeader("Content-Type", "application/json");
+		xmlhttp.send();
+	
 	}
-	if(request.body.filter === "Author"){
-           my_url = "http://0.0.0.0:8080/v1/search/author/"+request.body.search;
-	} else {
-		my_url = "http://0.0.0.0:8080/v1/search/title/"+request.body.search;
-	}
-
-	var log = {
-					"user" : request.session.currentuser.firstname,
-					"message" : request.session.currentuser.firstname+" Searched For "+ request.body.search +" in "+request.body.filter,
-					"timestamp" : new Date()
-				};
-	activityLog(log, response);
-	//console.log("Finding product");
-    //console.log(request.search);
-    xmlhttp.open("GET", my_url);  //User Activity Logs Python server
-    //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
-	xmlhttp.setRequestHeader("Content-Type", "application/json");
-	xmlhttp.send();
-
-
 });
 
 
