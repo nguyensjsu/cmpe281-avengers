@@ -514,14 +514,21 @@ app.get('/checkout', function(request, response) {
         	xmlhttp.onreadystatechange = function() {
 		    if (this.readyState === 4 && this.status === 200) {
 			    state_changed = true;
-    			data = this.responseText;
-		    	//data is in string format
-			    data = JSON.parse(data);
-                //data is in json format
-    	  		orderData = data.data;
-    	  		console.log(orderData);
-    	  		parsedOrderData = JSON.parse(orderData);
-		    	//orderData now contains output from shopping cart
+
+	    		var data = JSON.parse(this.responseText);
+		    	orderData = JSON.parse(data.data);
+			    console.log(orderData);
+                orderStats = JSON.parse(data.stats);
+                console.log(orderStats);
+		    	orderArray = [];
+                orderStatsArray = [];
+
+     			for(data in orderData){
+	   				orderArray.push(orderData[data]);
+		    	}
+			    for(stat in orderStats){
+					orderStatsArray.push(orderStats[stat]);
+    			}
             //add the shopping cart data to order database using multiple
             //document insert
 	        var xmlhttp1 = new XMLHttpRequest();  
@@ -535,20 +542,10 @@ app.get('/checkout', function(request, response) {
 			    console.log(data);
 			    status = data.Status;
 			    if(status == 'OK') {
-
-                userOrderStats = data.stats;
-			    console.log(userOrderStats);
-		    	orderArray = [];
-                orderStatsArray = [];
-
-     			for(data in parsedOrderData){
-     				console.log(data);
-	   				orderArray.push(parsedOrderData[data]);
-		    	}
-			    for(stat in userOrderStats){
-					orderStatsArray.push(userOrderStats[stat]);
-    			}			    	
-			    response.render('pages/order', {data: orderArray, stats: orderStatsArray,login: isLoggedIn});
+		    	orderDate = data.timestamp;
+		    	orderId = data.orderId;
+			    response.render('pages/order', {data: orderArray, stats: orderStatsArray,
+			     orderId: orderId, orderDate:orderDate, login: isLoggedIn});
 			    }
                 else {
                 	//display error message order not placed
