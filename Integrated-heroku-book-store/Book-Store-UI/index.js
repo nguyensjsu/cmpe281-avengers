@@ -65,7 +65,7 @@ app.post('/signup', function(request, response) {
 					"timestamp" : new Date()
 				};
 				activityLog(log, response);
-
+				console.log(array);
 				response.render('pages/index', {products: array, login: isLoggedIn});
 		        }
 		}
@@ -128,10 +128,11 @@ app.get('/logout', function (request, response) {
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState === 4 && this.status === 200) {
 			console.log("API call successful for sign out. Status: " + this.status);
-			res = this.responseText;
-			if(res.result == "0")
+			res = JSON.parse(this.responseText);
+			console.log(this.responseText);
+			if(res.result == 0)
 				console.log("Session deleted successfully.");
-			else if (res.result == "1")	
+			else if (res.result == 1)	
 				console.log("Error deleting session.");	
 			else	
 				console.log("Session does not exist for the user.");		
@@ -418,7 +419,7 @@ app.get('/shopping-cart', function(request, response) {
 	try{
 	var uSession = request.session.sessionvalue;
     var uId = request.session.currentuser.id;
-    if(uSession === 'undefined' || uId === 'undefined')
+    if(uSession === undefined || uId === undefined || uSession === "")
     {
     	response.render('user/signin', {login: isLoggedIn});
     }
