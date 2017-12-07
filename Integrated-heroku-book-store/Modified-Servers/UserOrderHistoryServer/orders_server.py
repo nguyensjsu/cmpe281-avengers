@@ -96,11 +96,14 @@ def insertOrUpdateOrder():
         print(result)
         userId = request.json['userId']
         orderData = request.json['orderData']
+        orderStats = request.json['stats']
         #orderData = ast.literal_eval(orderData)
         order = {}
         order['_id'] = generate_orderid()
         order['orderData'] = orderData
         order['timestamp'] = "timestamp"
+        order['userId'] = userId
+        order['stats'] = orderStats
         """
         output = myOrders.insert_many(orderData)
         print("insert many sucessful")
@@ -116,8 +119,7 @@ def insertOrUpdateOrder():
                                  { "$multiply": [ "$price", "$quantity" ] }
                                  },
                         "totalQuantity": { "$sum": "$quantity" } }
-                },
-                
+                }
          ]
          )
         statistics = dumps(stats)
@@ -125,7 +127,8 @@ def insertOrUpdateOrder():
         data = myOrders.insert_one(order)
         print(data)
         return jsonify({"Status" : "OK",
-        "orderId":order['_id'], "timestamp":order['timestamp']})
+        "orderId":order['_id'], "timestamp":order['timestamp'],
+        "userId":userId})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
 if __name__ == '__main__':

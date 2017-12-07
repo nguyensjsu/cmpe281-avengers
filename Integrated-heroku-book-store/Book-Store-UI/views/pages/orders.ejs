@@ -3,16 +3,15 @@
 <head>
   <% include ../partials/header.ejs %>
 </head>
-
+<% include ../partials/nav.ejs %>
 <body>
 <div class="jumbotron text-center">
 	<div class="container">
 <h1>Order History</h1>
-<div class="label label-success" title="$<%= orderId %>"><Strong>Order Id: </Strong>$<%= orderId %></div>
-<div class="label label-success" title="$<%= orderDate %>"><Strong>Order Date: </Strong>$<%= orderDate %></div>
+</div>
 <table class="table">
   <div class="row">
-    <% for(var i=0; i < data.length; i++) { 
+    <% for(var i=0; i < orders.length; i++) { 
 
     var checkout = "/checkout";
         %>
@@ -20,22 +19,15 @@
       
       <ul class="list-group">
           <li class="list-group-item">
-            <img src=<%= data[i].imageUrl %> alt="..." class="img-responsive bookImage" >
-            <h3> <%=data.length %></h3>
-            <h3 class= "bookTitle" title="<%= data[i].title %>"> <%= data[i].title %></h3>
-            <div class="label label-success" title="$<%= data[i].price %>"><Strong>Price: </Strong>$<%= data[i].price %></div>
-            <span class="badge"><%= data[i].quantity %></span>
-
+            <h3> <%=orders.length %></h3>
+            <div class="label label-success" title="$<%= orders[i]._id %>"><Strong>Order Id: </Strong>$<%= orders[i]._id %></div>
+            <div class="label label-success" title="$<%= orders[i].timestamp %>"><Strong>Order Date: </Strong>$<%= orders[i].timestamp %>
+            <div class="label label-success" title="$<%= orders[i].userId %>"><Strong>User Id: </Strong>$<%= orders[i].userId %></div>
           </li>
       </ul>
     </div>
     <% } %>
   </div>
-  <div class="row">
-    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-      <strong>Total: <%= stats[0].totalAmount %> $</strong>
-    </div>
-  </div>  
 </table>
 </div>
 </div>
