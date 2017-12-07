@@ -173,7 +173,7 @@ def getCartDetails():
     try:
         result = json.loads(request.get_data(as_text=True))
         userId = request.json['userId']
-        print("user id :"+userId)
+        print("user id is:"+userId)
         items = myCart.find({"userId":userId})
         data = dumps(items)
         print(str(items))

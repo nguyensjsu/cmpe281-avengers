@@ -37,10 +37,11 @@ class mongo_client:
         try:
             output = self.collection.find_one({'_id': ObjectId(oid)})
             data = dumps(output)
+            print(data)
         except Exception as e:
             return json.dumps({"Status":"Error"})
-        # return json.dumps({"Status": "OK", "data": json.loads(data)})
-        return jsonify({"Status": "OK", "data": data})
+        return json.dumps({"Status": "OK", "data": json.loads(data)})
+        #return jsonify({"Status": "OK", "data": data})
 
     def put_one(self,oid):
         try:

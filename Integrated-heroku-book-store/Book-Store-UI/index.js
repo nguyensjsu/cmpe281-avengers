@@ -182,6 +182,7 @@ function activityLog(log, response) {
 app.get('/add-to-cart/:id', function(request, response) {
 	console.log("haroon testing params");
 	var productId = request.params.id;
+	console.log(productId);
 	console.log(request.session);
 	
 	try{
@@ -226,11 +227,9 @@ app.get('/add-to-cart/:id', function(request, response) {
                 "price" : data.Price,
                 "title" : data.Title,
                 "productId" : productId,
-                "userId" : "haroon"
+                "userId" : uId
                 }
-
-            
-                console.log("user id is :"+userId);	        
+        
                 console.log(requestData);
 
                 //add to cart
@@ -484,7 +483,7 @@ app.post('/author', function(request, response) {
 });
 
 
-
+/*
 app.get('/shopping-cart', function(request, response) {
 	console.log("In Shopping cart");
 	var xmlhttp = new XMLHttpRequest();  
@@ -516,13 +515,89 @@ app.get('/shopping-cart', function(request, response) {
 		}
 	}
     xmlhttp.open("POST", "http://0.0.0.0:9999/v1/shoppingCart");  //User Activity Logs Python server
-    //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
 	var requestData = {"userId": "haroon"};
 	console.log(requestData);
 	xmlhttp.send(JSON.stringify(requestData));
 });
 
+*/
+
+app.get('/shopping-cart', function(request, response) {
+	console.log("haroon testing shopping-cart");
+	
+	try{
+	var uSession = request.session.sessionvalue;
+    var uId = request.session.currentuser.id;
+    }
+    catch(e) {
+    	//Display alert box and redirect to signin page
+    	if(e.name == "TypeError")
+    	    response.render('user/signin', {login: isLoggedIn});
+    }
+    console.log("session value:"+request.session.sessionvalue);
+    console.log("session id:"+request.session.currentuser.id);
+    
+    //Check whether the user is logged in
+	var xmlhttp2 = new XMLHttpRequest();  
+	xmlhttp2.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			state_changed = true;
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			resResult = data.result;
+			// If logged in and session is valid
+            if(resResult == 0) {
+
+	            var xmlhttp = new XMLHttpRequest();  
+				xmlhttp.onreadystatechange = function() {
+         		if (this.readyState === 4 && this.status === 200) {
+		    	state_changed = true;
+			  
+     			console.log("after get from python db" + this.responseText);
+	    		var data = JSON.parse(this.responseText);
+		    	cartBooks = JSON.parse(data.data);
+			    console.log(cartBooks);
+                cartStats = JSON.parse(data.stats);
+                console.log(cartStats);
+		    	cartArray = [];
+                cartStatsArray = [];
+
+     			for(data in cartBooks){
+	   				cartArray.push(cartBooks[data]);
+		    	}
+			    for(stat in cartStats){
+					cartStatsArray.push(cartStats[stat]);
+    			}
+	     		console.log("cartStatsArray");
+		     	console.log(cartStatsArray.totalAmount);
+    			console.log(cartStatsArray[0].totalAmount);
+	    		response.render('shop/shopping-cart', {cartItems: cartArray, login: isLoggedIn,
+		    	cartStatistics : cartStatsArray } );
+		        }
+	            }
+                xmlhttp.open("POST", "http://0.0.0.0:9999/v1/shoppingCart");  //User Activity Logs Python server
+             	xmlhttp.setRequestHeader("Content-Type", "application/json");
+            	var requestData = {"userId": uId};
+            	console.log(requestData);
+            	xmlhttp.send(JSON.stringify(requestData));
+
+            } //if valid session
+
+            else {
+
+            }
+
+		}
+	}
+    xmlhttp2.open("POST", "http://127.0.0.1:9000/v1/verifySession");  //User Activity Logs Python server
+	xmlhttp2.setRequestHeader("Content-Type", "application/json");
+	xmlhttp2.send(JSON.stringify({'id':uId, 'session':uSession}));	
+
+
+});
+
+/*
 app.get('/checkout', function(request, response) {
 	console.log("Inside checkout page");
 	var xmlhttp = new XMLHttpRequest();
@@ -541,6 +616,7 @@ app.get('/checkout', function(request, response) {
             // Write code to add multiple documents to mongodb
 
             console.log(data);
+
 	        var xmlhttp1 = new XMLHttpRequest();  
 	        xmlhttp1.onreadystatechange = function() {
 		    if (this.readyState === 4 && this.status === 200) {
@@ -563,7 +639,85 @@ app.get('/checkout', function(request, response) {
 	var requestData = {"userId": "haroon"};
 	xmlhttp.send(JSON.stringify(requestData));	
 });
+*/
 
+app.get('/checkout', function(request, response) {
+	console.log("In checkout");
+	
+	try{
+	var uSession = request.session.sessionvalue;
+    var uId = request.session.currentuser.id;
+    }
+    catch(e) {
+    	//Display alert box and redirect to signin page
+    	if(e.name == "TypeError")
+    	    response.render('user/signin', {login: isLoggedIn});
+    }
+    console.log("session value:"+request.session.sessionvalue);
+    console.log("user id:"+request.session.currentuser.id);
+    
+    //Check whether the user is logged in
+	var xmlhttp2 = new XMLHttpRequest();  
+	xmlhttp2.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			state_changed = true;
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			resResult = data.result;
+			// If logged in and session is valid
+            if(resResult == 0) {
+	        var xmlhttp = new XMLHttpRequest();
+        	xmlhttp.onreadystatechange = function() {
+		    if (this.readyState === 4 && this.status === 200) {
+			    state_changed = true;
+    			data = this.responseText;
+	    		console.log(data);
+		    	//data is in string format
+			    data = JSON.parse(data);
+                //data is in json format
+    	  		data = data.data;
+		    	//data now contains output from shopping cart
+            
+                // Write code to add multiple documents to mongodb
+
+                console.log(data);
+
+	        var xmlhttp1 = new XMLHttpRequest();  
+	        xmlhttp1.onreadystatechange = function() {
+		    if (this.readyState === 4 && this.status === 200) {
+			    state_changed = true;
+			    
+			    
+			//response.render('pages/index', {products: array, login: isLoggedIn});
+		    }
+	        }
+            xmlhttp1.open("POST", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
+    
+	        xmlhttp1.setRequestHeader("Content-Type", "application/json");
+	        xmlhttp1.send(JSON.stringify(requestData));	
+			response.render('pages/order', {products: array, login: isLoggedIn});
+		    }
+	        }
+
+            xmlhttp.open("POST", "http://0.0.0.0:9999/v1/checkout");  //Product Catalog server
+         	xmlhttp.setRequestHeader("Content-Type", "application/json");
+         	var requestData = {"userId": uId};
+         	xmlhttp.send(JSON.stringify(requestData));
+            } //if valid session
+
+            else {
+
+            }
+
+		}
+	}//end of function
+    //xmlhttp2.open("GET", "http://127.0.0.1:9000/v1/login?id="+uId+"&session="+uSession);  //User Activity Logs Python server
+    xmlhttp2.open("POST", "http://127.0.0.1:9000/v1/verifySession");  //User Activity Logs Python server
+	xmlhttp2.setRequestHeader("Content-Type", "application/json");
+	xmlhttp2.send(JSON.stringify({'id':uId, 'session':uSession}));	
+
+
+});
 
 app.get('/logs', function(request, response){
 	console.log("In GET Logs ");

@@ -95,8 +95,9 @@ def book_by_id(oid):
         app.logger.info("Recieved a GET One Request")
         ''' Retrieve the document by its _id'''
 
-        response = client.get_one(oid)
-        data = json.loads(response)
+        result = client.get_one(oid)
+        print(result);
+        data = json.loads(result)
         
         ''' Check if the returned document is empty.
             If empty, return 404 status as the document is not found''' 
