@@ -11,24 +11,27 @@
 		<!--var checkout = "/checkout/"+cartItems[i].userId;-->
 		var checkout = "/checkout";
         %>
-		<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+		<div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-2">
 			<ul class="list-group">
 
 					<li class="list-group-item">
 						<img src=<%= cartItems[i].imageUrl %> alt="..." class="img-responsive bookImage" >
 						
 						<h3 class= "bookTitle" title="<%= cartItems[i].title %>"> <%= cartItems[i].title %></h3>
-						<!--<strong><%= cartItems[i].title %></strong>-->
-                        <div class="label label-success" title="$<%= cartItems[i].price %>"><Strong>Price: </Strong>$<%= cartItems[i].price %></div>
-                        <span class="badge"><%= cartItems[i].quantity %></span>
-						<!--<span class="label label-success"><%= cartItems[i].price %></span>-->
-						<div class="btn-group">
-							<button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action<span class="caret"></span></button>
-							<ul class="dropdown-menu">
-								<li><a href="/reduce/{{this.item._id}}">Reduce by 1</a></li>
-								<li><a href="/remove/{{this.item._id}}">Remove All</a></li>
-							</ul>
-						</div>
+						<div class="label label-success" title="$<%= cartItems[i].price %>"><Strong>Price: </Strong>$<%= cartItems[i].price %></div>
+                      
+						<span class="badge"><%= cartItems[i].quantity %></span>
+						<div>
+						<form action="/updateQty" method="post" style="display: inline-block" >
+                        <div class="input-group">     
+                        <input type="text" class="form-control" name="quantity" placeholder="update qty">
+                        <input type="hidden" name="productData" value=<%= cartItems[i] %>>
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit" style="display: inline-block"><span class="glyphicon glyphicon-ok"></span></button>
+                        </span>
+                        </div>
+                        </form>
+                        </div>
 					</li>
 			</ul>
 		</div>
