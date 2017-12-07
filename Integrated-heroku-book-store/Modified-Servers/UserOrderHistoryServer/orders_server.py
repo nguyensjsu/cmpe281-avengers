@@ -16,7 +16,8 @@ from flask import Flask,render_template,jsonify,json,request
 from fabric.api import *
 from pprint import pprint
 from bson.json_util import dumps
-
+import ast
+import uuid
 app = Flask(__name__)
 
 """
@@ -34,7 +35,9 @@ db = client["financialData"]
 #Collection name
 myOrders = db["orderHistory"]
 
-
+# Generates a new order ID
+def generate_orderid():
+    return str(uuid.uuid4())
 """
 findProduct : returns the details of a product for
               a given user from the database
@@ -58,6 +61,7 @@ def findProduct():
         userId = result['userId']
         productId = result['productId']
         item = myCart.find_one({"userId":long(userId), "productId" : long(productId)})
+        print("find one success")
         data = dumps(item)
         print(str(item))
         return jsonify({"Status" : "OK", "data" : data})
@@ -83,48 +87,42 @@ def getOrderDetails():
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
 
-"""
-insertOrUpdateItemInCart: This method updates the quantity
-     of the product if it is available or else inserts the
-     product in the shopping cart
-"""
+
 @app.route('/v1/order', methods=['POST'])
 def insertOrUpdateOrder():
-    #APICallToProductCatalog
-    #productDetails = "curl http://localhost:5000/books/"+productId
-    #It is assumed that user Id is obtained from user db
-    #ProductId and productName from productCatalog
+
     try:
         result = json.loads(request.get_data(as_text=True))
-        userId = request.json['userId']
-        productId = request.json['productId']
-        title = request.json['title']
-        author = request.json['author']
-        price = request.json['price']
-        imageUrl = request.json['imageUrl']
-        
-        output = myCart.update_one(
-           {
-            "userId":userId,
-            "productId": productId,
-            "title": title,
-            "author": author,
-            "price":price,
-            "imageUrl": imageUrl
-           },
-           {
-            "$inc": {"quantity":1}
-           },
-           upsert = True)
-        #data = dumps(output)
-        print("Post sucessful")
         print(result)
-        return jsonify({"Status": "OK", "result" : result})
+        userId = request.json['userId']
+        orderData = request.json['orderData']
+        orderData = ast.literal_eval(orderData)
+        #orderData['orderId'] = generate_orderid()
+        output = myOrders.insert_many(orderData)
+        print("insert many sucessful")
+        print("Post sucessful")
+        
+        stats = myOrders.aggregate(
+            [
+                { "$match" : { "userId" : userId} },
+                { "$group":          
+                    {   
+                        "_id": { "userId": "$userId" },
+                        "totalAmount": 
+                            { "$sum": 
+                                 { "$multiply": [ "$price", "$quantity" ] }
+                                 },
+                        "totalQuantity": { "$sum": "$quantity" } }
+                },
+                
+         ]
+         )
+        statistics = dumps(stats)
+        return jsonify({"Status" : "OK", "stats":statistics})
     except Exception, e:
-        return jsonify(status='ERROR',message=str(e),result = result)
-
-
+        return jsonify(status='ERROR',message=str(e))
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=2000)
+
 
 

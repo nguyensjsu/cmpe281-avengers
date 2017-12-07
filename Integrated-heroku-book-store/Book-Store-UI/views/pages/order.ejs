@@ -17,6 +17,31 @@
      <td>Items</td>
      <td>Total Amount</td>
    </tr>
+  <div class="row">
+    <% for(var i=0; i < data.length; i++) { 
+    <!--var checkout = "/checkout/"+cartItems[i].userId;-->
+    var checkout = "/checkout";
+        %>
+    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+      <ul class="list-group">
+
+          <li class="list-group-item">
+            <img src=<%= data[i].imageUrl %> alt="..." class="img-responsive bookImage" >
+            
+            <h3 class= "bookTitle" title="<%= data[i].title %>"> <%= cartItems[i].title %></h3>
+                        <div class="label label-success" title="$<%= data[i].price %>"><Strong>Price: </Strong>$<%= data[i].price %></div>
+                        <span class="badge"><%= data[i].quantity %></span>
+
+          </li>
+      </ul>
+    </div>
+    <% } %>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+      <strong>Total: <%= cartStatistics[0].totalAmount %> $</strong>
+    </div>
+  </div>  
 <% for(var i=0; i < data.length; i++) { %>
    <tr>
      <td><%= data[i].date %></td>

@@ -157,10 +157,26 @@ def getCartDetailsForUser():
         result = json.loads(request.get_data(as_text=True))
         userId = request.json['userId']
         print("In get of shopping cart, user id :"+userId)
-        items = myCart.find({"userId":userId})
+        items = myCart.find({"userId":userId},{"_id":0})
         data = dumps(items)
         print(str(items))
-        return jsonify({"Status" : "OK", "data" : data})
+        stats = myCart.aggregate(
+            [
+                { "$match" : { "userId" : userId} },
+                { "$group":          
+                    {   
+                        "_id": { "userId": "$userId" },
+                        "totalAmount": 
+                            { "$sum": 
+                                 { "$multiply": [ "$price", "$quantity" ] }
+                                 },
+         "totalQuantity": { "$sum": "$quantity" } }
+         }
+         
+         ]
+         )
+        statistics = dumps(stats)
+        return jsonify({"Status" : "OK", "data" : data, "stats":statistics})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e),userId=userId)
 
@@ -179,6 +195,8 @@ def getCartDetails():
         print(str(items))
         stats = myCart.aggregate(
             [
+                #{ "$match" : { "userId" : "88041fab-078c-4e34-8f03-1dadbe1c537a"} },
+                { "$match" : { "userId" : userId} },
                 { "$group":          
                     {   
                         "_id": { "userId": "$userId" },
@@ -188,6 +206,7 @@ def getCartDetails():
                                  },
          "totalQuantity": { "$sum": "$quantity" } }
          }
+         
          ]
          )
         statistics = dumps(stats)
@@ -238,5 +257,6 @@ def insertOrUpdateItemInCart():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=9999)
+
 
 
