@@ -419,6 +419,7 @@ app.post('/find', function(request, response) {
 	console.log(typeof(request.body.filter));
 	var xmlhttp = new XMLHttpRequest();
 	var my_url = "";
+
 	xmlhttp.onreadystatechange = function() {
 			if (this.readyState === 4 && this.status === 200) {
 				state_changed = true;
@@ -444,6 +445,13 @@ app.post('/find', function(request, response) {
 	} else {
 		my_url = "http://0.0.0.0:8080/v1/search/title/"+request.body.search;
 	}
+
+	var log = {
+					"user" : request.session.currentuser.firstname,
+					"message" : request.session.currentuser.firstname+" Searched For "+ request.body.search +" in "+request.body.filter,
+					"timestamp" : new Date()
+				};
+	activityLog(log, response);
 	//console.log("Finding product");
     //console.log(request.search);
     xmlhttp.open("GET", my_url);  //User Activity Logs Python server
