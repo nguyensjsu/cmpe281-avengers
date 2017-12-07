@@ -459,7 +459,6 @@ app.get('/shopping-cart', function(request, response) {
 					cartStatsArray.push(cartStats[stat]);
     			}
 	     		console.log("cartStatsArray");
-		     	console.log(cartStatsArray.totalAmount);
     			console.log(cartStatsArray[0].totalAmount);
 	    		response.render('shop/shopping-cart', {cartItems: cartArray, login: isLoggedIn,
 		    	cartStatistics : cartStatsArray } );
@@ -520,7 +519,8 @@ app.get('/checkout', function(request, response) {
 			    data = JSON.parse(data);
                 //data is in json format
     	  		orderData = data.data;
-    	  		print(orderData);
+    	  		console.log(orderData);
+    	  		parsedOrderData = JSON.parse(orderData);
 		    	//orderData now contains output from shopping cart
             //add the shopping cart data to order database using multiple
             //document insert
@@ -533,10 +533,26 @@ app.get('/checkout', function(request, response) {
 			    data = JSON.parse(data);
 			    console.log("response after adding to order database:");
 			    console.log(data);
-                userOrderData = data.data;
+			    status = data.Status;
+			    if(status == 'OK') {
+
                 userOrderStats = data.stats;
-                console.log(userOrderData);
 			    console.log(userOrderStats);
+		    	orderArray = [];
+                orderStatsArray = [];
+
+     			for(data in parsedOrderData){
+     				console.log(data);
+	   				orderArray.push(parsedOrderData[data]);
+		    	}
+			    for(stat in userOrderStats){
+					orderStatsArray.push(userOrderStats[stat]);
+    			}			    	
+			    response.render('pages/order', {data: orderArray, stats: orderStatsArray,login: isLoggedIn});
+			    }
+                else {
+                	//display error message order not placed
+                }
 			    
 			//response.render('pages/index', {products: array, login: isLoggedIn});
 			    //response.render('pages/order', {data: userOrderData, stats: userOrderStats,login: isLoggedIn});
