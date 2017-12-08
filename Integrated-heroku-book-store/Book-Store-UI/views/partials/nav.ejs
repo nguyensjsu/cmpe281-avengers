@@ -17,7 +17,9 @@
         <li>
           <a href="/shopping-cart">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
-            <span class="badge">{{session.cart.totalQty}}</span>
+            <%if (login == true) { %>
+              <span class="badge"><%= cartItemsQuantity %></span>
+            <% } %>    
           </a>
         </li>
         <li class="dropdown">
