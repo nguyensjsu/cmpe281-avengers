@@ -7,13 +7,9 @@ var csurf = require('csurf');
 //var csurfProtection = csurf();
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
-const flash = require('express-flash-notification');
-
+//const flash = require('express-flash-notification');
 app.set('port', (process.env.PORT || 5000));
-
-//app.use(csurfProtection);
 app.use(bodyParser.urlencoded());
-
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
@@ -22,9 +18,8 @@ app.use(session({
 	saveUninitialiazed: false,
 	cookie: { maxAge: 180 * 60 * 1000} //in milliseconds 
 }));
-app.use(flash(app));
+//app.use(flash(app));
 app.use(express.static(__dirname + '/public'));
-
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -452,25 +447,25 @@ app.post('/find', function(request, response) {
 		xmlhttp.send();
 	
 	}
-	if(request.body.filter === "Author"){
-           my_url = "http://0.0.0.0:8080/v1/search/author/"+request.body.search;
-	} else {
-		my_url = "http://0.0.0.0:8080/v1/search/title/"+request.body.search;
-	}
+// 	if(request.body.filter === "Author"){
+//            my_url = "http://0.0.0.0:8080/v1/search/author/"+request.body.search;
+// 	} else {
+// 		my_url = "http://0.0.0.0:8080/v1/search/title/"+request.body.search;
+// 	}
 
-	var log = {
-					"user" : request.session.currentuser.firstname,
-					"message" : request.session.currentuser.firstname+" Searched For "+ request.body.search +" in "+request.body.filter,
-					"timestamp" : new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
-				};
-	activityLog(log, response);
-	//console.log("Finding product");
-    //console.log(request.search);
-    xmlhttp.open("GET", my_url);  //User Activity Logs Python server
-    //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
-	xmlhttp.setRequestHeader("Content-Type", "application/json");
-	xmlhttp.send();
-});
+// 	var log = {
+// 					"user" : request.session.currentuser.firstname,
+// 					"message" : request.session.currentuser.firstname+" Searched For "+ request.body.search +" in "+request.body.filter,
+// 					"timestamp" : new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+// 				};
+// 	activityLog(log, response);
+// 	//console.log("Finding product");
+//     //console.log(request.search);
+//     xmlhttp.open("GET", my_url);  //User Activity Logs Python server
+//     //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
+// 	xmlhttp.setRequestHeader("Content-Type", "application/json");
+// 	xmlhttp.send();
+ });
 
 
 app.get('/shopping-cart', function(request, response) {
