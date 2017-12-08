@@ -38,3 +38,11 @@
 	text-overflow: ellipsis;
 }
 
+.orders-info{
+	background-color: #5cb85c;
+	padding: 5px;
+	margin-top: 5px;
+	font-size: small;
+	display: inline-block;
+}
+
