@@ -27,12 +27,14 @@
 			<ul class="list-group">
 
 					<li class="list-group-item">
-						<img src=<%= cartItems[i].imageUrl %> alt="..." class="img-responsive bookImage"></img>
+						<img src=<%= cartItems[i].imageUrl %> alt="..." class="img-responsive bookImage" style="display:inline-block; margin-bottom:10px;"></img>
 						<input type="hidden" class="form-control" name="image_URL_Hidden" value=<%= cartItems[i].imageUrl %>></input>
-						<h3 class= "bookTitle" title="<%= cartItems[i].title %>"> <%= cartItems[i].title %></h3>
-						<input type="hidden" class="form-control" name="book_Title_Hidden" value="<%= booktitle %>"/>
-						<h4 class= "bookAuthor" title="<%= cartItems[i].title %>"> <%= cartItems[i].author %></h4>
-						<input type="hidden" class="form-control" name="book_Author_Hidden" value="<%= cartItems[i].author %>"/>
+						<div style="width: 70%;display: inline-block;margin-left: 30px;">
+							<h3 class= "bookTitle" title="<%= cartItems[i].title %>"> <%= cartItems[i].title %></h3>
+							<input type="hidden" class="form-control" name="book_Title_Hidden" value="<%= booktitle %>"/>
+							<h4 class= "bookAuthor" title="<%= cartItems[i].title %>"> <%= cartItems[i].author %></h4>
+							<input type="hidden" class="form-control" name="book_Author_Hidden" value="<%= cartItems[i].author %>"/>
+						</div>
 						<input type="hidden" class="form-control" name="cart_Id" value=<%= cartItems[i]._id.$oid %>>
 						<input type="hidden" class="form-control" name="book_Id" value=<%= cartItems[i].productId %>>
 						<div class="label label-success" title="$<%= cartItems[i].price %>">
@@ -41,7 +43,7 @@
                       				<input type="hidden" class="form-control" name="book_Price_Hidden" value=<%= cartItems[i].price %>>
 						<span class="badge"><%= cartItems[i].quantity %></span>
 						<div>
-					            <div class="input-group"> 
+					            <div class="input-group" style="margin-top: 10px;"> 
 		                			<input type="text" class="form-control" name="quantity" placeholder="update qty" />
 		                			<!--<input type="hidden" name="productData" value=<%= cartItems[i] %>/>-->
 		                			<span class="input-group-btn">
