@@ -72,3 +72,9 @@ TypeError: Object of type 'Cursor' is not JSON serializable
 2017-12-07 16:38:13,781 MainProcess __main__ INFO     Recieved a GET One Request
 2017-12-07 16:38:14,928 MainProcess __main__ INFO     Recieved a GET One Request
 2017-12-07 16:38:41,681 MainProcess __main__ INFO     Recieved a GET One Request
+2017-12-07 20:02:38,953 MainProcess __main__ INFO     Recieved a GET all request
+2017-12-07 20:23:30,323 MainProcess __main__ INFO     Recieved a GET all request
+2017-12-07 20:48:09,235 MainProcess __main__ INFO     Recieved a GET all request
+2017-12-07 22:19:18,987 MainProcess __main__ INFO     Recieved a GET all request
+2017-12-07 22:20:05,972 MainProcess __main__ INFO     Recieved a GET all request
+2017-12-07 22:20:09,564 MainProcess __main__ INFO     Recieved a GET One Request

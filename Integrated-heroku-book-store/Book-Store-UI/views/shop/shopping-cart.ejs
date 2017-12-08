@@ -5,6 +5,14 @@
 </head>
 <% include ../partials/nav.ejs %>
 <body>
+	<% var sharedURL = "/:" + cartItems[i]._id.$oid; %>
+	<script>
+		function shareURL(){
+			console.log("======IN shared URL func=========");
+			// document.getElementById("success").innerHTML = "You Clicked Me!!!";
+			document.getElementById("success").innerHTML = <span>Shop by sharing the cart!!! </span><a href= <%= sharedURL %> <span><b> <%= sharedURL %></b></span></a>;
+		}
+	</script>
 <%if (cartItems.length > 0) { %>
 	<div class="row">
 		<% for(var i=0; i < cartItems.length; i++) { 
@@ -64,7 +72,7 @@
 		</div>
 	</div>
 	<hr>
-	<div class="container">
+	<div class="container" style="width: 5%;display: inline-block;position: relative;vertical-align: top;margin-left: 35%;">
 		<div class="row">
 			<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
 				<a href= <%= checkout %> type="button" class="btn btn-success">Checkout</a>
@@ -72,12 +80,14 @@
 		</div>
 	</div>
 <% } %>
-	<div class="container">
+	<div class="container" style="width: 20% !important; display: inline-block;">
 		<div class="row">
 			<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-				<a href= <%= checkout %> type="button" class="btn btn-success">Share Cart</a>
+				<input type="button" id="sharedURL" class="btn btn-success" value="Share Cart" onclick="shareURL()">
 			</div>
 		</div>
+		<div id="success" class="alert alert-success">
+  		</div>
 	</div>
 <% } else { %>  
 	<div class="container">
