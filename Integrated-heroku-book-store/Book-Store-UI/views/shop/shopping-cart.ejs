@@ -8,6 +8,7 @@
 <%if (cartItems.length > 0) { %>
 	<div class="row">
 		<% for(var i=0; i < cartItems.length; i++) { 
+		if(cartItems[i].quantity > 0) {
 		//var checkout = "/checkout/"+cartItems[i].userId;
 		console.log(cartItems[i].userId);
 		var booktitle = cartItems[i].title.toString();
@@ -47,9 +48,16 @@
 			</ul>
         		</form>
 		</div>
-    <% } %>
+    <% }} %>
 	</div>
-
+<%if (cartStatistics[0].totalAmount == 0) { %>
+	<div class="row">
+		<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+			<strong><h2>No Items in Cart</h2></strong>
+		</div>
+	</div>
+<% } %>
+<%if (cartStatistics[0].totalAmount > 0) { %>
 	<div class="row">
 		<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
 			<strong>Total: <%= cartStatistics[0].totalAmount %> $</strong>
@@ -60,6 +68,13 @@
 		<div class="row">
 			<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
 				<a href= <%= checkout %> type="button" class="btn btn-success">Checkout</a>
+			</div>
+		</div>
+	</div>
+<% } %>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
 				<a href= <%= checkout %> type="button" class="btn btn-success">Share Cart</a>
 			</div>
 		</div>
