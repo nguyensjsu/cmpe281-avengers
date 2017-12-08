@@ -9,7 +9,7 @@
 		function shareURL(){
 			console.log("======IN shared URL func=========");
 			var success_element = document.getElementById("success");
-			var sharedURL = "/SharedCart/" + "<%= userId %>";
+			var sharedURL = "<%= userId %>"+ "/" + "<%= userSession %>" ;
 			success_element.style.display = "block";
 			success_element.innerHTML = "<span>Shop by sharing the cart!!! </span><a href=" +  sharedURL + "<span><b>" + sharedURL +" </b></span></a>";
 		}
