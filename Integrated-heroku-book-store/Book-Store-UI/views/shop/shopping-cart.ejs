@@ -8,32 +8,43 @@
 <!--{{# if cartItems }} -->
 	<div class="row">
 		<% for(var i=0; i < cartItems.length; i++) { 
-		<!--var checkout = "/checkout/"+cartItems[i].userId;-->
+		//var checkout = "/checkout/"+cartItems[i].userId;
+		console.log(cartItems[i].userId);
+		var booktitle = cartItems[i].title.toString();
+		console.log(booktitle);
 		var checkout = "/checkout";
         %>
 		<div class="col-sm-10 col-md-6 col-md-offset-3 col-sm-offset-2">
+			<form action="/updateQty" method="post" style="display: inline-block; width:100%" > 
 			<ul class="list-group">
 
 					<li class="list-group-item">
-						<img src=<%= cartItems[i].imageUrl %> alt="..." class="img-responsive bookImage" >
-						
+						<img src=<%= cartItems[i].imageUrl %> alt="..." class="img-responsive bookImage"></img>
+						<input type="hidden" class="form-control" name="image_URL_Hidden" value=<%= cartItems[i].imageUrl %>></input>
 						<h3 class= "bookTitle" title="<%= cartItems[i].title %>"> <%= cartItems[i].title %></h3>
-						<div class="label label-success" title="$<%= cartItems[i].price %>"><Strong>Price: </Strong>$<%= cartItems[i].price %></div>
-                      
+						<input type="hidden" class="form-control" name="book_Title_Hidden" value="<%= booktitle %>"/>
+						<h4 class= "bookAuthor" title="<%= cartItems[i].title %>"> <%= cartItems[i].author %></h4>
+						<input type="hidden" class="form-control" name="book_Author_Hidden" value="<%= cartItems[i].author %>"/>
+						<input type="hidden" class="form-control" name="book_Id" value="<%= cartItems[i]._id.$oid %>"/>
+						<div class="label label-success" title="$<%= cartItems[i].price %>">
+							<Strong>Price: </Strong>$<%= cartItems[i].price %>
+						</div>
+                      				<input type="hidden" class="form-control" name="book_Price_Hidden" value=<%= cartItems[i].price %>>
 						<span class="badge"><%= cartItems[i].quantity %></span>
 						<div>
-						<form action="/updateQty" method="post" style="display: inline-block" >
-                        <div class="input-group">     
-                        <input type="text" class="form-control" name="quantity" placeholder="update qty">
-                        <input type="hidden" name="productData" value=<%= cartItems[i] %>>
-                        <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit" style="display: inline-block"><span class="glyphicon glyphicon-ok"></span></button>
-                        </span>
-                        </div>
-                        </form>
-                        </div>
+					            <div class="input-group"> 
+		                			<input type="text" class="form-control" name="quantity" placeholder="update qty" />
+		                			<!--<input type="hidden" name="productData" value=<%= cartItems[i] %>/>-->
+		                			<span class="input-group-btn">
+				        			<button class="btn btn-default" type="submit" style="display: inline-block">
+									<span class="glyphicon glyphicon-ok"></span>
+								</button>
+		                			</span>
+			                    	    </div>
+                        			</div>	
 					</li>
 			</ul>
+        		</form>
 		</div>
     <% } %>
 	</div>
