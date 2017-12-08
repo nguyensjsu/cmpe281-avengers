@@ -25,9 +25,7 @@ def insert_log():
     logs = mongo.db.logs_collection
     log = {}
     result = json.loads(request.get_data(as_text=True))
-    log['log_id']=result['log_id']
     log['user']=result['user']
-    log['ipAddress']=result['ipAddress']
     log['message'] = result['message']
     log['timestamp'] = result['timestamp']
     output = logs.insert(log)
