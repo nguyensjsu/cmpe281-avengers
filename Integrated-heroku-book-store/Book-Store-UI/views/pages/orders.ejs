@@ -19,25 +19,23 @@
       
       <ul class="list-group">
           <li class="list-group-item">
-            <h3> <%=orders.length %></h3>
             <div class="row" style="margin-bottom:10px;">
+	    <div class="label label-success orders-info bookTitle orderid-header" style="margin-top:15px;" title="<%= orders[i]._id %>" ><Strong>Order Id: </Strong><%= orders[i]._id %></div>
             <% for(var j=0; j < orders[i].orderData.length; j++) { 
             %>
             <div class="col-sm-6 col-md-9 col-md-offset-2 col-sm-offset-3" style="margin-bottom: 15px;">
             <img src=<%= orders[i].orderData[j].imageUrl %> alt="..." class="img-responsive bookImage" style="display: inline-block;">
             <div style="color: black; width: 60%; display: inline-block; margin-left: 15px;">
-		    <h3 class= "bookTitle" style="color:black;" title="<%= orders[i].orderData[j].title %>"> <%= orders[i].orderData[j].title %></h3>
-		    <div class="label label-success" title="$<%= orders[i].orderData[j].price %>"><Strong>Price: </Strong>$<%= orders[i].orderData[j].price %></div>
-		    <span class="badge"><%= orders[i].orderData[j].quantity %></span>
+		    <h2 class= "bookTitle" style="color:black;" title="<%= orders[i].orderData[j].title %>"> <%= orders[i].orderData[j].title %></h2>
+		    <div class="label label-success" style="font-size: 20px;" title="$<%= orders[i].orderData[j].price %>"><Strong>Price: </Strong>$<%= orders[i].orderData[j].price %></div>
+		    <div style="display: inline-block;font-size: 20px;"><span class="badge" style="font-size: 20px;"><%= orders[i].orderData[j].quantity %></span></div>
 	    </div>
             </div>
             <% } %>
             </div>            
-            <div class="label label-success orders-info" title="<%= orders[i]._id %>"><Strong>Order Id: </Strong><%= orders[i]._id %></div>
-            <div class="label label-success orders-info" title="<%= orders[i].timestamp %>"><Strong>Order Date: </Strong><%= orders[i].timestamp %></div>
-            <div class="label label-success orders-info" title="<%= orders[i].userId %>"><Strong>User Id: </Strong><%= orders[i].userId %></div>
-            <div class="label label-success orders-info" title="$<%= orders[i].stats[0].totalAmount %>"><Strong>Total Amount: </Strong>$<%= orders[i].stats[0].totalAmount %></div>
-              <div class="label label-success orders-info" title="<%= orders[i].stats[0].totalQuantity %>"><Strong>Total Quantity: </Strong><%= orders[i].stats[0].totalQuantity %></div>
+            <div class="order-details" title="<%= orders[i].timestamp %>"><Strong>Order Date: </Strong><%= orders[i].timestamp %></div>
+            <div class="order-details" title="$<%= orders[i].stats[0].totalAmount %>"><Strong>Total Amount: </Strong>$<%= orders[i].stats[0].totalAmount %></div>
+            <div class="order-details" title="<%= orders[i].stats[0].totalQuantity %>" style="margin-bottom:15px;"><Strong>Total Quantity: </Strong><%= orders[i].stats[0].totalQuantity %></div>
           </li>
       </ul>
     </div>
