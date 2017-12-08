@@ -18,6 +18,7 @@ from pprint import pprint
 from bson.json_util import dumps
 import ast
 import uuid
+import datetime
 app = Flask(__name__)
 
 """
@@ -101,7 +102,7 @@ def insertOrUpdateOrder():
         order = {}
         order['_id'] = generate_orderid()
         order['orderData'] = orderData
-        order['timestamp'] = "timestamp"
+        order['timestamp'] = datetime.datetime.now()
         order['userId'] = userId
         order['stats'] = orderStats
         """
