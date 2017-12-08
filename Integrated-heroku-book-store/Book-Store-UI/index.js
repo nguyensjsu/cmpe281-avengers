@@ -31,12 +31,12 @@ app.set('view engine', 'ejs');
 
 var isLoggedIn = false;
 var array = [];
-var userId = "";
 var hasErrors = false;
 var cartItemsQuantity = 0;
+var uId = "";
 
 app.get('/signup', function(request, response) {
-  response.render('user/signup', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+  response.render('user/signup', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
 });
 
 app.post('/signup', function(request, response) {
@@ -54,7 +54,6 @@ app.post('/signup', function(request, response) {
 				res = JSON.parse(this.responseText);
 				state_changed = true;
 				request.session.sessionvalue = res.session;
-				userId = res.id;
 				newUser.id = JSON.stringify(res.id);
 				request.session.id = res.id;
 				console.log("session:" + JSON.stringify(request.session.sessionvalue));		
@@ -69,7 +68,7 @@ app.post('/signup', function(request, response) {
 				};
 				activityLog(log, response);
 
-				response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors,cartItemsQuantity: cartItemsQuantity});
+				response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors,cartItemsQuantity: cartItemsQuantity, userId : uId});
 		        }
 		}
 		console.log("before POST");
@@ -84,7 +83,7 @@ app.post('/signup', function(request, response) {
 
 
 app.get('/signin', function(request, response) { //URL
-	response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+	response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
 });
 
 app.post('/signin', function(request, response) {
@@ -108,7 +107,7 @@ app.post('/signin', function(request, response) {
 				//return done(null, newUser);
 				isLoggedIn = true;
 				// response.flash('success', 'Signed In successfully!!!');
-
+                uId = request.session.currentuser.id;
 				var log = {
 					"user" : request.session.currentuser.firstname,
 					"message" : request.session.currentuser.firstname+" Signed in!",
@@ -116,7 +115,7 @@ app.post('/signin', function(request, response) {
 				};
 				activityLog(log, response);
 
-				response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity});
+				response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId});
 		        }
 		}
 		console.log("before POST for Login");
@@ -157,11 +156,11 @@ app.get('/logout', function (request, response) {
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
 	xmlhttp.send(JSON.stringify({'id': id}));
 	isLoggedIn = false;
-	response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity});
+	response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId});
 });
 
 app.get('/user/profile', function(request,response){
-	response.render('user/profile',{products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity});
+	response.render('user/profile',{products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId});
 });
 
 // app.post('/logs/insert', function(request, response){
@@ -172,7 +171,7 @@ function activityLog(log, response) {
 		if (this.readyState === 4 && this.status === 200) {
 			resptext = JSON.parse(this.responseText);
 			state_changed = true;
-			response.render('pages/logs', {data: log,products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity});
+			response.render('pages/logs', {data: log,products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId});
 		}
 	}
     xmlhttp.open("POST", "http://localhost:7000/logs/insert");
@@ -192,12 +191,12 @@ app.get('/add-to-cart/:id', function(request, response) {
 	
 	try{
 	var uSession = request.session.sessionvalue;
-    var uId = request.session.currentuser.id;
+    uId = request.session.currentuser.id;
     }
     catch(e) {
     	//Display alert box and redirect to signin page
     	if(e.name == "TypeError")
-    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
     }
     console.log("session value:"+request.session.sessionvalue);
     console.log("session id:"+request.session.currentuser.id);
@@ -250,7 +249,7 @@ app.get('/add-to-cart/:id', function(request, response) {
     
 	            xmlhttp1.setRequestHeader("Content-Type", "application/json");
 	            xmlhttp1.send(JSON.stringify(requestData));	
-			    response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity});
+			    response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId});
 		        }
 
 	        }
@@ -294,7 +293,7 @@ app.get('/', function(request, response){
 				//}
 			}
 			//console.log(array);
-			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity});
+			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId});
 		}
 	}
     xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books");  //User Activity Logs Python server
@@ -325,7 +324,7 @@ app.get('/hightolow', function(request, response){
 				//}
 			}
 			//console.log(array);
-			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity});
+			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId});
 		}
 	}
     xmlhttp.open("GET", "http://0.0.0.0:8080/v1/sort/hightolow");  //User Activity Logs Python server
@@ -356,7 +355,7 @@ app.get('/lowtohigh', function(request, response){
 				//}
 			}
 			//console.log(array);
-			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity});
+			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId});
 		}
 	}
     xmlhttp.open("GET", "http://0.0.0.0:8080/v1/sort/lowtohigh");  //User Activity Logs Python server
@@ -393,7 +392,7 @@ app.post('/find', function(request, response) {
 					//}
 				}
 				//console.log(array);
-				response.render('pages/index', {products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+				response.render('pages/index', {products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
 			}
 		}
 		if(request.body.filter === "Author"){
@@ -436,7 +435,7 @@ app.post('/find', function(request, response) {
 				//}
 			}
 			//console.log(array);
-			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity});
+			response.render('pages/index', {userId : uId, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity});
 		}
 		}
 	    xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books");  //User Activity Logs Python server
@@ -466,17 +465,17 @@ app.post('/find', function(request, response) {
 });
 
 
-app.get('/shopping-cart', function(request, response) {
+app.get('/shopping-cart/:userid', function(request, response) {
 	console.log("haroon testing shopping-cart");	
 	try{
 	    if(request.session.sessionvalue === undefined || request.session.currentuser === undefined || request.session.sessionvalue === "" || request.session.currentuser === "")
 	    {
-	    	response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+	    	response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
 	    }       
 	    else
 	    {
 		var uSession = request.session.sessionvalue;
-	    	var uId = request.session.currentuser.id;
+	    	uId = request.session.currentuser.id;
 	    	console.log("session value:"+request.session.sessionvalue);
 	    	console.log("session id:"+request.session.currentuser.id);
 	    
@@ -534,7 +533,7 @@ app.get('/shopping-cart', function(request, response) {
 	catch(e) {
 	    	//Display alert box and redirect to signin page
 	    	if(e.name == "TypeError")
-	    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+	    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
 	    }
 
 
@@ -545,12 +544,12 @@ app.get('/checkout', function(request, response) {
 	
 	try{
 	var uSession = request.session.sessionvalue;
-    var uId = request.session.currentuser.id;
+    uId = request.session.currentuser.id;
     }
     catch(e) {
     	//Display alert box and redirect to signin page
     	if(e.name == "TypeError")
-    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
     }
     console.log("session value:"+request.session.sessionvalue);
     console.log("user id:"+request.session.currentuser.id);
@@ -600,7 +599,7 @@ app.get('/checkout', function(request, response) {
 		    	orderDate = data.timestamp;
 		    	orderId = data.orderId;
 			    response.render('pages/order', {data: orderArray, stats: orderStatsArray,
-			     orderId: orderId, orderDate:orderDate, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+			     orderId: orderId, orderDate:orderDate, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
 			    }
                 else {
                 	//display error message order not placed
@@ -655,7 +654,7 @@ app.get('/logs', function(request, response){
 				}
 			}
 
-			response.render('pages/logs', {data: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+			response.render('pages/logs', {data: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
 		}
 	}
     xmlhttp.open("GET", "http://127.0.0.1:7000/logs");  //User Activity Logs Python server
@@ -670,12 +669,12 @@ app.get('/myOrders', function(request, response) {
 	
 	try{
 	var uSession = request.session.sessionvalue;
-    var uId = request.session.currentuser.id;
+    uId = request.session.currentuser.id;
     }
     catch(e) {
     	//Display alert box and redirect to signin page
     	if(e.name == "TypeError")
-    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
     }    
     //Check whether the user is logged in
 	var xmlhttp2 = new XMLHttpRequest();  
@@ -703,7 +702,7 @@ app.get('/myOrders', function(request, response) {
 	   				ordersArray.push(userOrders[order]);
 		    	}
 
-	    		response.render('pages/orders', {orders: ordersArray, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+	    		response.render('pages/orders', {orders: ordersArray, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
 		        }
 	            }
                 xmlhttp.open("POST", "http://0.0.0.0:2000/v1/myOrders");  //User Activity Logs Python server
@@ -734,16 +733,16 @@ app.post('/updateQty', function(request, response) {
 	console.log(request.body);
 	try{
 	var uSession = request.session.sessionvalue;
-    var uId = request.session.currentuser.id;
+    uId = request.session.currentuser.id;
     if(uSession === 'undefined' || uId === 'undefined')
     {
-    	response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+    	response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
     }
     }
     catch(e) {
     	//Display alert box and redirect to signin page
     	if(e.name == "TypeError")
-    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
     }
     console.log("session value:"+request.session.sessionvalue);
     console.log("session id:"+request.session.currentuser.id);
@@ -783,7 +782,7 @@ app.post('/updateQty', function(request, response) {
     
 	            xmlhttp1.setRequestHeader("Content-Type", "application/json");
 	            xmlhttp1.send(JSON.stringify(requestData));	
-			    response.render('pages/index', {products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+			    response.render('pages/index', {products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
 
 
             } //if valid session
@@ -799,34 +798,11 @@ app.post('/updateQty', function(request, response) {
 	xmlhttp2.send(JSON.stringify({'id':uId, 'session':uSession}));	
 });
 
-app.get('/add-to-shared-cart/:id', function(request, response) {
-	console.log("haroon testing params");
-	var productId = request.params.id;
-	console.log(productId);
-	console.log(request.session);
-	
-	try{
-	var uSession = request.session.sessionvalue;
-    var uId = request.session.currentuser.id;
-    }
-    catch(e) {
-    	//Display alert box and redirect to signin page
-    	if(e.name == "TypeError")
-    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
-    }
-    console.log("session value:"+request.session.sessionvalue);
-    console.log("session id:"+request.session.currentuser.id);
-    
+app.get('/SharedCart/:id', function(request, response) {
+	console.log("haroon testing SharedCart");
+	var cartId = request.params.id;
+	console.log(cartId);
     //Check whether the user is logged in
-	var xmlhttp2 = new XMLHttpRequest();  
-	xmlhttp2.onreadystatechange = function() {
-		if (this.readyState === 4 && this.status === 200) {
-			state_changed = true;
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			resResult = data.result;
-			// If logged in and session is valid
-            if(resResult == 0) {
 
                 var xmlhttp = new XMLHttpRequest();
 	            xmlhttp.onreadystatechange = function() {
@@ -864,46 +840,28 @@ app.get('/add-to-shared-cart/:id', function(request, response) {
     
 	            xmlhttp1.setRequestHeader("Content-Type", "application/json");
 	            xmlhttp1.send(JSON.stringify(requestData));	
-			    response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity});
+			    response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId});
 		        }
 
 	        }
 
-            xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books/"+productId);  //Product Catalog server
+            //xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books/"+productId);  //Product Catalog server
 	        xmlhttp.setRequestHeader("Content-Type", "application/json");
 	        xmlhttp.send();
-            } //if valid session
-
-            else {
-
-            }
-
-		}
-	}
-    //xmlhttp2.open("GET", "http://127.0.0.1:9000/v1/login?id="+uId+"&session="+uSession);  //User Activity Logs Python server
-    xmlhttp2.open("POST", "http://127.0.0.1:9000/v1/verifySession");  //User Activity Logs Python server
-	xmlhttp2.setRequestHeader("Content-Type", "application/json");
-	xmlhttp2.send(JSON.stringify({'id':uId, 'session':uSession}));	
-
 
 });
 
 app.get('/shared-shopping-cart', function(request, response) {
 	console.log("haroon testing shared-shopping-cart");
-	
 	try{
 	var uSession = request.session.sessionvalue;
-    var uId = request.session.currentuser.id;
-    if(uSession === 'undefined' || uId === 'undefined')
-    {
-    	response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
-    }
-    }
-    catch(e) {
-    	//Display alert box and redirect to signin page
-    	if(e.name == "TypeError")
-    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
-    }
+    uId = request.session.currentuser.id;
+	if(request.session.sessionvalue === undefined || request.session.currentuser === undefined || request.session.sessionvalue === "" || request.session.currentuser === "")
+	    {
+	    	response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
+	    }
+	else {
+
     console.log("session value:"+request.session.sessionvalue);
     console.log("session id:"+request.session.currentuser.id);
     
@@ -943,7 +901,7 @@ app.get('/shared-shopping-cart', function(request, response) {
 	     		console.log("cartStatsArray");
     			console.log(cartStatsArray[0].totalAmount);
 	    		response.render('shop/shopping-cart', {cartItems: cartArray, login: isLoggedIn,
-		    	cartStatistics : cartStatsArray, cartItemsQuantity: cartItemsQuantity } );
+		    	cartStatistics : cartStatsArray, cartItemsQuantity: cartItemsQuantity, userId : uId});
 		        }
 	            }
                 xmlhttp.open("POST", "http://0.0.0.0:9999/v1/shoppingCart");  //User Activity Logs Python server
@@ -963,6 +921,15 @@ app.get('/shared-shopping-cart', function(request, response) {
     xmlhttp2.open("POST", "http://127.0.0.1:9000/v1/verifySession");  //User Activity Logs Python server
 	xmlhttp2.setRequestHeader("Content-Type", "application/json");
 	xmlhttp2.send(JSON.stringify({'id':uId, 'session':uSession}));	
+
+	}
+    }
+    catch(e) {
+    	//Display alert box and redirect to signin page
+    	if(e.name == "TypeError")
+    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId});
+    }
+
 
 
 });

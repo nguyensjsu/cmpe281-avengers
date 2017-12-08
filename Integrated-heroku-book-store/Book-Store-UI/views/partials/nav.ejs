@@ -15,7 +15,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="/shopping-cart">
+         <%var url = "/shopping-cart/" +  userId.toString()%>
+          <a href="<%= url %>">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
             <%if (login == true) { %>
               <span class="badge"><%= cartItemsQuantity %></span>
