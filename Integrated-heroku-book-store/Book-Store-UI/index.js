@@ -161,10 +161,6 @@ app.get('/logout', function (request, response) {
 	response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
 });
 
-app.get('/user/profile', function(request,response){
-	response.render('user/profile',{products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
-});
-
 // app.post('/logs/insert', function(request, response){
 function activityLog(log, response) {
 	console.log("inside activity log function");
@@ -177,9 +173,7 @@ function activityLog(log, response) {
 		}
 	}
     xmlhttp.open("POST", "http://localhost:7000/logs/insert");
-    //xmlhttp.open("POST", "http://control-panel-elb-492600712.us-west-1.elb.amazonaws.com:8081/v1/shorten");
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
-	//xmlhttp.send(JSON.stringify({'originalUrl': request.body.originalUrl}));
 	xmlhttp.send(JSON.stringify(log));
 }
 	
@@ -253,7 +247,14 @@ app.get('/add-to-cart/:id', function(request, response) {
 		            }
 	            }
                 xmlhttp1.open("POST", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
-    
+    			
+    			var log = {
+					"user" : request.session.currentuser.firstname,
+					"message" : request.session.currentuser.firstname+" Added " + data.Title + " book.",
+					"timestamp" : new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
+				};
+				activityLog(log, response);
+
 	            xmlhttp1.setRequestHeader("Content-Type", "application/json");
 	            xmlhttp1.send(JSON.stringify(requestData));	
 			    response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
