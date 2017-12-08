@@ -539,6 +539,101 @@ app.get('/shopping-cart/:userid', function(request, response) {
 
 });
 
+app.post('/checkout', function(request, response){
+	console.log("In checkout");
+	
+	try{
+	var uSession = request.session.sessionvalue;
+    var uId = request.session.currentuser.id;
+    }
+    catch(e) {
+    	//Display alert box and redirect to signin page
+    	if(e.name == "TypeError")
+    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+    }
+    console.log("session value:"+request.session.sessionvalue);
+    console.log("user id:"+request.session.currentuser.id);
+    
+    //Check whether the user is logged in
+	var xmlhttp2 = new XMLHttpRequest();  
+	xmlhttp2.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			state_changed = true;
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			resResult = data.result;
+			// If logged in and session is valid
+            if(resResult == 0) {
+	        var xmlhttp = new XMLHttpRequest();
+        	xmlhttp.onreadystatechange = function() {
+		    if (this.readyState === 4 && this.status === 200) {
+			    state_changed = true;
+
+	    		var data = JSON.parse(this.responseText);
+		    	orderData = JSON.parse(data.data);
+			    console.log(orderData);
+                orderStats = JSON.parse(data.stats);
+                console.log(orderStats);
+		    	orderArray = [];
+                orderStatsArray = [];
+
+     			for(data in orderData){
+	   				orderArray.push(orderData[data]);
+		    	}
+			    for(stat in orderStats){
+					orderStatsArray.push(orderStats[stat]);
+    			}
+            //add the shopping cart data to order database using multiple
+            //document insert
+	        var xmlhttp1 = new XMLHttpRequest();  
+	        xmlhttp1.onreadystatechange = function() {
+		    if (this.readyState === 4 && this.status === 200) {
+			    state_changed = true;
+			    data = this.responseText;
+		    	//data is in string format
+			    data = JSON.parse(data);
+			    console.log("response after adding to order database:");
+			    console.log(data);
+			    status = data.Status;
+			    if(status == 'OK') {
+		    	orderDate = data.timestamp;
+		    	orderId = data.orderId;
+			    response.render('pages/order', {data: orderArray, stats: orderStatsArray,
+			     orderId: orderId, orderDate:orderDate, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+			    }
+                else {
+                	//display error message order not placed
+                }
+		    }
+	        }
+            xmlhttp1.open("POST", "http://0.0.0.0:2000/v1/order");  //Shopping Cart server
+	        xmlhttp1.setRequestHeader("Content-Type", "application/json");
+	        var requestData2 = {"userId": uId, "orderData":orderData, "stats":orderStats};
+	        xmlhttp1.send(JSON.stringify(requestData2));
+
+		    }
+	        }
+            xmlhttp.open("POST", "http://0.0.0.0:9999/v1/checkout");  //User Activity Logs Python server
+            xmlhttp.setRequestHeader("Content-Type", "application/json");
+            var requestData = {"userId": uId};
+            console.log(requestData);
+            xmlhttp.send(JSON.stringify(requestData));
+
+            } //if valid session
+
+            else {
+
+            }
+
+		}
+	}//end of function
+    //xmlhttp2.open("GET", "http://127.0.0.1:9000/v1/login?id="+uId+"&session="+uSession);  //User Activity Logs Python server
+    xmlhttp2.open("POST", "http://127.0.0.1:9000/v1/verifySession");  //User Activity Logs Python server
+	xmlhttp2.setRequestHeader("Content-Type", "application/json");
+	xmlhttp2.send(JSON.stringify({'id':uId, 'session':uSession}));	
+
+});
+
 app.get('/checkout', function(request, response) {
 	console.log("In checkout");
 	
@@ -663,6 +758,11 @@ app.get('/logs', function(request, response){
 	xmlhttp.send();
 });
 
+app.get('/payment/:totalAmount', function(request, response) {
+	console.log("Inside payment=========");
+	console.log("Chekout totalAmount: " + request.params.totalAmount);
+	response.render('shop/checkout', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, totalAmount: request.params.totalAmount});
+});
 
 app.get('/myOrders', function(request, response) {
 	console.log("haroon testing my Orders");
