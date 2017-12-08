@@ -546,7 +546,7 @@ app.get('/shopping-cart', function(request, response) {
 });
 
 app.post('/checkout', function(request, response){
-	console.log("In checkout");
+	console.log("In checkout post");
 	
 	try{
 	uSession = request.session.sessionvalue;
@@ -655,7 +655,7 @@ app.post('/checkout', function(request, response){
 });
 
 app.get('/checkout', function(request, response) {
-	console.log("In checkout");
+	console.log("In checkout get");
 	
 	try{
 	uSession = request.session.sessionvalue;
@@ -779,8 +779,6 @@ app.get('/logs', function(request, response){
 });
 
 app.get('/payment/:totalAmount', function(request, response) {
-	console.log("Inside payment=========");
-	console.log("Chekout totalAmount: " + request.params.totalAmount);
 	response.render('shop/checkout', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, totalAmount: request.params.totalAmount, userSession: uSession});
 });
 
