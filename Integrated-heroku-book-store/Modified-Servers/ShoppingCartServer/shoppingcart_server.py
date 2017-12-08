@@ -141,13 +141,11 @@ deleteProduct: This method removes a product from the cart
     productId:
 """
 @app.route("/v1/cart",methods=['DELETE'])
-def deleteProduct():
+def deleteCart():
     try:
         userId = request.json['userId']
-        productId = request.json['productId']
-        result = myCart.delete_one({"userId":userId, "productId" : productId})
-        #data = dumps(result)
-        return jsonify({"Status" : "OK", "data" : data})
+        result = myCart.remove({"userId":userId})
+        return jsonify({"Status" : "OK"})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))
 

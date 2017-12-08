@@ -518,8 +518,6 @@ app.get('/shopping-cart', function(request, response) {
 						    for(stat in cartStats){
 								cartStatsArray.push(cartStats[stat]);
 			    			}
-				     		console.log("cartStatsArray");
-			    			console.log(cartStatsArray[0].totalAmount);
 				    		response.render('shop/shopping-cart', {userId: uId, cartItems: cartArray, login: isLoggedIn,cartStatistics : cartStatsArray,cartItemsQuantity: cartItemsQuantity, userSession: uSession } );
 					    }
 					}
@@ -606,6 +604,20 @@ app.post('/checkout', function(request, response){
 			    if(status == 'OK') {
 		    	orderDate = data.timestamp;
 		    	orderId = data.orderId;
+		    	
+		    	//Delete from cart
+	            var xmlhttp4 = new XMLHttpRequest();  
+	            xmlhttp4.onreadystatechange = function() {
+		        if (this.readyState === 4 && this.status === 200) {
+			        state_changed = true;
+			    
+		            }
+	            }
+                xmlhttp4.open("DELETE", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
+	            xmlhttp4.setRequestHeader("Content-Type", "application/json");
+	            var requestData4 = {"userId": uId};
+	            xmlhttp4.send(JSON.stringify(requestData4));
+
 			    response.render('pages/order', {data: orderArray, stats: orderStatsArray,
 			     orderId: orderId, orderDate:orderDate, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userSession: uSession});
 			    }
