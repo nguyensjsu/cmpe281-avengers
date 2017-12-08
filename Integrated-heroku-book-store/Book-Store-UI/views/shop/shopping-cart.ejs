@@ -44,15 +44,21 @@
 		</div>
 	</div>
 	<hr>
-	<div class="row">
-		<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-			<a href= <%= checkout %> type="button" class="btn btn-success">Checkout</a>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+				<a href= <%= checkout %> type="button" class="btn btn-success">Checkout</a>
+				<a href= <%= checkout %> type="button" class="btn btn-success">Share Cart</a>
+			</div>
 		</div>
 	</div>
 <% } else { %>  
-	<div class="row">
-		<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-			<h2>No Items in Cart</h2>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+				<h2>No Items in Cart</h2>
+				<a href= <%= checkout %> type="button" class="btn btn-success">Share Cart</a>
+			</div>
 		</div>
 	</div>
 <% } %> 

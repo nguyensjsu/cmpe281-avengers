@@ -68,13 +68,8 @@ app.post('/signup', function(request, response) {
 					"timestamp" : new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 				};
 				activityLog(log, response);
-<<<<<<< Updated upstream
-				console.log(array);
-				response.render('pages/index', {products: array, login: isLoggedIn});
-=======
 
 				response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors,cartItemsQuantity: cartItemsQuantity});
->>>>>>> Stashed changes
 		        }
 		}
 		console.log("before POST");
@@ -450,8 +445,6 @@ app.post('/find', function(request, response) {
 		xmlhttp.send();
 	
 	}
-<<<<<<< Updated upstream
-=======
 	if(request.body.filter === "Author"){
            my_url = "http://0.0.0.0:8080/v1/search/author/"+request.body.search;
 	} else {
@@ -470,9 +463,6 @@ app.post('/find', function(request, response) {
     //xmlhttp.open("GET", "http://linked-redirect-elb-13359793.us-west-1.elb.amazonaws.com:8082/v1/domain");
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
 	xmlhttp.send();
-
-
->>>>>>> Stashed changes
 });
 
 
@@ -486,27 +476,19 @@ app.get('/shopping-cart', function(request, response) {
 	    	response.render('user/signin', {login: isLoggedIn});
 	    }
         
-	else{
-	var uSession = request.session.sessionvalue;
-<<<<<<< Updated upstream
-    	var uId = request.session.currentuser.id;
-    	console.log("session value:"+request.session.sessionvalue);
-    	console.log("session id:"+request.session.currentuser.id);
-=======
-    var uId = request.session.currentuser.id;
-    if(uSession === 'undefined' || uId === 'undefined')
-    {
-    	response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
-    }
-    }
-    catch(e) {
-    	//Display alert box and redirect to signin page
-    	if(e.name == "TypeError")
-    	    response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
-    }
+		else{
+			var uSession = request.session.sessionvalue;
+	    	var uId = request.session.currentuser.id;
+	    	console.log("session value:"+request.session.sessionvalue);
+	    	console.log("session id:"+request.session.currentuser.id);
+    		if(uSession === 'undefined' || uId === 'undefined')
+		    {
+		    	response.render('user/signin', {login: isLoggedIn, cartItemsQuantity: cartItemsQuantity});
+		    }
+		
+		
     console.log("session value:"+request.session.sessionvalue);
     console.log("session id:"+request.session.currentuser.id);
->>>>>>> Stashed changes
     
     //Check whether the user is logged in
 	var xmlhttp2 = new XMLHttpRequest();  
