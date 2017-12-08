@@ -779,7 +779,7 @@ app.post('/updateQty', function(request, response) {
 			    
 		            }
 	            }
-                xmlhttp1.open("POST", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
+                xmlhttp1.open("PUT", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
     
 	            xmlhttp1.setRequestHeader("Content-Type", "application/json");
 	            xmlhttp1.send(JSON.stringify(requestData));	
@@ -926,6 +926,7 @@ app.get('/shared-shopping-cart', function(request, response) {
      			console.log("after get from python db" + this.responseText);
 	    		var data = JSON.parse(this.responseText);
 		    	cartBooks = JSON.parse(data.data);
+			console.log("Cart books");
 			    console.log(cartBooks);
                 cartStats = JSON.parse(data.stats);
                 console.log(cartStats);
@@ -938,6 +939,7 @@ app.get('/shared-shopping-cart', function(request, response) {
 			    for(stat in cartStats){
 					cartStatsArray.push(cartStats[stat]);
     			}
+			console.log(cartArray);
 	     		console.log("cartStatsArray");
     			console.log(cartStatsArray[0].totalAmount);
 	    		response.render('shop/shopping-cart', {cartItems: cartArray, login: isLoggedIn,

@@ -119,13 +119,17 @@ if newQty is 0 : call the delete method and remove this item from cart
 @app.route("/v1/cart",methods=['PUT'])
 def updateCart():
     try:
-        result = json.loads(request.get_data(as_text=True))
-        userId = result['userId']
-        productId = result['productId']
-        quantity = result['quantity']
+	print("In PUT")
+        userId = request.json['userId']
+	print(userId)
+        productId = request.json['productId']
+	print(productId)
+        quantity = int(request.json['quantity'])
+	print(quantity)
         #if quantity == 0 we need to delete the item from cart
         result = myCart.update_one({"userId":userId, "productId": productId},
         {"$set": {"quantity": quantity} })
+	print("Success")
         return jsonify({"Status" : "OK", "data" : data})
     except Exception, e:
         return jsonify(status='ERROR',message=str(e))

@@ -25,7 +25,8 @@
 						<input type="hidden" class="form-control" name="book_Title_Hidden" value="<%= booktitle %>"/>
 						<h4 class= "bookAuthor" title="<%= cartItems[i].title %>"> <%= cartItems[i].author %></h4>
 						<input type="hidden" class="form-control" name="book_Author_Hidden" value="<%= cartItems[i].author %>"/>
-						<input type="hidden" class="form-control" name="book_Id" value="<%= cartItems[i]._id.$oid %>"/>
+						<input type="hidden" class="form-control" name="cart_Id" value=<%= cartItems[i]._id.$oid %>>
+						<input type="hidden" class="form-control" name="book_Id" value=<%= cartItems[i].productId %>>
 						<div class="label label-success" title="$<%= cartItems[i].price %>">
 							<Strong>Price: </Strong>$<%= cartItems[i].price %>
 						</div>
