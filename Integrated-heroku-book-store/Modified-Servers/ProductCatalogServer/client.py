@@ -4,6 +4,7 @@ from bson.objectid import ObjectId
 from pymongo import errors
 from flask import jsonify
 import json
+import re
 
 '''Mongo Client object to do crud operations on MongoDB'''
 
@@ -58,17 +59,18 @@ class mongo_client:
 
     def get_title(self,title):
         try:
-            output = self.collection.find({'Title': {'$regex':title}})
+            # output = self.collection.find({'Title': {'$regex':title}})
+            output = self.collection.find({'Title': re.compile(title, re.IGNORECASE)})
             data = dumps(output)
         except Exception as e:
             return json.dumps({"Status":"Error"})
-        # return json.dumps({"Status": "OK", "data": json.loads(data)})
+        #return json.dumps({"Status": "OK", "data": json.loads(data)})
         return jsonify({"Status": "OK", "data": data})
     
 
     def get_author(self,author):
         try:
-            output = self.collection.find({'Author': {'$regex':author}})
+            output = self.collection.find({'Author': re.compile(author, re.IGNORECASE)})
             data = dumps(output)
         except Exception as e:
             return json.dumps({"Status":"Error"})
@@ -101,4 +103,4 @@ class mongo_client:
 
 if __name__ == "__main__":
     client = mongo_client()
-    print(client.sort_hightolow())
+    print(client.get_title("jane"))
