@@ -513,7 +513,7 @@ app.get('/shopping-cart', function(request, response) {
 			    			}
 				     		console.log("cartStatsArray");
 			    			console.log(cartStatsArray[0].totalAmount);
-				    		response.render('shop/shopping-cart', {cartItems: cartArray, login: isLoggedIn,cartStatistics : cartStatsArray,cartItemsQuantity: cartItemsQuantity } );
+				    		response.render('shop/shopping-cart', {userId: uId, cartItems: cartArray, login: isLoggedIn,cartStatistics : cartStatsArray,cartItemsQuantity: cartItemsQuantity } );
 					    }
 					}
 					xmlhttp.open("POST", "http://0.0.0.0:9999/v1/shoppingCart");  //User Activity Logs Python server
