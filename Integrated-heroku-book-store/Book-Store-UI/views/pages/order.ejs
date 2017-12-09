@@ -5,37 +5,35 @@
 </head>
 <% include ../partials/nav.ejs %>
 <body>
-<div class="jumbotron text-center">
+<div class="jumbotron text-center" style="background-color:white; color:black;">
 	<div class="container">
 <h1>Order Placed Successfully</h1>
-<div class="label label-success" title="<%= orderId %>"><Strong>Order Id: </Strong><%= orderId %></div>
-<div class="label label-success" title="<%= orderDate %>"><Strong>Order Date: </Strong><%= orderDate %></div>
 <table class="table">
-  <div class="row">
+  <div class="row col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3" style="margin-top: 5%;padding: 20px;border: 1px solid #ddd;">
+    <div style="margin-left: 20%;text-align: left;" title="<%= orderId %>"><Strong>Order Id: </Strong><%= orderId %></div>
+    <div style="margin-left: 20%;text-align: left;" title="<%= orderDate %>"><Strong>Order Date: </Strong><%= orderDate %></div>
     <% for(var i=0; i < data.length; i++) { 
 
     var checkout = "/checkout";
         %>
-    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3" style="margin-left:0%;width: 100%;">
       
       <ul class="list-group">
-          <li class="list-group-item">
-            <img src=<%= data[i].imageUrl %> alt="..." class="img-responsive bookImage" >
-            <h3> <%=data.length %></h3>
-            <h3 class= "bookTitle" title="<%= data[i].title %>"> <%= data[i].title %></h3>
-            <div class="label label-success" title="$<%= data[i].price %>"><Strong>Price: </Strong>$<%= data[i].price %></div>
-            <span class="badge"><%= data[i].quantity %></span>
-
+          <li class="list-group-item" style="border: none;">
+            <img src=<%= data[i].imageUrl %> alt="..." class="img-responsive bookImage" style="display: inline-block;">
+	    <div style="color: black; width: 60%; display: inline-block; margin-left: 15px;">
+		    <h3 class= "bookTitle" title="<%= data[i].title %>"> <%= data[i].title %></h3>
+		    <div class="label label-success" style="font-size: 16px;" title="$<%= data[i].price %>"><Strong>Price: </Strong>$<%= data[i].price %></div>
+		    <span class="badge" style="font-size: 16px;"><%= data[i].quantity %></span>
+	    </div>
           </li>
       </ul>
     </div>
     <% } %>
-  </div>
-  <div class="row">
-    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-      <strong>Total: <%= stats[0].totalAmount %> $</strong>
+    <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3" style="font-size: 20px;">
+      <strong>Total: $<%= stats[0].totalAmount %></strong>
     </div>
-  </div>  
+  </div> 
 </table>
 </div>
 </div>
