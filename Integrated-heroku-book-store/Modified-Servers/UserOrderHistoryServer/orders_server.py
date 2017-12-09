@@ -102,7 +102,7 @@ def insertOrUpdateOrder():
         order = {}
         order['_id'] = generate_orderid()
         order['orderData'] = orderData
-        order['timestamp'] = datetime.datetime.now()
+        order['timestamp'] = str(datetime.datetime.now())
         order['userId'] = userId
         order['stats'] = orderStats
         """
