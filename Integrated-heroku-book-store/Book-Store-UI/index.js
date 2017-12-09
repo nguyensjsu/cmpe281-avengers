@@ -261,12 +261,8 @@ app.get('/', function(request, response){
 			for(d in data){
 					array.push(data[d]);
 			}
-<<<<<<< HEAD
 			//console.log(array);
 			response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
-=======
-			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
->>>>>>> 7b99937a085c1a9049b4389dcba896044607c9d9
 		}
 	}
     xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books");  
@@ -286,12 +282,8 @@ app.get('/hightolow', function(request, response){
 			for(d in data){
 				array.push(data[d]);
 			}
-<<<<<<< HEAD
 			//console.log(array);
 			response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
-=======
-			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
->>>>>>> 7b99937a085c1a9049b4389dcba896044607c9d9
 		}
 	}
     xmlhttp.open("GET", "http://0.0.0.0:8080/v1/sort/hightolow");  
@@ -311,12 +303,8 @@ app.get('/lowtohigh', function(request, response){
 			for(d in data){
 					array.push(data[d]);
 			}
-<<<<<<< HEAD
 			//console.log(array);
 			response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
-=======
-			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
->>>>>>> 7b99937a085c1a9049b4389dcba896044607c9d9
 		}
 	}
     xmlhttp.open("GET", "http://0.0.0.0:8080/v1/sort/lowtohigh");  
@@ -333,7 +321,6 @@ app.post('/find', function(request, response) {
 			if (this.readyState === 4 && this.status === 200) {
 				state_changed = true;
 				var data = JSON.parse(this.responseText);
-<<<<<<< HEAD
 				var status = data.Status;
 				array = [];
 				//console.log("data 1st parse" + status);
@@ -352,14 +339,6 @@ app.post('/find', function(request, response) {
 
 				response.render('pages/index', {NotFound: true, products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
 			    // response.redirect('/');
-=======
-				data = JSON.parse(data.data);
-				array = [];
-				for(d in data){
-					array.push(data[d]);
-				}
-				response.render('pages/index', {products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
->>>>>>> 7b99937a085c1a9049b4389dcba896044607c9d9
 			}
 		   }
 		}
@@ -391,12 +370,8 @@ app.post('/find', function(request, response) {
 			for(d in data){
 				array.push(data[d]);
 			}
-<<<<<<< HEAD
 			//console.log(array);
 			response.render('pages/index', {NotFound: false, userId : uId, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userSession: uSession});
-=======
-			response.render('pages/index', {userId : uId, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userSession: uSession});
->>>>>>> 7b99937a085c1a9049b4389dcba896044607c9d9
 		}
 	}
 	xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books");  
@@ -782,7 +757,7 @@ app.post('/updateQty', function(request, response) {
 	                "userId" : uId,
 	                "quantity" : request.body.quantity
 	            }
-<<<<<<< HEAD
+
                 xmlhttp1.open("PUT", "http://0.0.0.0:9999/v1/cart");  //Shopping Cart server
     
 	            xmlhttp1.setRequestHeader("Content-Type", "application/json");
@@ -797,7 +772,7 @@ app.post('/updateQty', function(request, response) {
             }
 
 		}
-=======
+
 	            //add to cart
 		        var xmlhttp1 = new XMLHttpRequest();  
 		        xmlhttp1.onreadystatechange = function() {
@@ -814,11 +789,9 @@ app.post('/updateQty', function(request, response) {
 				"timestamp" : new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
 					};
 			activityLog(log, response);
-			response.render('pages/index', {products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+			response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
 	    } 
-	}
->>>>>>> 7b99937a085c1a9049b4389dcba896044607c9d9
-	}
+	
     xmlhttp2.open("POST", "http://127.0.0.1:9000/v1/verifySession"); 
 	xmlhttp2.setRequestHeader("Content-Type", "application/json");
 	xmlhttp2.send(JSON.stringify({'id':uId, 'session':uSession}));	
