@@ -63,9 +63,15 @@ class mongo_client:
             output = self.collection.find({'Title': re.compile(title, re.IGNORECASE)})
             data = dumps(output)
         except Exception as e:
-            return json.dumps({"Status":"Error"})
-        #return json.dumps({"Status": "OK", "data": json.loads(data)})
-        return jsonify({"Status": "OK", "data": data})
+            # return json.dumps({"Status":"Error"})
+            return jsonify({"Status":"Error"})
+        #return json.dumps({"Status": "OK", "data": json.loads(data)})  
+        # return jsonify({"Status": "OK", "data": data})
+        print(data)
+        if len(data) > 2:
+            return jsonify({"Status": "OK", "data": data})
+        return jsonify({"Status":"Error"})   
+
     
 
     def get_author(self,author):
@@ -73,9 +79,12 @@ class mongo_client:
             output = self.collection.find({'Author': re.compile(author, re.IGNORECASE)})
             data = dumps(output)
         except Exception as e:
-            return json.dumps({"Status":"Error"})
+            return jsonify({"Status":"Error"})
         # return json.dumps({"Status": "OK", "data": json.loads(data)})
-        return jsonify({"Status": "OK", "data": data})
+        print(data)
+        if len(data) > 2:
+            return jsonify({"Status": "OK", "data": data})
+        return jsonify({"Status":"Error"})   
 
     def sort_hightolow(self):
         try:

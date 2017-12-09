@@ -65,7 +65,7 @@ app.post('/signup', function(request, response) {
 				};
 				activityLog(log, response);
 
-				response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors,cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+				response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, hasErrors: hasErrors,cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
 		        }
 		}
 		console.log("before POST");
@@ -112,7 +112,7 @@ app.post('/signin', function(request, response) {
 				};
 				activityLog(log, response);
 
-				response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+				response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
 		        }
 		}
 		console.log("before POST for Login");
@@ -153,7 +153,7 @@ app.get('/logout', function (request, response) {
 	xmlhttp.setRequestHeader("Content-Type", "application/json");
 	xmlhttp.send(JSON.stringify({'id': id}));
 	isLoggedIn = false;
-	response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+	response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
 });
 
 // app.post('/logs/insert', function(request, response){
@@ -252,7 +252,7 @@ app.get('/add-to-cart/:id', function(request, response) {
 
 	            xmlhttp1.setRequestHeader("Content-Type", "application/json");
 	            xmlhttp1.send(JSON.stringify(requestData));	
-			    response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+			    response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
 		        }
 
 	        }
@@ -296,7 +296,7 @@ app.get('/', function(request, response){
 				//}
 			}
 			//console.log(array);
-			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+			response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
 		}
 	}
     xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books");  //User Activity Logs Python server
@@ -327,7 +327,7 @@ app.get('/hightolow', function(request, response){
 				//}
 			}
 			//console.log(array);
-			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+			response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
 		}
 	}
     xmlhttp.open("GET", "http://0.0.0.0:8080/v1/sort/hightolow");  //User Activity Logs Python server
@@ -358,7 +358,7 @@ app.get('/lowtohigh', function(request, response){
 				//}
 			}
 			//console.log(array);
-			response.render('pages/index', {products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+			response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
 		}
 	}
     xmlhttp.open("GET", "http://0.0.0.0:8080/v1/sort/lowtohigh");  //User Activity Logs Python server
@@ -383,20 +383,26 @@ app.post('/find', function(request, response) {
 					state_changed = true;
 				//console.log("data" + this.responseText);
 				var data = JSON.parse(this.responseText);
-				//console.log("data 1st parse" + data);
-				data = JSON.parse(data.data);
-				//console.log("data second parse" + data);
+				var status = data.Status;
 				array = [];
-
-				//console.log("data " + data[0].message);
-				for(d in data){
-					//if(data[d].user != null || data[d].ipAddress != null || data[d].message != null || data[d].timestamp != null){
+				//console.log("data 1st parse" + status);
+				if(status!= "Error"){
+			    	data = JSON.parse(data.data);
+				    //console.log("data second parse" + data);    
+				    //console.log("data " + data[0].message);
+				    for(d in data){
+					 //if(data[d].user != null || data[d].ipAddress != null || data[d].message != null || data[d].timestamp != null){
 						array.push(data[d]);
-					//}
-				}
+					  //}
+				    }
 				//console.log(array);
-				response.render('pages/index', {products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+				response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+			} else {
+
+				response.render('pages/index', {NotFound: true, products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+			    // response.redirect('/');
 			}
+		   }
 		}
 		if(request.body.filter === "Author"){
 		   my_url = "http://0.0.0.0:8080/v1/search/author/"+request.body.search;
@@ -438,7 +444,7 @@ app.post('/find', function(request, response) {
 				//}
 			}
 			//console.log(array);
-			response.render('pages/index', {userId : uId, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userSession: uSession});
+			response.render('pages/index', {NotFound: false, userId : uId, products: array, login: isLoggedIn, hasErrors: hasErrors, cartItemsQuantity: cartItemsQuantity, userSession: uSession});
 		}
 		}
 	    xmlhttp.open("GET", "http://0.0.0.0:8080/v1/books");  //User Activity Logs Python server
@@ -895,7 +901,7 @@ app.post('/updateQty', function(request, response) {
     
 	            xmlhttp1.setRequestHeader("Content-Type", "application/json");
 	            xmlhttp1.send(JSON.stringify(requestData));	
-			    response.render('pages/index', {products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
+			    response.render('pages/index', {NotFound: false, products: array, login: isLoggedIn, cartItemsQuantity: cartItemsQuantity, userId : uId, userSession: uSession});
 
 
             } //if valid session
